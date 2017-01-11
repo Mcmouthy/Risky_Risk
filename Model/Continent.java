@@ -21,5 +21,3 @@ public class Continent {
 
     public int getNbbonusrenforts(){return nbbonusrenforts;}
 }
-
-
