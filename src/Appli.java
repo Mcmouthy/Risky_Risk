@@ -13,5 +13,6 @@ public class Appli extends Application{
     public void start(Stage stage) throws Exception {
         Menu_View menu = new Menu_View(stage);
         Control_Menu control_menu = new Control_Menu(menu);
+
     }
 }

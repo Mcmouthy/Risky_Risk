@@ -1,10 +1,12 @@
 package Model;
 
+import java.io.File;
+import java.io.Serializable;
 import java.util.*;
 /**
  * Created by PC-Dylan on 09/11/2016.
  */
-public class Partie {
+public class Partie implements Serializable{
     final static int CLASSICO = 0;
     final static int RAPIDO = 1;
     final static int THEMEMONDE = 2;
@@ -140,5 +142,9 @@ public class Partie {
     public int calculRenforts(Joueur j){
         /* Pour le moment on ne prend pas en compte les continents*/
         return j.terrain.size();
+    }
+
+    public void initialiseSetCasesNeutres(File nomFile){
+
     }
 }

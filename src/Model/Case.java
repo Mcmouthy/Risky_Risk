@@ -1,11 +1,12 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by PC-Dylan on 09/11/2016.
  */
-public class Case {
+public class Case implements Serializable{
     Joueur joueur;
     int nbtroupes;
     int x,y,width,height;
@@ -79,7 +80,13 @@ public class Case {
         return height;
     }
 
-    public void compteVoisins(){}
+    public void setVoisins(Set<Case> voisins) {
+        this.voisins = voisins;
+    }
+
+    public Set<Case> getVoisins() {
+        return voisins;
+    }
 
     public void addRenforts(){}
 }

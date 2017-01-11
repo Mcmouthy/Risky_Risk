@@ -1,11 +1,12 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by PC-Dylan on 09/11/2016.
  */
-public class Joueur {
+public class Joueur implements Serializable{
 
     final static int RED=0;
     final static int BLUE=1;
