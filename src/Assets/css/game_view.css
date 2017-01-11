@@ -1,0 +1,107 @@
+#second-player-layout-in,#first-player-layout-in, #pioche-layout {
+    -fx-padding: 1em;
+    -fx-hgap: 0.3em;
+    -fx-vgap: 0.3em;
+}
+#second-player-layout,#first-player-layout {
+    -fx-hgap: 2em;
+}
+#second-player-blason,#first-player-blason {
+    -fx-alignment: center-right;
+    -fx-pref-width: 200;
+}
+.nom-joueur {
+    -fx-padding: 1em;
+    -fx-font-size: 1.6em;
+    -fx-text-fill: white;
+}
+#second-player-layout>*,#first-player-layout>* {
+    -fx-alignment: center;
+}
+
+#plateau-layout > * {
+    -fx-alignment: top-center;
+}
+
+#plateau-layout {
+    -fx-max-height: 550px;
+    -fx-pref-height: 550px;
+    -fx-min-height: 550px;
+}
+
+.body {
+    -fx-background-image: url('../img/background.png');
+}
+
+#second-player-deck,#first-player-deck,#message_zone{
+    -fx-alignment: bottom-center;
+    -fx-background-color: rgba(0,0,0,0.5);
+}
+#second-player-deck,#first-player-deck{
+    -fx-padding: 1em;
+    -fx-hgap: 2em;
+    -fx-vgap: 2em;
+}
+.selectable:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-scale-z: 1.1;
+}
+
+#popup {
+    -fx-background-color: rgba(0,0,0,0.2);
+    -fx-padding: 1em;
+    -fx-pref-width: 50em;
+    -fx-max-width: 50em;
+    -fx-min-width: 50em;
+    -fx-pref-height: 50em;
+    -fx-max-height: 50em;
+    -fx-min-height: 50em;
+    -fx-alignment: top-center;
+    -fx-border-color: #000000;
+    -fx-border-width: 1;
+    -fx-border-radius: 5px;
+}
+
+#close {
+    -fx-border-color: rgb(255, 255, 255);
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-progress-color: rgb(255, 255, 255);
+    -fx-font-weight: 700;
+}
+#nothing-to-show {
+   -fx-text-fill: white;
+}
+#switch-turn {
+    -fx-background-color: rgb(132,28,32);
+    -fx-text-fill: rgb(245,204,34);
+    -fx-font-size: 20px;
+    -fx-padding: 10 ;
+    -fx-padding : 50px;
+}
+#switch-turn:hover {
+  -fx-background-color: rgb(120,25,28);
+}
+#popup-button {
+  -fx-background-color: rgb(132,28,32);
+  -fx-text-fill: rgb(245,204,34);
+  -fx-alignment: bottom-center;
+  -fx-padding: 10 ;
+  -fx-pref-width: 12em;
+}
+#popup-button:hover {
+  -fx-background-color: rgb(120,25,28);
+}
+#close-button {
+  -fx-background-color: rgb(132,28,32);
+  -fx-text-fill: rgb(245,204,34);
+}
+#close-button:hover {
+  -fx-background-color: rgb(120,25,28);
+}
+.huge-focus {
+    -fx-effect: dropshadow(gaussian, #ff1100, 7, 0.6, 0, 0);
+}
+#button-group {
+  -fx-alignment: top-center;
+}
