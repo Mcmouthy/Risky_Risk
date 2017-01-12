@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Control_Menu;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -12,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 
@@ -57,6 +59,7 @@ public class Menu_View{
         root = new BorderPane();
         scene = new Scene(root, 500, 500, Color.BLACK);
         stage.setScene(scene);
+        stage.close();
         // attribution du fichier CSS
         stage.getScene().getStylesheets().add(new File("css/menu_view.css").toURI().toString());
         stage.show();
