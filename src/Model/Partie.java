@@ -37,7 +37,7 @@ public class Partie implements Serializable{
         tempstour=new Timer();
         brouillard=false;
         fin=false;
-        distributionRenforts=false;
+        distributionRenforts=true;
         attaque_deplacements=false;
     }
 
@@ -63,6 +63,11 @@ public class Partie implements Serializable{
 
     public boolean isAttaque_deplacements() {
         return attaque_deplacements;
+    }
+
+    public void passeEtapeSuivante(){
+        if (distributionRenforts){setAttaque_deplacements(true);setDistributionRenforts(false);}
+        else{setDistributionRenforts(true);setAttaque_deplacements(false);}
     }
 
     public void setAttaque_deplacements(boolean attaque_deplacements) {
