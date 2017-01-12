@@ -1,6 +1,7 @@
 package Controller;
 
 
+import Model.Joueur;
 import Model.Partie;
 import View.Game_View;
 import javafx.event.EventHandler;
@@ -22,20 +23,32 @@ public class Control_Game implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent event) {
         while(!model.isFin()){
-            //si le joueur clique sur une de ces cases et une case neutre
-            //on lance la fonction conquerirNeutre() de Partie
+            for (Joueur j : model.getJoueurs()){
+                //joueur.calcul renfort
+                //tant que joueur.nbrenfort>0:
+                    //si le joueur clique sur une case lui appartenant
+                    //on incremente de 1 le nbtroupe de la case
+                    //on decremente de 1 le nbrenfort
+                    //sinon on fait rien ou message en mode
+                    //ON NE FAIT PAS DE PRET DE TROUPE !
 
-            //si le joueur clique sur une de ces cases et une autre de ces cases
-            // on demande de combien il veut deplacer et on utilise deplacement dans partie
-            //NON DISPONIBLE EN RAPIDE
+                //tant que le bouton fin du tour n'a pas ete clique on fait:
+                    //si le joueur clique sur une de ces cases et une case neutre
+                    //on lance la fonction conquerirNeutre() de Partie
 
-            //si il clique sur une de ces cases et une ennemie on demande de combien il veut envoyer ses
-            //troupes et on lance l'attaque
-            //si PARTIE RAPIDE, on demande pas le nombre a envoyer on envoie la totalité-1
+                    //si le joueur clique sur une de ces cases et une autre de ces cases
+                    // on demande de combien il veut deplacer et on utilise deplacement dans partie
+                    //NON DISPONIBLE EN RAPIDE
 
+                    //si il clique sur une de ces cases et une ennemie on demande de combien il veut envoyer ses
+                    //troupes et on lance l'attaque
+                    //si le defenseur n'a plus de terrain on le kick de la partie
+                    //si PARTIE RAPIDE, on demande pas le nombre a envoyer on envoie la totalité-1
 
+            }
+            //une fois que tout les joueurs on jouer on incremente le tour de 1
         }
-
+        //on affiche le vainqueur
     }
 
 }
