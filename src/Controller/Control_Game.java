@@ -25,6 +25,7 @@ public class Control_Game implements EventHandler<MouseEvent> {
     public void handle(MouseEvent event) {
         if(event.getSource().equals(view.endTurn)){
             model.passeJoueurSuivant();
+            view.notice.setText(model.getJoueurCourant().getNom());
         }
     }
 }

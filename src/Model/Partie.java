@@ -83,6 +83,10 @@ public class Partie implements Serializable{
         if (joueurCourant>=joueurs.size())joueurCourant=0;
     }
 
+    public Joueur getJoueurCourant() {
+        return joueurs.get(joueurCourant);
+    }
+
     public Set<Case> getNeutres() {
         return neutres;
     }
