@@ -27,6 +27,9 @@ public class Control_Menu implements EventHandler<ActionEvent> {
             ex: view.setOptionsView();
         }
 
+        pour le début de partie, il faudra juste créer ça:
+            new ControlGame(nbJoueur):
+       c tout!
          */
     }
 }
