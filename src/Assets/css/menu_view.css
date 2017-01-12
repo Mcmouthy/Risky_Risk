@@ -4,10 +4,13 @@
 #panneau{
     -fx-alignment: bottom-center;
     -fx-padding: 0 0 11em 0;
-
-
 }
+
 #jouer{
     -fx-alignment: center;
     -fx-padding: 1em 3em 1em 3em;
+    -fx-font-weight: bold;
+    -fx-background-color: darksalmon;
+
+
 }
