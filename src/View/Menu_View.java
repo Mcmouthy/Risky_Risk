@@ -5,7 +5,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -26,6 +28,7 @@ public class Menu_View{
     public Button continuer;
     public Button options;
     public Button apropos;
+    public ImageView titreJeu;
 
     public Menu_View(Stage stage) {
         this.stage = stage;
@@ -66,6 +69,8 @@ public class Menu_View{
         options.setId("options");
         apropos=new Button("À PROPOS");
         apropos.setId("apropos");
+        titreJeu=new ImageView(new Image(new File("img/logo_pt_v1.png").toURI().toString(),270,270,true,true));
+        titreJeu.setId("titre");
 
         /*
           Initialisation des attributs:
@@ -92,9 +97,8 @@ public class Menu_View{
         ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
         VBox panneau=new VBox();
         panneau.setId("panneau");
+        panneau.getChildren().add(titreJeu);
         panneau.getChildren().add(startButton);
-
-
 
         // Ajout des éléments de la sorte:
         // panel.getChildren().add(Node element);
