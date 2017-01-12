@@ -184,7 +184,12 @@ public class Partie implements Serializable{
         }
     }
 
-    public void deplacementTroupes(){
+    public void deplacementTroupes(Case caseDepart,Case caseArrivee,int nbtroupes){
+        if (caseDepart.getNbtroupes()>1){
+            if (caseDepart.getNbtroupes()<nbtroupes)caseDepart.setNbtroupes(caseDepart.getNbtroupes()-(caseDepart.getNbtroupes()-1));
+            else caseDepart.setNbtroupes(caseDepart.getNbtroupes()-nbtroupes);
+            caseArrivee.setNbtroupes(nbtroupes);
+        }
 
     }
 }

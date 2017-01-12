@@ -24,7 +24,7 @@ public class Joueur implements Serializable{
     public Joueur(String nom,int couleur){
         this.nom=nom;
         this.couleur=couleur;
-        terrain= new HashSet<Case>();
+        terrain= new HashSet<>();
         distributionRenforts=false;
         attaque_deplacements=false;
         nbRenforts=0;
