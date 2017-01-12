@@ -21,6 +21,12 @@ public class Menu_View{
     private Scene scene; // La scene est le contenu visile de la fenetre
     private BorderPane root; // Le root est le panel (comme ds java SWING) principal. C'est dedans que vous metterez tout
 
+    public Button startButton;
+    public Button nouvellePartie;
+    public Button continuer;
+    public Button options;
+    public Button apropos;
+
     public Menu_View(Stage stage) {
         this.stage = stage;
 
@@ -49,7 +55,16 @@ public class Menu_View{
         // attribution du fichier CSS
         stage.getScene().getStylesheets().add(new File("css/menu_view.css").toURI().toString());
         stage.show();
-
+        startButton=new Button("JOUER");
+        startButton.setId("jouer");
+        nouvellePartie=new Button("NOUVELLE PARTIE");
+        nouvellePartie.setId("nouvellePartie");
+        continuer=new Button("CONTINUER");
+        continuer.setId("continuer");
+        options=new Button("OPTIONS");
+        options.setId("options");
+        apropos=new Button("À PROPOS");
+        apropos.setId("apropos");
 
         /*
           Initialisation des attributs:
