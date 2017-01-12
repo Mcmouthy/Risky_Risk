@@ -26,6 +26,7 @@ public class Partie implements Serializable{
     public Partie(){
         joueurs=new ArrayList<>();
         neutres=new HashSet<>();
+        initialiseSetCasesNeutres("src/Model/Terrain");
         mode=CLASSICO;
         theme=THEMEMONDE;
         nbtour=1;
@@ -52,6 +53,14 @@ public class Partie implements Serializable{
 
     public Set<Case> getNeutres() {
         return neutres;
+    }
+
+    public boolean isFin() {
+        return fin;
+    }
+
+    public boolean isBrouillard() {
+        return brouillard;
     }
 
     public List<Joueur> getJoueurs() {

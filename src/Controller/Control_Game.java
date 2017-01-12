@@ -21,6 +21,20 @@ public class Control_Game implements EventHandler<MouseEvent> {
     }
     @Override
     public void handle(MouseEvent event) {
+        while(!model.isFin()){
+            //si le joueur clique sur une de ces cases et une case neutre
+            //on lance la fonction conquerirNeutre() de Partie
+
+            //si le joueur clique sur une de ces cases et une autre de ces cases
+            // on demande de combien il veut deplacer et on utilise deplacement dans partie
+            //NON DISPONIBLE EN RAPIDE
+
+            //si il clique sur une de ces cases et une ennemie on demande de combien il veut envoyer ses
+            //troupes et on lance l'attaque
+            //si PARTIE RAPIDE, on demande pas le nombre a envoyer on envoie la totalité-1
+
+
+        }
 
     }
 
