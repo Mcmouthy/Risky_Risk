@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -20,6 +21,13 @@ public class Menu_View{
     private Stage stage; // Le stage est la fenetre principale
     private Scene scene; // La scene est le contenu visile de la fenetre
     private BorderPane root; // Le root est le panel (comme ds java SWING) principal. C'est dedans que vous metterez tout
+    public Button startButton;
+    public Button nouvellePartie;
+    public Button continuer;
+    public Button options;
+    public Button apropos;
+
+
 
     public Menu_View(Stage stage) {
         this.stage = stage;
@@ -48,6 +56,17 @@ public class Menu_View{
         stage.setScene(scene);
         // attribution du fichier CSS
         stage.getScene().getStylesheets().add(new File("/css/menu_view.css").toURI().toString());
+        startButton=new Button("JOUER");
+        startButton.setId("jouer");
+        nouvellePartie=new Button("NOUVELLE PARTIE");
+        nouvellePartie.setId("nouvellePartie");
+        continuer=new Button("CONTINUER");
+        continuer.setId("continuer");
+        options=new Button("OPTIONS");
+        options.setId("options");
+        apropos=new Button("À PROPOS");
+        apropos.setId("apropos");
+
 
 
         /*
