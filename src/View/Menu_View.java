@@ -110,7 +110,7 @@ public class Menu_View{
     // TODO
     public void setOptionsView() {
         /*
-        Cette vue doit afficher des radio buttons choisir la resolution e le fullscreen
+        Cette vue doit afficher des radio buttons choisir la resolution et le fullscreen
          */
     }
 

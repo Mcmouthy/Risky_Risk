@@ -16,16 +16,20 @@ public class Partie implements Serializable{
     private Random random=new Random();
     private List <Joueur> joueurs;
     private Set <Case> neutres;
+    private int joueurCourant;
     private int mode;
     private int theme;
     private int nbtour;
     private Timer tempstour;
     private boolean brouillard;
     private boolean fin;
+    private boolean distributionRenforts;
+    private boolean attaque_deplacements;
 
     public Partie(){
         joueurs=new ArrayList<>();
         neutres=new HashSet<>();
+        joueurCourant=0;
         initialiseSetCasesNeutres("map/TerrainBase");
         mode=CLASSICO;
         theme=THEMEMONDE;
@@ -33,6 +37,8 @@ public class Partie implements Serializable{
         tempstour=new Timer();
         brouillard=false;
         fin=false;
+        distributionRenforts=false;
+        attaque_deplacements=false;
     }
 
     public int getMode() {
@@ -49,6 +55,27 @@ public class Partie implements Serializable{
 
     public boolean getbrouillard(){
         return brouillard;
+    }
+
+    public boolean isDistributionRenforts() {
+        return distributionRenforts;
+    }
+
+    public boolean isAttaque_deplacements() {
+        return attaque_deplacements;
+    }
+
+    public void setAttaque_deplacements(boolean attaque_deplacements) {
+        this.attaque_deplacements = attaque_deplacements;
+    }
+
+    public void setDistributionRenforts(boolean distributionRenforts) {
+        this.distributionRenforts = distributionRenforts;
+    }
+
+    public void passeJoueurSuivant() {
+        this.joueurCourant +=1;
+        if (joueurCourant>=joueurs.size())joueurCourant=0;
     }
 
     public Set<Case> getNeutres() {
