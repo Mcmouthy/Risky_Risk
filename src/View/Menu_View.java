@@ -69,7 +69,7 @@ public class Menu_View{
         options.setId("options");
         apropos=new Button("À PROPOS");
         apropos.setId("apropos");
-        titreJeu=new ImageView(new Image(new File("img/logo_pt_v1.png").toURI().toString(),270,270,true,true));
+        titreJeu=new ImageView(new Image(new File("img/logo_pt_v1.png").toURI().toString(),300,300,true,true));
         titreJeu.setId("titre");
 
         /*
