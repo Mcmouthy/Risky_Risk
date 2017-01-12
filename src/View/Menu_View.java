@@ -6,10 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -93,8 +90,10 @@ public class Menu_View{
         // Manoeuvre a repeter pour tout les panel qui seront utilisées de la sorte:
         // panel.getChildren().clear()
         ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
-        Pane panneau=new Pane();
+        VBox panneau=new VBox();
+        panneau.setId("panneau");
         panneau.getChildren().add(startButton);
+
 
 
         // Ajout des éléments de la sorte:
