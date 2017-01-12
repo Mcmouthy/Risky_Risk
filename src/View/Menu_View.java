@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -91,20 +90,37 @@ public class Menu_View{
          */
     }
     //TODO IMPORTANT
-    public void setLauncherView(){
+    private void setLauncherView(){
         stage.getScene().getRoot().setVisible(false);
 
+
+        // Nettoyer le contenu d'une précédente fenêtre
+        // Manoeuvre a repeter pour tout les panel qui seront utilisées de la sorte:
+        // panel.getChildren().clear()
+        ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
         VBox panneau=new VBox();
         panneau.setId("panneau");
         panneau.getChildren().add(titreJeu);
         panneau.getChildren().add(startButton);
 
-        ((BorderPane) stage.getScene().getRoot()).setCenter(panneau);
+        // Ajout des éléments de la sorte:
+        // panel.getChildren().add(Node element);
+        // ex:
+        //   vbox.getChildren().add(jLabel);
+        //   gridlayout.getChildren().add(jnomTextField,indexX,indexY);
+        //   borderpane.setCenter(blasonsJ);
+        //   menuSection.getChildren().add(continueButton);
 
+
+        // Ajout final
+        ((BorderPane) stage.getScene().getRoot()).setCenter(/* élément principal au lieu de null */panneau);
+
+
+        // Montrer la vue
         stage.getScene().getRoot().setVisible(true);
     }
     // TODO ULTRA IMPORTANT
-    public void setMainMenuView() {
+    private void setMainMenuView() {
         /*
          Affichage du menu principal
          Prototype pour les autres view de cette classe
@@ -153,7 +169,7 @@ public class Menu_View{
     }
 
     // TODO ULTRA
-    public void setController(EventHandler<MouseEvent> eh) {
+    public void setController(EventHandler<ActionEvent> eh) {
         /*
 
         Attribution du controlleur au bouton INSTANCIÉS AU PRÉALABLE (dans initAttributs) par la méthode suivante:
@@ -161,7 +177,6 @@ public class Menu_View{
         bouton.setOnMouseClicked(eh);
 
          */
-        startButton.setOnMouseClicked(eh);
     }
 
     public Scene getScene() {

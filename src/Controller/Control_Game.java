@@ -8,9 +8,6 @@ import View.Game_View;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 
@@ -25,26 +22,45 @@ public class Control_Game implements EventHandler<MouseEvent> {
 
     public Control_Game(Partie model,Control_Menu control_menu){
         this.model=model;
-        for(Joueur j:model.getJoueurs()) {
+        for(Joueur j:model.getJoueurs())
             for(int iz=0;iz<3;iz++)
-                j.getTerrain().add(model.getNeutres().remove(loto.nextInt(model.getNeutres().size())));
-        }
+                model.conquerirNeutre(j,model.getNeutres().get(loto.nextInt(model.getNeutres().size())),1);
         this.view = new Game_View(model,control_menu.getView().getStage());
         this.menu = control_menu;
+        model.calculRenforts(model.getJoueurCourant());
+        view.notice.setText(model.getJoueurCourant().getNom()+"\nPlacez vos renforts!");
         view.setGameView();
     }
     @Override
     public void handle(MouseEvent event) {
-        if(event.getSource().equals(view.endTurn)){
+        if(event.getSource().equals(view.endTurn))
+        {
             model.passeJoueurSuivant();
-            view.notice.setText(model.getJoueurCourant().getNom());
-        } else if(event.getSource() instanceof Button && view.allCases.containsKey((Button) event.getSource())) {
+            model.calculRenforts(model.getJoueurCourant());
+            view.notice.setText(model.getJoueurCourant().getNom()+"\nPlacez vos renforts!");
+        }
+        else if(event.getSource() instanceof Button && view.allCases.containsKey((Button) event.getSource()))
+        {
             Button b = ((Button) event.getSource());
             Case c = view.allCases.get(b);
+
             if(model.isDistributionRenforts() && model.getJoueurCourant().getTerrain().contains(c)) {
                 c.addRenforts();
-                b.setText(c.getNbtroupes()+"");
+                view.notice.setText(model.getJoueurCourant().getNom()+"\n"+
+                        model.getJoueurCourant().getNbRenforts()+"renforts restant");
+
+            } else if(model.isAttaque_deplacements()) {
+                if (model.getNeutres().contains(b)) {
+                    if(c.getNbtroupes()>1) {
+                        model.conquerirNeutre(model.getJoueurCourant(), c, c.getNbtroupes() - 1);
+                    }
+                } else if(!model.getJoueurCourant().getTerrain().contains(b)) {
+                    for(Joueur j:model.getJoueurs()) if(j.getTerrain().contains(b))
+                        model.captureTerrainAdverse(model.getJoueurCourant(),j,c,c.getNbtroupes()-1);
+                }
             }
+
+            view.actualizeCases();
         }
 
     }
