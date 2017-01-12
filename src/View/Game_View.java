@@ -14,10 +14,19 @@ public class Game_View {
     public Game_View(Partie model, Stage stage) {
         this.model = model;
         this.stage = stage;
+
         initAttributs();
+        setGameView();
+
     }
 
+
+
     private void initAttributs() {
+
+    }
+
+    private void setGameView() {
 
     }
 }

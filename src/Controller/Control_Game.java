@@ -50,5 +50,4 @@ public class Control_Game implements EventHandler<MouseEvent> {
         }
         //on affiche le vainqueur
     }
-
 }
