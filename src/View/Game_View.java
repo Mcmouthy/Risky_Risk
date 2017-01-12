@@ -67,7 +67,8 @@ public class Game_View {
         for(Map.Entry<Button,Case> e: allCases.entrySet())
             game.add(e.getKey(),e.getValue().getX(),e.getValue().getY());
 
-        ((BorderPane) stage.getScene().getRoot()).setCenter(endTurn);
+        ((BorderPane) stage.getScene().getRoot()).setLeft(panel);
+        ((BorderPane) stage.getScene().getRoot()).setCenter(game);
 
         stage.getScene().getRoot().setVisible(true);
     }
