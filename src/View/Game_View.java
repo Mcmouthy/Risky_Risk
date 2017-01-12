@@ -69,14 +69,10 @@ public class Game_View {
         ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
 
         GridPane game = new GridPane();
-<<<<<<< HEAD
+
         game.setId("game");
         for(Map.Entry<Button,Case> e: allCases.entrySet())
             game.add(e.getKey(),e.getValue().getX(),e.getValue().getY());
-=======
-        for (Map.Entry<Button, Case> e : allCases.entrySet())
-            game.add(e.getKey(), e.getValue().getX(), e.getValue().getY());
->>>>>>> e52818c3ee2385a281b581df4aeaff6710ff7ce1
 
         VBox panel = new VBox();
         panel.setId("panel");
