@@ -124,4 +124,12 @@ public class Menu_View{
 
          */
     }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
 }

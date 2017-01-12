@@ -32,4 +32,8 @@ public class Control_Menu implements EventHandler<ActionEvent> {
        c tout!
          */
     }
+
+    public Menu_View getView() {
+        return view;
+    }
 }
