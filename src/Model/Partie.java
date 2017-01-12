@@ -26,8 +26,8 @@ public class Partie implements Serializable{
     public Partie(){
         joueurs=new ArrayList<>();
         neutres=new HashSet<>();
-        mode=0;
-        theme=2;
+        mode=CLASSICO;
+        theme=THEMEMONDE;
         nbtour=1;
         tempstour=new Timer();
         brouillard=false;
@@ -180,6 +180,5 @@ public class Partie implements Serializable{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 }
