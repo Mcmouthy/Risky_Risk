@@ -8,6 +8,11 @@
     -fx-padding: 0 0 2em 0;
 }
 
+#terminer{
+    -fx-background-color: darksalmon;
+    -fx-padding: 1em 3em 1em 3em;
+}
+
 #notice{
     -fx-text-fill: antiquewhite;
     -fx-padding: 1em 0 0 0;

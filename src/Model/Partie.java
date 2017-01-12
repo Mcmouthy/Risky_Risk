@@ -221,7 +221,6 @@ public class Partie implements Serializable{
                 Case o = (Case) ois.readObject();
                 neutres.add(o);
             }
-            System.out.println("Récupération terminée !!!");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
