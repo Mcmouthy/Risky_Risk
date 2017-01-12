@@ -27,8 +27,11 @@ public class Control_Game implements EventHandler<MouseEvent> {
                 model.conquerirNeutre(j,model.getNeutres().get(loto.nextInt(model.getNeutres().size())),1);
         this.view = new Game_View(model,control_menu.getView().getStage());
         this.menu = control_menu;
+
         model.calculRenforts(model.getJoueurCourant());
         view.notice.setText(model.getJoueurCourant().getNom()+"\nPlacez vos renforts!");
+
+        view.setController(this);
         view.setGameView();
     }
     @Override
@@ -36,18 +39,27 @@ public class Control_Game implements EventHandler<MouseEvent> {
         if(event.getSource().equals(view.endTurn))
         {
             model.passeJoueurSuivant();
+            model.passeEtapeSuivante();
             model.calculRenforts(model.getJoueurCourant());
             view.notice.setText(model.getJoueurCourant().getNom()+"\nPlacez vos renforts!");
         }
         else if(event.getSource() instanceof Button && view.allCases.containsKey((Button) event.getSource()))
         {
+            System.out.println("OK");
             Button b = ((Button) event.getSource());
             Case c = view.allCases.get(b);
 
             if(model.isDistributionRenforts() && model.getJoueurCourant().getTerrain().contains(c)) {
+                model.getJoueurCourant().setNbRenforts(model.getJoueurCourant().getNbRenforts()-1);
                 c.addRenforts();
-                view.notice.setText(model.getJoueurCourant().getNom()+"\n"+
-                        model.getJoueurCourant().getNbRenforts()+"renforts restant");
+                if(model.getJoueurCourant().getNbRenforts()>0) {
+                    view.notice.setText(model.getJoueurCourant().getNom() + "\n" +
+                            model.getJoueurCourant().getNbRenforts() + "renforts restant");
+                } else {
+                    model.passeEtapeSuivante();
+                    view.notice.setText(model.getJoueurCourant().getNom()+"\n"+
+                            "Cliquez sur une case adversaire ou neutre pour tenter de la conquérir");
+                }
 
             } else if(model.isAttaque_deplacements()) {
                 if (model.getNeutres().contains(b)) {

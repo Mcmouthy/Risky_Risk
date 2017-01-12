@@ -18,3 +18,19 @@
     -fx-translate-x: -12em;
 
 }
+
+.case-red {
+    -fx-background-color: red;
+}
+.case-blue {
+    -fx-background-color: blue;
+}
+.case-green {
+    -fx-background-color: green;
+}
+.case-yellow {
+    -fx-background-color: yellow;
+}
+.case-black {
+    -fx-background-color: black;
+}
