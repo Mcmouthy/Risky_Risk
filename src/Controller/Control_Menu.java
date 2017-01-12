@@ -19,10 +19,10 @@ public class Control_Menu implements EventHandler<ActionEvent> {
         this.view.setController(this);
 
         // En attendant un menu fonctionnel, pour passer direct au jeu:
-        Partie p = new Partie();
-        p.ajouterJoueur(new Joueur("Pierre",0));
-        p.ajouterJoueur(new Joueur("Gérard",1));
-        new Control_Game(p,this);
+        //Partie p = new Partie();
+        //p.ajouterJoueur(new Joueur("Pierre",0));
+        //p.ajouterJoueur(new Joueur("Gérard",1));
+        //new Control_Game(p,this);
         // fin truc inutile
     }
 

@@ -6,7 +6,10 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -33,7 +36,8 @@ public class Menu_View{
         // intialisation des attributs (comme ca pas besoin de les recréer a chaque page du menu)
         initAttributs();
         // mise en place de la vue du menu principale
-        setMainMenuView();
+        setLauncherView();
+        //setMainMenuView();
     }
 
     // TODO ULTRA IPORTANT
@@ -80,7 +84,34 @@ public class Menu_View{
 
          */
     }
+    //TODO IMPORTANT
+    private void setLauncherView(){
+        stage.getScene().getRoot().setVisible(false);
 
+
+        // Nettoyer le contenu d'une précédente fenêtre
+        // Manoeuvre a repeter pour tout les panel qui seront utilisées de la sorte:
+        // panel.getChildren().clear()
+        ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
+        Pane panneau=new Pane();
+        panneau.getChildren().add(startButton);
+
+        // Ajout des éléments de la sorte:
+        // panel.getChildren().add(Node element);
+        // ex:
+        //   vbox.getChildren().add(jLabel);
+        //   gridlayout.getChildren().add(jnomTextField,indexX,indexY);
+        //   borderpane.setCenter(blasonsJ);
+        //   menuSection.getChildren().add(continueButton);
+
+
+        // Ajout final
+        ((BorderPane) stage.getScene().getRoot()).setCenter(/* élément principal au lieu de null */panneau);
+
+
+        // Montrer la vue
+        stage.getScene().getRoot().setVisible(true);
+    }
     // TODO ULTRA IMPORTANT
     private void setMainMenuView() {
         /*
