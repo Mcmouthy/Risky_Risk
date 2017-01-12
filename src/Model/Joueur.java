@@ -8,11 +8,11 @@ import java.util.*;
  */
 public class Joueur implements Serializable{
     private static final long serialVersionUID = 2914403070993434934L;
-    final static int RED=0;
-    final static int BLUE=1;
-    final static int GREEN=2;
-    final static int YELLOW=3;
-    final static int BLACK=4;
+    public final static int RED=0;
+    public final static int BLUE=1;
+    public final static int GREEN=2;
+    public final static int YELLOW=3;
+    public final static int BLACK=4;
 
     private String nom;
     private int couleur;

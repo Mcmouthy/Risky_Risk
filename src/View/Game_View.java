@@ -1,6 +1,7 @@
 package View;
 
 import Model.Case;
+import Model.Joueur;
 import Model.Partie;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -19,6 +20,12 @@ import java.util.Map;
  * Created by yhaffner on 08/12/16
  */
 public class Game_View {
+    final static String NEUTRE="case-neutre";
+    final static String COLOR_RED="case-red";
+    final static String COLOR_BLUE="case-blue";
+    final static String COLOR_GREEN="case-green";
+    final static String COLOR_YELLOW="case-yellow";
+    final static String COLOR_BLACK="case-black";
     private Partie model;
     public Stage stage;
     private Menu_View menu_view;
@@ -46,8 +53,31 @@ public class Game_View {
         Button b;
         for(Case c:model.getNeutres()){
             b = new Button(c.getNbtroupes()+"");
-            //for(Joueur j:)
+            b.getStyleClass().add(NEUTRE);
             allCases.put(b,c);
+        }
+        for(Joueur j:model.getJoueurs()){
+            for(Case c:j.getTerrain()) {
+                b = new Button(c.getNbtroupes() + "");
+                switch(j.getCouleur()) {
+                    case Joueur.RED:
+                        b.getStyleClass().add(COLOR_RED);
+                        break;
+                    case Joueur.BLUE:
+                        b.getStyleClass().add(COLOR_BLUE);
+                        break;
+                    case Joueur.GREEN:
+                        b.getStyleClass().add(COLOR_GREEN);
+                        break;
+                    case Joueur.YELLOW:
+                        b.getStyleClass().add(COLOR_YELLOW);
+                        break;
+                    case Joueur.BLACK:
+                        b.getStyleClass().add(COLOR_BLACK);
+                        break;
+                }
+                allCases.put(b, c);
+            }
         }
     }
 
@@ -75,6 +105,6 @@ public class Game_View {
     public void setController(EventHandler<MouseEvent> eh){
         for(Map.Entry<Button,Case> e: allCases.entrySet())
             e.getKey().setOnMouseClicked(eh);
-
+        endTurn.setOnMouseClicked(eh);
     }
 }
