@@ -122,7 +122,7 @@ public class Generateur {
         liste.add(null);
 
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src/Model/TerrainBase"));
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("TerrainBase"));
             for (Case c:liste){
                 oos.writeObject(c);
             }
