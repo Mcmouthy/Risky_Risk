@@ -1,9 +1,11 @@
 package Model;
 
+import java.io.Serializable;
+
 /**
  * Created by PC-Dylan on 09/11/2016.
  */
-public class Continent {
+public class Continent implements Serializable{
     int descripteurContinent;
     int nbbonusrenforts;
 

@@ -1,25 +1,38 @@
 package Model;
 
+import java.io.*;
 import java.util.*;
 /**
  * Created by PC-Dylan on 09/11/2016.
  */
-public class Partie {
+public class Partie implements Serializable{
+    private static final long serialVersionUID = 2914403070993434934L;
     final static int CLASSICO = 0;
     final static int RAPIDO = 1;
     final static int THEMEMONDE = 2;
     final static int THEMEAPOCALYPSE=3;
     final static int THEMEGLOOGLOO=4;
 
-    Random random=new Random();
-    List <Joueur> joueurs;
-    Set <Case> neutres;
-    int mode;
-    int theme;
-    int nbtour;
-    Timer tempstour;
-    boolean brouillard;
-    boolean fin;
+    private Random random=new Random();
+    private List <Joueur> joueurs;
+    private Set <Case> neutres;
+    private int mode;
+    private int theme;
+    private int nbtour;
+    private Timer tempstour;
+    private boolean brouillard;
+    private boolean fin;
+
+    public Partie(){
+        joueurs=new ArrayList<>();
+        neutres=new HashSet<>();
+        mode=CLASSICO;
+        theme=THEMEMONDE;
+        nbtour=1;
+        tempstour=new Timer();
+        brouillard=false;
+        fin=false;
+    }
 
     public int getMode() {
         return mode;
@@ -35,6 +48,18 @@ public class Partie {
 
     public boolean getbrouillard(){
         return brouillard;
+    }
+
+    public Set<Case> getNeutres() {
+        return neutres;
+    }
+
+    public List<Joueur> getJoueurs() {
+        return joueurs;
+    }
+
+    public Timer getTempstour() {
+        return tempstour;
     }
 
     public void setBrouillard(boolean brouillard) {
@@ -53,7 +78,7 @@ public class Partie {
     }
 
     public void findePartieJoueur(Joueur j){
-        if (j.terrain.isEmpty())joueurs.remove(j);
+        if (j.getTerrain().isEmpty())joueurs.remove(j);
     }
 
     public void captureTerrainAdverse(Joueur attaquant,Joueur defenseur, Case c, int nbtroupes){
@@ -137,8 +162,29 @@ public class Partie {
         else return 0;
     }
 
-    public int calculRenforts(Joueur j){
+    public void calculRenforts(Joueur j){
         /* Pour le moment on ne prend pas en compte les continents*/
-        return j.terrain.size();
+        j.setNbRenforts(j.getTerrain().size());
+    }
+
+
+
+    public void initialiseSetCasesNeutres(String nomFile){
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nomFile));
+            for(int i=0;i<20;i++){
+                Case o = (Case) ois.readObject();
+                neutres.add(o);
+            }
+            System.out.println("Récupération terminée !!!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deplacementTroupes(){
+
     }
 }

@@ -1,16 +1,20 @@
 package Model;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by PC-Dylan on 09/11/2016.
  */
-public class Case {
-    Joueur joueur;
-    int nbtroupes;
-    int x,y,width,height;
-    Set<Case> voisins;
-    Continent continent;
+public class Case implements Serializable{
+    private static final long serialVersionUID = 2914403070993434934L;
+    private Joueur joueur;
+    private int nbtroupes;
+    private int x,y,width,height;
+    private Set<Case> voisins;
+    private Continent continent;
 
     public Case(Joueur joueur,int nbtroupes,int x,int y,int width,int height,Continent continent){
         this.joueur=joueur;
@@ -79,7 +83,17 @@ public class Case {
         return height;
     }
 
-    public void compteVoisins(){}
+    public void setVoisins(Set<Case> voisins) {
+        this.voisins = voisins;
+    }
+
+    public Set<Case> getVoisins() {
+        return voisins;
+    }
 
     public void addRenforts(){}
+
+    public String toString(){
+        return ""+joueur;
+    }
 }
