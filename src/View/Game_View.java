@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -45,9 +46,11 @@ public class Game_View {
     private void initAttributs() {
         // attribution du fichier CSS
         stage.getScene().getStylesheets().clear();
-        stage.getScene().getStylesheets().add(new File("css/menu_view.css").toURI().toString());
+        stage.getScene().getStylesheets().add(new File("css/game_view.css").toURI().toString());
         endTurn = new Button("Terminer le tour");
-        notice = new Label("");
+        endTurn.setId("terminer");
+        notice = new Label("esrtdtyfyguhij");
+        notice.setId("notice");
 
         allCases = new HashMap<Button,Case>();
         Button b;
@@ -87,14 +90,16 @@ public class Game_View {
         stage.getScene().getRoot().setVisible(false);
         ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
 
-
-        HBox panel = new HBox();
-        panel.getChildren().add(endTurn);
-        panel.getChildren().add(notice);
-
         GridPane game = new GridPane();
+        game.setId("game");
         for(Map.Entry<Button,Case> e: allCases.entrySet())
             game.add(e.getKey(),e.getValue().getX(),e.getValue().getY());
+
+        VBox panel = new VBox();
+        panel.setId("panel");
+        //panel.getChildren().add(game);
+        panel.getChildren().add(endTurn);
+        panel.getChildren().add(notice);
 
         ((BorderPane) stage.getScene().getRoot()).setLeft(panel);
         ((BorderPane) stage.getScene().getRoot()).setCenter(game);
