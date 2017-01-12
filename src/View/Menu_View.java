@@ -96,6 +96,7 @@ public class Menu_View{
         Pane panneau=new Pane();
         panneau.getChildren().add(startButton);
 
+
         // Ajout des éléments de la sorte:
         // panel.getChildren().add(Node element);
         // ex:

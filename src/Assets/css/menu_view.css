@@ -39,6 +39,10 @@
 
 .body {
     -fx-alignment: center;
-    -fx-background-image: url('../img/menu.jpg');
+    -fx-background-image: url('../img/background.jpg');
     -fx-font-family: "";
+}
+
+.root{
+    -fx-background-image: url('../img/background.jpg');
 }
