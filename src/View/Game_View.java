@@ -2,16 +2,15 @@ package View;
 
 import Model.Case;
 import Model.Partie;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import javax.swing.text.html.ImageView;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +25,7 @@ public class Game_View {
 
     public Button endTurn;
     public Label notice;
-    private HashMap<Button, Case> allCases;
+    public HashMap<Button, Case> allCases;
 
 
     public Game_View(Partie model, Stage stage) {
@@ -44,11 +43,11 @@ public class Game_View {
         notice = new Label("");
 
         allCases = new HashMap<Button,Case>();
+        Button b;
         for(Case c:model.getNeutres()){
-            allCases.put(
-                    new Button(c.getNbtroupes()+""),
-                    c
-            );
+            b = new Button(c.getNbtroupes()+"");
+            //for(Joueur j:)
+            allCases.put(b,c);
         }
     }
 
@@ -71,5 +70,11 @@ public class Game_View {
         ((BorderPane) stage.getScene().getRoot()).setCenter(game);
 
         stage.getScene().getRoot().setVisible(true);
+    }
+
+    public void setController(EventHandler<MouseEvent> eh){
+        for(Map.Entry<Button,Case> e: allCases.entrySet())
+            e.getKey().setOnMouseClicked(eh);
+
     }
 }

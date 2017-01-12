@@ -15,7 +15,7 @@ public class Partie implements Serializable{
 
     private Random random=new Random();
     private List <Joueur> joueurs;
-    private Set <Case> neutres;
+    private List <Case> neutres;
     private int joueurCourant;
     private int mode;
     private int theme;
@@ -28,7 +28,7 @@ public class Partie implements Serializable{
 
     public Partie(){
         joueurs=new ArrayList<>();
-        neutres=new HashSet<>();
+        neutres=new ArrayList<>();
         joueurCourant=0;
         initialiseSetCasesNeutres("map/TerrainBase");
         mode=CLASSICO;
@@ -87,7 +87,7 @@ public class Partie implements Serializable{
         return joueurs.get(joueurCourant);
     }
 
-    public Set<Case> getNeutres() {
+    public List<Case> getNeutres() {
         return neutres;
     }
 

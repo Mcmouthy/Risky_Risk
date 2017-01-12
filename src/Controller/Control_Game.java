@@ -1,11 +1,18 @@
 package Controller;
 
 
+import Model.Case;
 import Model.Joueur;
 import Model.Partie;
 import View.Game_View;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
+
 
 /**
  * Created by yhaffner on 15/12/16.
@@ -14,9 +21,14 @@ public class Control_Game implements EventHandler<MouseEvent> {
     private final Partie model;
     private final Game_View view;
     private final Control_Menu menu;
+    private final Random loto = new Random();
 
     public Control_Game(Partie model,Control_Menu control_menu){
         this.model=model;
+        for(Joueur j:model.getJoueurs()) {
+            for(int iz=0;iz<3;iz++)
+                j.getTerrain().add(model.getNeutres().remove(loto.nextInt(model.getNeutres().size())));
+        }
         this.view = new Game_View(model,control_menu.getView().getStage());
         this.menu = control_menu;
         view.setGameView();
@@ -26,7 +38,15 @@ public class Control_Game implements EventHandler<MouseEvent> {
         if(event.getSource().equals(view.endTurn)){
             model.passeJoueurSuivant();
             view.notice.setText(model.getJoueurCourant().getNom());
+        } else if(event.getSource() instanceof Button && view.allCases.containsKey((Button) event.getSource())) {
+            Button b = ((Button) event.getSource());
+            Case c = view.allCases.get(b);
+            if(model.isDistributionRenforts() && model.getJoueurCourant().getTerrain().contains(c)) {
+                c.addRenforts();
+                b.setText(c.getNbtroupes()+"");
+            }
         }
+
     }
 }
 
