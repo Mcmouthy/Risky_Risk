@@ -26,7 +26,7 @@ public class Partie implements Serializable{
     public Partie(){
         joueurs=new ArrayList<>();
         neutres=new HashSet<>();
-        initialiseSetCasesNeutres("src/Model/Terrain");
+        initialiseSetCasesNeutres("src/Model/TerrainBase");
         mode=CLASSICO;
         theme=THEMEMONDE;
         nbtour=1;
