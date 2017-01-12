@@ -31,7 +31,7 @@ public class Partie implements Serializable{
         neutres=new ArrayList<>();
         joueurCourant=0;
         initialiseSetCasesNeutres("map/TerrainBase");
-        mode=CLASSICO;
+        mode=RAPIDO;
         theme=THEMEMONDE;
         nbtour=1;
         tempstour=new Timer();
@@ -134,12 +134,11 @@ public class Partie implements Serializable{
             nbtrouperestante=attaqueRapide(defenseur,c,nbtroupes);
         }
         if (c.getNbtroupes()==0 && nbtrouperestante>0){
+            System.out.println("capture");
             c.setJoueur(attaquant);
             c.setNbtroupes(nbtrouperestante);
             defenseur.perdTerrain(c);
             attaquant.gagneTerrain(c);
-        }else{
-            c.setNbtroupes(1);
         }
     }
 
@@ -150,13 +149,17 @@ public class Partie implements Serializable{
         double chanceAtt=0f;
         double chanceDef=0f;
         if (nbtroupes==c.getNbtroupes()){
-            chanceAtt= random.nextDouble();
+            chanceAtt=random.nextDouble();
             chanceDef=random.nextDouble();
             if (chanceAtt>chanceDef){
                 nbtroupes= nbtroupes-c.getNbtroupes();
+            }else if (chanceAtt<chanceDef){
+                c.setNbtroupes(1);
+                nbtroupes=0;
             }
         }else if(nbtroupes>c.getNbtroupes()){
             nbtroupes= nbtroupes-c.getNbtroupes();
+            c.setNbtroupes(0);
         }else if(nbtroupes<c.getNbtroupes()){
             c.setNbtroupes(c.getNbtroupes()-nbtroupes);
             nbtroupes=0;

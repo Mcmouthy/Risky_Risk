@@ -16,13 +16,13 @@ public class Joueur implements Serializable{
 
     private String nom;
     private int couleur;
-    private Set<Case> terrain;
+    private List<Case> terrain;
     private int nbRenforts;
 
     public Joueur(String nom,int couleur){
         this.nom=nom;
         this.couleur=couleur;
-        terrain= new HashSet<>();
+        terrain= new ArrayList<>();
         nbRenforts=0;
     }
 
@@ -46,8 +46,15 @@ public class Joueur implements Serializable{
         return nbRenforts;
     }
 
-    public Set<Case> getTerrain() {
+    public List<Case> getTerrain() {
         return terrain;
+    }
+
+    public int getindexTerrain(Case c){
+        for (int i=0;i<terrain.size();i++){
+            if (c.equals(terrain.get(i)))return i;
+        }
+        return 0;
     }
 
     public int getCouleur(){
