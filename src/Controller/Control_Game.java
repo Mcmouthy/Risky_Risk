@@ -53,7 +53,7 @@ public class Control_Game implements EventHandler<MouseEvent> {
                 c.addRenforts();
                 if(model.getJoueurCourant().getNbRenforts()>0) {
                     view.notice.setText(model.getJoueurCourant().getNom() + "\n" +
-                            model.getJoueurCourant().getNbRenforts() + "renforts restant");
+                            model.getJoueurCourant().getNbRenforts() + " renforts restant");
                 } else {
                     model.passeEtapeSuivante();
                     view.notice.setText(model.getJoueurCourant().getNom()+"\n"+
