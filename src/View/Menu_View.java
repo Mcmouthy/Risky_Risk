@@ -55,7 +55,8 @@ public class Menu_View{
         scene = new Scene(root, 500, 500, Color.BLACK);
         stage.setScene(scene);
         // attribution du fichier CSS
-        stage.getScene().getStylesheets().add(new File("/css/menu_view.css").toURI().toString());
+        stage.getScene().getStylesheets().add(new File("css/menu_view.css").toURI().toString());
+
         startButton=new Button("JOUER");
         startButton.setId("jouer");
         nouvellePartie=new Button("NOUVELLE PARTIE");
@@ -66,8 +67,6 @@ public class Menu_View{
         options.setId("options");
         apropos=new Button("À PROPOS");
         apropos.setId("apropos");
-
-
 
         /*
           Initialisation des attributs:
@@ -108,7 +107,6 @@ public class Menu_View{
         //   gridlayout.getChildren().add(jnomTextField,indexX,indexY);
         //   borderpane.setCenter(blasonsJ);
         //   menuSection.getChildren().add(continueButton);
-
 
         // Ajout final
         ((BorderPane) stage.getScene().getRoot()).setCenter(/* élément principal au lieu de null */null);
