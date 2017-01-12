@@ -47,7 +47,8 @@ public class Menu_View{
         scene = new Scene(root, 500, 500, Color.BLACK);
         stage.setScene(scene);
         // attribution du fichier CSS
-        stage.getScene().getStylesheets().add(new File("/css/menu_view.css").toURI().toString());
+        stage.getScene().getStylesheets().add(new File("css/menu_view.css").toURI().toString());
+        stage.show();
 
 
         /*

@@ -19,9 +19,25 @@ public class Control_Game implements EventHandler<MouseEvent> {
         this.model=model;
         this.view = new Game_View(model,control_menu.getView().getStage());
         this.menu = control_menu;
+        view.setGameView();
     }
     @Override
     public void handle(MouseEvent event) {
+        if(event.getSource().equals(view.endTurn)){
+            model.passeJoueurSuivant();
+        }
+    }
+}
+
+// Au tour de JOUEUR.nom de joeur!
+// Commencez par placer de vos renfort
+// Renfort restant: n
+// Attaquez ou déplacez vous en cliquant sur une case étrangère
+// Cliquez sur 'Terminer le tour' pour finir votre tour
+
+
+/* DÉROULEMENT
+
         while(!model.isFin()){
             for (Joueur j : model.getJoueurs()){
                 //joueur.calcul renfort
@@ -49,5 +65,4 @@ public class Control_Game implements EventHandler<MouseEvent> {
             //une fois que tout les joueurs on jouer on incremente le tour de 1
         }
         //on affiche le vainqueur
-    }
-}
+ */

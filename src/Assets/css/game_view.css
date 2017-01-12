@@ -29,10 +29,6 @@
     -fx-min-height: 550px;
 }
 
-.body {
-    -fx-background-image: url('../img/background.png');
-}
-
 #second-player-deck,#first-player-deck,#message_zone{
     -fx-alignment: bottom-center;
     -fx-background-color: rgba(0,0,0,0.5);
