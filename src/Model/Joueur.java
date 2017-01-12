@@ -19,6 +19,7 @@ public class Joueur implements Serializable{
     private Set<Case> terrain;
     private boolean distributionRenforts;
     private boolean attaque_deplacements;
+    private int nbRenforts;
 
     public Joueur(String nom,int couleur){
         this.nom=nom;
@@ -26,6 +27,7 @@ public class Joueur implements Serializable{
         terrain= new HashSet<Case>();
         distributionRenforts=false;
         attaque_deplacements=false;
+        nbRenforts=0;
     }
 
     public void setNom(String nom){
@@ -38,6 +40,22 @@ public class Joueur implements Serializable{
 
     public String getNom(){
         return nom;
+    }
+
+    public void setAttaque_deplacements(boolean attaque_deplacements) {
+        this.attaque_deplacements = attaque_deplacements;
+    }
+
+    public void setDistributionRenforts(boolean distributionRenforts) {
+        this.distributionRenforts = distributionRenforts;
+    }
+
+    public void setNbRenforts(int nbRenforts) {
+        this.nbRenforts = nbRenforts;
+    }
+
+    public int getNbRenforts() {
+        return nbRenforts;
     }
 
     public boolean isDistributionRenforts() {

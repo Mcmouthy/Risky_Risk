@@ -162,10 +162,12 @@ public class Partie implements Serializable{
         else return 0;
     }
 
-    public int calculRenforts(Joueur j){
+    public void calculRenforts(Joueur j){
         /* Pour le moment on ne prend pas en compte les continents*/
-        return j.getTerrain().size();
+        j.setNbRenforts(j.getTerrain().size());
     }
+
+
 
     public void initialiseSetCasesNeutres(String nomFile){
         try {
@@ -180,5 +182,9 @@ public class Partie implements Serializable{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void deplacementTroupes(){
+
     }
 }
