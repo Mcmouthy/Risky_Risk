@@ -7,11 +7,12 @@ import View.Game_View;
 import View.Menu_View;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 /**
  * Created by yhaffner on 21/11/16.
  */
-public class Control_Menu implements EventHandler<ActionEvent> {
+public class Control_Menu implements EventHandler<MouseEvent> {
     private Menu_View view;
 
     public Control_Menu(Menu_View menu) {
@@ -28,7 +29,7 @@ public class Control_Menu implements EventHandler<ActionEvent> {
 
     @Override
     // TODO ULTRA IMPORTANT
-    public void handle(ActionEvent event) {
+    public void handle(MouseEvent event) {
         /*
         Réception des objets du genre:
 
@@ -36,7 +37,11 @@ public class Control_Menu implements EventHandler<ActionEvent> {
             traiter...
             ex: view.setOptionsView();
         }
-
+        */
+        if (event.getSource().equals(getView().startButton)){
+            view.setMainMenuView();
+        }
+/*
         pour le début de partie, il faudra juste créer ça:
                 Partie p = new Partie();
                 ajouter à p les joueurs

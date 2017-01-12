@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -87,7 +88,7 @@ public class Menu_View{
          */
     }
     //TODO IMPORTANT
-    private void setLauncherView(){
+    public void setLauncherView(){
         stage.getScene().getRoot().setVisible(false);
 
 
@@ -117,7 +118,7 @@ public class Menu_View{
         stage.getScene().getRoot().setVisible(true);
     }
     // TODO ULTRA IMPORTANT
-    private void setMainMenuView() {
+    public void setMainMenuView() {
         /*
          Affichage du menu principal
          Prototype pour les autres view de cette classe
@@ -166,7 +167,7 @@ public class Menu_View{
     }
 
     // TODO ULTRA
-    public void setController(EventHandler<ActionEvent> eh) {
+    public void setController(EventHandler<MouseEvent> eh) {
         /*
 
         Attribution du controlleur au bouton INSTANCIÉS AU PRÉALABLE (dans initAttributs) par la méthode suivante:
@@ -174,6 +175,7 @@ public class Menu_View{
         bouton.setOnMouseClicked(eh);
 
          */
+        startButton.setOnMouseClicked(eh);
     }
 
     public Scene getScene() {
