@@ -80,8 +80,8 @@ public class Game_View {
         panel.getChildren().add(endTurn);
         panel.getChildren().add(notice);
 
-        ((BorderPane) stage.getScene().getRoot()).setLeft(panel);
         ((BorderPane) stage.getScene().getRoot()).setCenter(game);
+        ((BorderPane) stage.getScene().getRoot()).setBottom(panel);
 
         stage.getScene().getRoot().setVisible(true);
     }

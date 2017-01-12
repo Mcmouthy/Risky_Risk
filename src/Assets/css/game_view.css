@@ -5,7 +5,7 @@
 
 #panel{
     -fx-alignment: bottom-center;
-    -fx-padding: 0 0 2em 14em;
+    -fx-padding: 0 0 2em 0;
 }
 
 #notice{
@@ -19,7 +19,6 @@
 
 #game{
     -fx-alignment: center;
-    -fx-translate-x: -12em;
 
 }
 
