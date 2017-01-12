@@ -99,7 +99,7 @@ public class Menu_View{
         panneau.getChildren().add(titreJeu);
         panneau.getChildren().add(startButton);
 
-        ((BorderPane) stage.getScene().getRoot()).setCenter(/* élément principal au lieu de null */panneau);
+        ((BorderPane) stage.getScene().getRoot()).setCenter(panneau);
 
         stage.getScene().getRoot().setVisible(true);
     }
