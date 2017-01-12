@@ -1,12 +1,12 @@
 package Model;
 
-import java.io.File;
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 /**
  * Created by PC-Dylan on 09/11/2016.
  */
 public class Partie implements Serializable{
+    private static final long serialVersionUID = 2914403070993434934L;
     final static int CLASSICO = 0;
     final static int RAPIDO = 1;
     final static int THEMEMONDE = 2;
@@ -23,6 +23,17 @@ public class Partie implements Serializable{
     boolean brouillard;
     boolean fin;
 
+    public Partie(){
+        joueurs=new ArrayList<>();
+        neutres=new HashSet<>();
+        mode=0;
+        theme=2;
+        nbtour=1;
+        tempstour=new Timer();
+        brouillard=false;
+        fin=false;
+    }
+
     public int getMode() {
         return mode;
     }
@@ -37,6 +48,18 @@ public class Partie implements Serializable{
 
     public boolean getbrouillard(){
         return brouillard;
+    }
+
+    public Set<Case> getNeutres() {
+        return neutres;
+    }
+
+    public List<Joueur> getJoueurs() {
+        return joueurs;
+    }
+
+    public Timer getTempstour() {
+        return tempstour;
     }
 
     public void setBrouillard(boolean brouillard) {
@@ -144,7 +167,19 @@ public class Partie implements Serializable{
         return j.terrain.size();
     }
 
-    public void initialiseSetCasesNeutres(File nomFile){
+    public void initialiseSetCasesNeutres(String nomFile){
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nomFile));
+            for(int i=0;i<20;i++){
+                Case o = (Case) ois.readObject();
+                neutres.add(o);
+            }
+            System.out.println("Récupération terminée !!!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 }

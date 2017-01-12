@@ -1,5 +1,7 @@
 package Model;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -7,6 +9,7 @@ import java.util.*;
  * Created by PC-Dylan on 09/11/2016.
  */
 public class Case implements Serializable{
+    private static final long serialVersionUID = 2914403070993434934L;
     Joueur joueur;
     int nbtroupes;
     int x,y,width,height;
@@ -89,4 +92,8 @@ public class Case implements Serializable{
     }
 
     public void addRenforts(){}
+
+    public String toString(){
+        return ""+joueur;
+    }
 }

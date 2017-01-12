@@ -130,5 +130,6 @@ public class Generateur {
             e.printStackTrace();
         }
         System.out.println("Travail terminé !!!");
+        return;
     }
 }

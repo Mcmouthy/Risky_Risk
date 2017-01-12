@@ -7,7 +7,7 @@ import java.util.*;
  * Created by PC-Dylan on 09/11/2016.
  */
 public class Joueur implements Serializable{
-
+    private static final long serialVersionUID = 2914403070993434934L;
     final static int RED=0;
     final static int BLUE=1;
     final static int GREEN=2;
