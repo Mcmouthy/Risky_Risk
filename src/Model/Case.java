@@ -91,7 +91,9 @@ public class Case implements Serializable{
         return voisins;
     }
 
-    public void addRenforts(){}
+    public void addRenforts(){
+        nbtroupes++;
+    }
 
     public String toString(){
         return ""+joueur;

@@ -45,7 +45,6 @@ public class Control_Game implements EventHandler<MouseEvent> {
         }
         else if(event.getSource() instanceof Button && view.allCases.containsKey((Button) event.getSource()))
         {
-            System.out.println("OK");
             Button b = ((Button) event.getSource());
             Case c = view.allCases.get(b);
 
