@@ -14,14 +14,18 @@ public class Joueur implements Serializable{
     final static int YELLOW=3;
     final static int BLACK=4;
 
-    String nom;
-    int couleur;
-    Set<Case> terrain;
+    private String nom;
+    private int couleur;
+    private Set<Case> terrain;
+    private boolean distributionRenforts;
+    private boolean attaque_deplacements;
 
     public Joueur(String nom,int couleur){
         this.nom=nom;
         this.couleur=couleur;
         terrain= new HashSet<Case>();
+        distributionRenforts=false;
+        attaque_deplacements=false;
     }
 
     public void setNom(String nom){
@@ -34,6 +38,18 @@ public class Joueur implements Serializable{
 
     public String getNom(){
         return nom;
+    }
+
+    public boolean isDistributionRenforts() {
+        return distributionRenforts;
+    }
+
+    public boolean isAttaque_deplacements() {
+        return attaque_deplacements;
+    }
+
+    public Set<Case> getTerrain() {
+        return terrain;
     }
 
     public int getCouleur(){

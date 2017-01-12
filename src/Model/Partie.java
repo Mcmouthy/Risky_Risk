@@ -13,15 +13,15 @@ public class Partie implements Serializable{
     final static int THEMEAPOCALYPSE=3;
     final static int THEMEGLOOGLOO=4;
 
-    Random random=new Random();
-    List <Joueur> joueurs;
-    Set <Case> neutres;
-    int mode;
-    int theme;
-    int nbtour;
-    Timer tempstour;
-    boolean brouillard;
-    boolean fin;
+    private Random random=new Random();
+    private List <Joueur> joueurs;
+    private Set <Case> neutres;
+    private int mode;
+    private int theme;
+    private int nbtour;
+    private Timer tempstour;
+    private boolean brouillard;
+    private boolean fin;
 
     public Partie(){
         joueurs=new ArrayList<>();
@@ -78,7 +78,7 @@ public class Partie implements Serializable{
     }
 
     public void findePartieJoueur(Joueur j){
-        if (j.terrain.isEmpty())joueurs.remove(j);
+        if (j.getTerrain().isEmpty())joueurs.remove(j);
     }
 
     public void captureTerrainAdverse(Joueur attaquant,Joueur defenseur, Case c, int nbtroupes){
@@ -164,7 +164,7 @@ public class Partie implements Serializable{
 
     public int calculRenforts(Joueur j){
         /* Pour le moment on ne prend pas en compte les continents*/
-        return j.terrain.size();
+        return j.getTerrain().size();
     }
 
     public void initialiseSetCasesNeutres(String nomFile){

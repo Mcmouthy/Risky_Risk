@@ -10,11 +10,11 @@ import java.util.*;
  */
 public class Case implements Serializable{
     private static final long serialVersionUID = 2914403070993434934L;
-    Joueur joueur;
-    int nbtroupes;
-    int x,y,width,height;
-    Set<Case> voisins;
-    Continent continent;
+    private Joueur joueur;
+    private int nbtroupes;
+    private int x,y,width,height;
+    private Set<Case> voisins;
+    private Continent continent;
 
     public Case(Joueur joueur,int nbtroupes,int x,int y,int width,int height,Continent continent){
         this.joueur=joueur;
