@@ -61,14 +61,18 @@ public class Control_Game implements EventHandler<MouseEvent> {
                 }
 
             } else if(model.isAttaque_deplacements()) {
-                if (model.getNeutres().contains(b)) {
-                    if(c.getNbtroupes()>1) {
-                        model.conquerirNeutre(model.getJoueurCourant(), c, c.getNbtroupes() - 1);
+                if(view.caseOnFocus!=null) {
+                    if (model.getNeutres().contains(b)) {
+                        if (c.getNbtroupes() > 1) {
+                            model.conquerirNeutre(model.getJoueurCourant(), c, c.getNbtroupes() - 1);
+                        }
+                    } else if (!model.getJoueurCourant().getTerrain().contains(b)) {
+                        for (Joueur j : model.getJoueurs())
+                            if (j.getTerrain().contains(b))
+                                model.captureTerrainAdverse(model.getJoueurCourant(), j, c, c.getNbtroupes() - 1);
                     }
-                } else if(!model.getJoueurCourant().getTerrain().contains(b)) {
-                    for(Joueur j:model.getJoueurs()) if(j.getTerrain().contains(b))
-                        model.captureTerrainAdverse(model.getJoueurCourant(),j,c,c.getNbtroupes()-1);
-                }
+                    view.caseOnFocus=null;
+                } else view.caseOnFocus=b;
             }
 
             view.actualizeCases();

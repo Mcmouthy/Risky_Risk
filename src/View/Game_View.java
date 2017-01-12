@@ -34,6 +34,7 @@ public class Game_View {
     public Button endTurn;
     public Label notice;
     public HashMap<Button, Case> allCases;
+    public Button caseOnFocus;
 
 
     public Game_View(Partie model, Stage stage) {
@@ -72,7 +73,7 @@ public class Game_View {
 
         game.setId("game");
         for(Map.Entry<Button,Case> e: allCases.entrySet())
-            game.add(e.getKey(),e.getValue().getX(),e.getValue().getY());
+            game.add(e.getKey(),e.getValue().getX()/100,e.getValue().getY()/100);
 
         VBox panel = new VBox();
         panel.setId("panel");
@@ -97,6 +98,8 @@ public class Game_View {
             e.getKey().setText(e.getValue().getNbtroupes() + "");
             e.getKey().getStyleClass().clear();
             e.getKey().getStyleClass().add("button");
+            if(caseOnFocus!=null && caseOnFocus.equals(e.getKey()))
+                e.getKey().getStyleClass().add("focus");
             if (e.getValue().getJoueur() != null)
                 switch (e.getValue().getJoueur().getCouleur()) {
                     case Joueur.RED:

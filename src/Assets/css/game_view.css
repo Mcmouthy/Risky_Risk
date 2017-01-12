@@ -19,7 +19,11 @@
 
 #game{
     -fx-alignment: center;
-
+    -fx-hgap: 0.3em;
+    -fx-vgap: 0.3em;
+}
+#game > *{
+    -fx-padding: 0.6em 1em 0.6em 1em;
 }
 
 .case-red {
@@ -36,4 +40,8 @@
 }
 .case-black {
     -fx-background-color: black;
+}
+
+.focus {
+    -fx-effect: dropshadow(gaussian, #fff9f0, 7, 0.7, 0, 0);
 }
