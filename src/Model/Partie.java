@@ -83,6 +83,10 @@ public class Partie implements Serializable{
         if (joueurCourant>=joueurs.size())joueurCourant=0;
     }
 
+    public void setFin(boolean fin) {
+        this.fin = fin;
+    }
+
     public Joueur getJoueurCourant() {
         return joueurs.get(joueurCourant);
     }
@@ -163,7 +167,6 @@ public class Partie implements Serializable{
             c.setNbtroupes(c.getNbtroupes()-nbtroupes);
             nbtroupes=0;
         }
-
         return nbtroupes;
     }
 

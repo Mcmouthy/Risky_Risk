@@ -7,7 +7,11 @@ import Model.Partie;
 import View.Game_View;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
 import javafx.scene.input.MouseEvent;
+import org.controlsfx.*;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -79,8 +83,21 @@ public class Control_Game implements EventHandler<MouseEvent> {
                     view.caseOnFocus=null;
                 } else view.caseOnFocus=b;
             }
-
             view.actualizeCases();
+            ArrayList<Joueur> asupr=new ArrayList<>();
+            for (Joueur j:model.getJoueurs()){
+                if (j.getTerrain().size()==0){
+                    System.out.println(j.getNom()+" a été éliminé !");
+                    asupr.add(j);
+                }
+            }
+            for (int i=0;i<asupr.size();i++){
+                model.getJoueurs().remove(asupr.get(i));
+            }
+            if (model.getJoueurs().size()==1){
+                model.setFin(true);
+                System.out.println(model.getJoueurs().get(0).getNom()+" a gagné !");
+            }
         }
 
     }
