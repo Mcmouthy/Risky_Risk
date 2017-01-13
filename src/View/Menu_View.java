@@ -74,7 +74,6 @@ public class Menu_View
         apropos = new Button("À PROPOS");
         apropos.setId("apropos");
         titreJeu = new ImageView(new Image(new File("img/logo_pt_v1.png").toURI().toString(), 300, 300, true, true));
-        titreJeu.setId("titre");
 
 
 
@@ -99,7 +98,9 @@ public class Menu_View
         stage.getScene().getRoot().setVisible(false);
 
         VBox panneau = new VBox();
-        panneau.setId("panneau");
+        panneau.setId("pan-jouer");
+        titreJeu.setId("titre1");
+
         panneau.getChildren().add(titreJeu);
         panneau.getChildren().add(startButton);
 
@@ -133,17 +134,18 @@ public class Menu_View
         //   gridlayout.getChildren().add(jnomTextField,indexX,indexY);
         //   borderpane.setCenter(blasonsJ);
         //   menuSection.getChildren().add(continueButton);
+        titreJeu.setId("titre2");
 
-        VBox panneau = new VBox();
+        GridPane panneau = new GridPane();
         panneau.setId("panneau");
-        panneau.getChildren().add(titreJeu);
-        panneau.getChildren().add(nouvellePartie);
-        panneau.getChildren().add(continuer);
-        panneau.getChildren().add(options);
-        panneau.getChildren().add(apropos);
+        panneau.add(nouvellePartie,0,0);
+        panneau.add(continuer,0,1);
+        panneau.add(options,0,2);
+        panneau.add(apropos,0,3);
 
 
         // Ajout final
+        ((BorderPane) stage.getScene().getRoot()).setTop(titreJeu);
         ((BorderPane) stage.getScene().getRoot()).setCenter(panneau);
 
 

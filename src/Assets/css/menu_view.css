@@ -1,18 +1,32 @@
 .root{
     -fx-background-image: url('../img/background.jpg');
 }
+#pan-jouer{
+    -fx-alignment: bottom-center;
+    -fx-padding: 0 0 12em 0;
+}
 #panneau{
     -fx-alignment: bottom-center;
-    -fx-padding: 0 0 11em 0;
-
+    -fx-padding: 0 0 7em 0em;
+    -fx-vgap: 0.3em;
 }
 
-#jouer{
+#jouer, #continuer, #nouvellePartie, #continuer, #options, #apropos{
     -fx-alignment: center;
-    -fx-padding: 1em 3em 1em 3em;
+    -fx-padding: 0.8em;
     -fx-font-weight: bold;
-    -fx-background-color: darksalmon;
+    -fx-background-color: #d6ba51;
+    -fx-pref-width: 200px;
 }
-#titre{
-    -fx-translate-y: -7em;
+#jouer:hover, #continuer:hover, #nouvellePartie:hover, #continuer:hover, #options:hover, #apropos:hover{
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+    -fx-background-color: #ccb050;
+}
+#titre1{
+    -fx-translate-y: -5em;
+}
+#titre2{
+    -fx-translate-y: 7em;
+    -fx-translate-x: 8em;
 }
