@@ -134,7 +134,6 @@ public class Partie implements Serializable{
             nbtrouperestante=attaqueRapide(defenseur,c,nbtroupes);
         }
         if (c.getNbtroupes()==0 && nbtrouperestante>0){
-            System.out.println("capture");
             c.setJoueur(attaquant);
             c.setNbtroupes(nbtrouperestante);
             defenseur.perdTerrain(c);
@@ -152,7 +151,7 @@ public class Partie implements Serializable{
             chanceAtt=random.nextDouble();
             chanceDef=random.nextDouble();
             if (chanceAtt>chanceDef){
-                nbtroupes= nbtroupes-c.getNbtroupes();
+                c.setNbtroupes(0);
             }else if (chanceAtt<chanceDef){
                 c.setNbtroupes(1);
                 nbtroupes=0;
