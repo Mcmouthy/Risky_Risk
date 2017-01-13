@@ -10,7 +10,7 @@
 }
 
 #terminer{
-    -fx-background-color: darksalmon;
+    -fx-background-color: #d6ba51;
     -fx-padding: 1em;
     -fx-pref-width: 22em;
 }
@@ -46,30 +46,40 @@
     -fx-background-color: red;
     -fx-pref-width: 80px;
     -fx-pref-height: 60px;
+    -fx-text-fill: white;
+    -fx-font-size: 1.3em;
 }
 .case-blue {
     -fx-background-color: blue;
     -fx-pref-width: 80px;
     -fx-pref-height: 60px;
+    -fx-text-fill: white;
+    -fx-font-size: 1.3em;
 }
 .case-green {
     -fx-background-color: green;
     -fx-pref-width: 80px;
     -fx-pref-height: 60px;
+    -fx-text-fill: white;
+    -fx-font-size: 1.3em;
 }
 .case-yellow {
     -fx-background-color: yellow;
     -fx-pref-width: 80px;
     -fx-pref-height: 60px;
+    -fx-font-size: 1.3em;
 }
 .case-black {
     -fx-background-color: black;
     -fx-pref-width: 80px;
     -fx-pref-height: 60px;
+    -fx-text-fill: white;
+    -fx-font-size: 1.3em;
 }
 .case-neutre {
     -fx-pref-width: 80px;
     -fx-pref-height: 60px;
+    -fx-font-size: 1.3em;
 }
 
 .focus {
