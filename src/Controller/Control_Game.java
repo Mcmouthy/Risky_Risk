@@ -7,9 +7,7 @@ import Model.Partie;
 import View.Game_View;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
 import javafx.scene.input.MouseEvent;
-import org.controlsfx.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -99,7 +97,6 @@ public class Control_Game implements EventHandler<MouseEvent> {
                 System.out.println(model.getJoueurs().get(0).getNom()+" a gagné !");
             }
         }
-
     }
 }
 
