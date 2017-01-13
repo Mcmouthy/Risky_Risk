@@ -4,19 +4,30 @@
 }
 
 #panel{
-    -fx-alignment: bottom-center;
-    -fx-padding: 0 0 2em 0;
+    -fx-alignment: center;
+    -fx-padding: 1em;
+    -fx-background-color: rgba(0,0,0,0.7);
 }
 
 #terminer{
     -fx-background-color: darksalmon;
-    -fx-padding: 1em 3em 1em 3em;
+    -fx-padding: 1em;
+    -fx-pref-width: 22em;
 }
 
 #notice{
     -fx-text-fill: antiquewhite;
+    -fx-padding: 0 2em 0 2em;
+    -fx-pref-width: 46em;
+    -fx-pref-height: 6em;
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+#mode-label {
+    -fx-text-fill: antiquewhite;
     -fx-padding: 1em 0 0 0;
-    -fx-pref-width: 20em;
+    -fx-pref-width: 15em;
     -fx-wrap-text: true;
     -fx-alignment: center;
     -fx-text-alignment: center;
@@ -24,8 +35,8 @@
 
 #game{
     -fx-alignment: center;
-    -fx-hgap: 0.3em;
-    -fx-vgap: 0.3em;
+    -fx-hgap: 1em;
+    -fx-vgap: 1em;
 }
 #game > *{
     -fx-padding: 0.6em 1em 0.6em 1em;
@@ -33,18 +44,32 @@
 
 .case-red {
     -fx-background-color: red;
+    -fx-pref-width: 80px;
+    -fx-pref-height: 60px;
 }
 .case-blue {
     -fx-background-color: blue;
+    -fx-pref-width: 80px;
+    -fx-pref-height: 60px;
 }
 .case-green {
     -fx-background-color: green;
+    -fx-pref-width: 80px;
+    -fx-pref-height: 60px;
 }
 .case-yellow {
     -fx-background-color: yellow;
+    -fx-pref-width: 80px;
+    -fx-pref-height: 60px;
 }
 .case-black {
     -fx-background-color: black;
+    -fx-pref-width: 80px;
+    -fx-pref-height: 60px;
+}
+.case-neutre {
+    -fx-pref-width: 80px;
+    -fx-pref-height: 60px;
 }
 
 .focus {

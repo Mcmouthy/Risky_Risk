@@ -60,7 +60,7 @@ public class Menu_View
         stage.centerOnScreen();
         stage.setResizable(false);
         root = new BorderPane();
-        scene = new Scene(root, 500, 500, Color.BLACK);
+        scene = new Scene(root, 700, 500, Color.BLACK);
         stage.setScene(scene);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override

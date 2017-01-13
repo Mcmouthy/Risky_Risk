@@ -34,6 +34,7 @@ public class Game_View {
 
     public Button endTurn;
     public Label notice;
+    public Label mode;
     public HashMap<Button, Case> allCases;
     public Button caseOnFocus;
 
@@ -53,6 +54,8 @@ public class Game_View {
         endTurn.setId("terminer");
         notice = new Label("esrtdtyfyguhij");
         notice.setId("notice");
+        mode = new Label("Partie Rapide");
+        mode.setId("mode-label");
 
         allCases = new HashMap<Button, Case>();
         Button b;
@@ -76,11 +79,12 @@ public class Game_View {
         for(Map.Entry<Button,Case> e: allCases.entrySet())
             game.add(e.getKey(),e.getValue().getX()/100,e.getValue().getY()/100);
 
-        VBox panel = new VBox();
+        HBox panel = new HBox();
         panel.setId("panel");
         //panel.getChildren().add(game);
         panel.getChildren().add(endTurn);
         panel.getChildren().add(notice);
+        panel.getChildren().add(mode);
 
         ((BorderPane) stage.getScene().getRoot()).setCenter(game);
         ((BorderPane) stage.getScene().getRoot()).setBottom(panel);
