@@ -30,6 +30,7 @@ public class Control_Game implements EventHandler<MouseEvent> {
         this.view = new Game_View(model,control_menu.getView().getStage());
         this.menu = control_menu;
 
+        view.endTurn.disableProperty().setValue(true);
         model.calculRenforts(model.getJoueurCourant());
         view.notice.setText(model.getJoueurCourant().getNom()+"\nPlacez vos renforts!");
 
@@ -40,10 +41,12 @@ public class Control_Game implements EventHandler<MouseEvent> {
     public void handle(MouseEvent event) {
         if(event.getSource().equals(view.endTurn))
         {
+            view.endTurn.disableProperty().setValue(true);
             model.passeJoueurSuivant();
             model.passeEtapeSuivante();
             model.calculRenforts(model.getJoueurCourant());
             view.notice.setText(model.getJoueurCourant().getNom()+"\nPlacez vos renforts!");
+            view.caseOnFocus=null;
         }
         else if(event.getSource() instanceof Button && view.allCases.containsKey((Button) event.getSource()))
         {
@@ -51,6 +54,7 @@ public class Control_Game implements EventHandler<MouseEvent> {
             Case c = view.allCases.get(b);
 
             if(model.isDistributionRenforts() && model.getJoueurCourant().getTerrain().contains(c)) {
+                view.caseOnFocus=null;
                 model.getJoueurCourant().setNbRenforts(model.getJoueurCourant().getNbRenforts()-1);
                 c.addRenforts();
                 if(model.getJoueurCourant().getNbRenforts()>0) {
@@ -59,8 +63,10 @@ public class Control_Game implements EventHandler<MouseEvent> {
                 } else {
                     model.passeEtapeSuivante();
                     view.notice.setText(model.getJoueurCourant().getNom()+"\n"+
-                            "Cliquez sur une case adversaire ou neutre pour tenter de la conquérir");
+                            "Cliquez sur une de vos case puis sur une case adversaire ou neutre pour tenter de la conquérir");
+                    view.endTurn.disableProperty().setValue(false);
                 }
+
 
             } else if(model.isAttaque_deplacements()) {
                 Case caseattaquante=view.allCases.get(view.caseOnFocus);
@@ -81,7 +87,6 @@ public class Control_Game implements EventHandler<MouseEvent> {
                     view.caseOnFocus=null;
                 } else view.caseOnFocus=b;
             }
-            view.actualizeCases();
             ArrayList<Joueur> asupr=new ArrayList<>();
             for (Joueur j:model.getJoueurs()){
                 if (j.getTerrain().size()==0){
@@ -97,6 +102,8 @@ public class Control_Game implements EventHandler<MouseEvent> {
                 System.out.println(model.getJoueurs().get(0).getNom()+" a gagné !");
             }
         }
+        view.actualizeCases();
+
     }
 }
 
