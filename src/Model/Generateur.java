@@ -58,7 +58,7 @@ public class Generateur {
         Set<Case> voisinCase20 = new HashSet<>();
 
         voisinCase1.add(case2);voisinCase1.add(case6);
-        voisinCase2.add(case1);voisinCase1.add(case3);voisinCase2.add(case7);
+        voisinCase2.add(case1);voisinCase2.add(case3);voisinCase2.add(case7);
         voisinCase3.add(case2);voisinCase3.add(case4);voisinCase3.add(case8);
         voisinCase4.add(case3);voisinCase4.add(case5);voisinCase4.add(case9);
         voisinCase5.add(case4);voisinCase5.add(case10);
