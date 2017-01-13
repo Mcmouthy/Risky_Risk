@@ -64,7 +64,7 @@ public class Control_Game implements EventHandler<MouseEvent> {
 
             } else if(model.isAttaque_deplacements()) {
                 Case caseattaquante=view.allCases.get(view.caseOnFocus);
-                if(view.caseOnFocus!=null) {
+                if(view.caseOnFocus!=null && view.allCases.get(view.caseOnFocus).getNbtroupes()>1 && view.allCases.get(view.caseOnFocus).getJoueur()==model.getJoueurCourant()) {
                     if (model.getNeutres().contains(c)) {
                         if (c.getNbtroupes() == 0) {
                             model.conquerirNeutre(model.getJoueurCourant(), c, caseattaquante.getNbtroupes() - 1);
