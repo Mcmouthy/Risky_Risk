@@ -14,8 +14,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
+
+import static java.lang.System.exit;
 
 /**
  * Created by yhaffner on 21/11/16.
@@ -59,7 +62,13 @@ public class Menu_View
         root = new BorderPane();
         scene = new Scene(root, 500, 500, Color.BLACK);
         stage.setScene(scene);
-        stage.close();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                stage.close();
+                exit(0);
+            }
+        });
         // attribution du fichier CSS
         stage.getScene().getStylesheets().add(new File("css/menu_view.css").toURI().toString());
         stage.show();
