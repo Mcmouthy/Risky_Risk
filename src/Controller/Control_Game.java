@@ -5,6 +5,7 @@ import Model.Case;
 import Model.Joueur;
 import Model.Partie;
 import View.Game_View;
+import View.Menu_View;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -99,10 +100,16 @@ public class Control_Game implements EventHandler<MouseEvent> {
             }
             if (model.getJoueurs().size()==1){
                 model.setFin(true);
-                System.out.println(model.getJoueurs().get(0).getNom()+" a gagné !");
+                view.setFinDePartieView();
             }
         }
         view.actualizeCases();
+
+        if (event.getSource().equals(view.retour)){
+            System.out.println("retour au menu principal");
+        }else if(event.getSource().equals(view.recommencer)){
+            System.out.println("partie recommencée");
+        }
 
     }
 }

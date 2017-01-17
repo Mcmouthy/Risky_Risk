@@ -37,6 +37,10 @@ public class Game_View {
     public Label mode;
     public HashMap<Button, Case> allCases;
     public Button caseOnFocus;
+    public Label finDePartie;
+    public Label message;
+    public Button retour;
+    public Button recommencer;
 
 
     public Game_View(Partie model, Stage stage) {
@@ -56,9 +60,16 @@ public class Game_View {
         notice.setId("notice");
         mode = new Label("Partie Rapide");
         mode.setId("mode-label");
+        finDePartie=new Label("Félicitations "+model.getJoueurs().get(0).getNom()+", vous avez gagné !");
+        finDePartie.setId("fin");
+        message=new Label("Vous pouvez revenir au menu principal ou rejouer avec les mêmes paramètres.");
+        message.setId("message");
+        retour = new Button("Menu Principal");
+        retour.setId("retour");
+        recommencer= new Button("Recommencer");
+        recommencer.setId("recommencer");
 
         allCases = new HashMap<Button, Case>();
-        Button b;
         for (Case c : model.getNeutres()) {
             allCases.put(new Button(c.getNbtroupes() + ""), c);
             for (Joueur j : model.getJoueurs())
@@ -96,6 +107,8 @@ public class Game_View {
         for (Map.Entry<Button, Case> e : allCases.entrySet())
             e.getKey().setOnMouseClicked(eh);
         endTurn.setOnMouseClicked(eh);
+        retour.setOnMouseClicked(eh);
+        recommencer.setOnMouseClicked(eh);
     }
 
     public void actualizeCases() {
@@ -128,5 +141,25 @@ public class Game_View {
             else
                 e.getKey().getStyleClass().add(NEUTRE);
         }
+    }
+
+    public void setFinDePartieView(){
+        stage.getScene().getRoot().setVisible(false);
+
+        VBox panneau=new VBox();
+        panneau.setId("panneauFinPartie");
+        HBox bouton = new HBox();
+        bouton.setId("bouton");
+
+        panneau.getChildren().add(finDePartie);
+        panneau.getChildren().add(message);
+
+        bouton.getChildren().add(retour);
+        bouton.getChildren().add(recommencer);
+
+        ((BorderPane) stage.getScene().getRoot()).setCenter(panneau);
+        ((BorderPane) stage.getScene().getRoot()).setBottom(bouton);
+
+        stage.getScene().getRoot().setVisible(true);
     }
 }

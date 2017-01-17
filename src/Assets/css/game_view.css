@@ -85,3 +85,43 @@
 .focus {
     -fx-effect: dropshadow(gaussian, #fff9f0, 7, 0.7, 0, 0);
 }
+
+#fin{
+    -fx-text-alignment: center;
+    -fx-text-fill: antiquewhite;
+}
+
+#message{
+    -fx-text-alignment: center;
+    -fx-text-fill: antiquewhite;
+
+}
+
+#panneauFinPartie{
+    -fx-alignment: center;
+
+}
+
+#retour, #recommencer{
+    -fx-background-color: #d6ba51;
+    -fx-padding: 0.8em;
+    -fx-font-weight: bold;
+}
+
+#retour:hover, #recommencer:hover{
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+    -fx-background-color: #ccb050;
+}
+#retour{
+    -fx-translate-x:-2em;
+}
+
+#recommencer{
+    -fx-translate-x: 2em;
+}
+
+#bouton{
+    -fx-alignment: bottom-center;
+    -fx-translate-y: -5em;
+}
