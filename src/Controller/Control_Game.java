@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -106,9 +107,11 @@ public class Control_Game implements EventHandler<MouseEvent> {
         view.actualizeCases();
 
         if (event.getSource().equals(view.retour)){
-            System.out.println("retour au menu principal");
+            menu.getView().setMainMenuView();
+            menu.getView().getStage().getScene().getStylesheets().clear();
+            menu.getView().getStage().getScene().getStylesheets().add(new File("css/menu_view.css").toURI().toString());
         }else if(event.getSource().equals(view.recommencer)){
-            System.out.println("partie recommencée");
+            menu.nouvellepartie();
         }
 
     }

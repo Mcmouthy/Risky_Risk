@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 public class Control_Menu implements EventHandler<MouseEvent>
 {
     private Menu_View view;
+    private Control_Game game;
 
     public Control_Menu(Menu_View menu)
     {
@@ -47,10 +48,7 @@ public class Control_Menu implements EventHandler<MouseEvent>
 
         if (event.getSource().equals(getView().nouvellePartie))
         {
-            Partie p = new Partie();
-            p.ajouterJoueur(new Joueur("Pierre",0));
-            p.ajouterJoueur(new Joueur("Gérard",1));
-            new Control_Game(p,this);
+            nouvellepartie();
         }
 /*
         pour le début de partie, il faudra juste créer ça:
@@ -64,5 +62,12 @@ public class Control_Menu implements EventHandler<MouseEvent>
     public Menu_View getView()
     {
         return view;
+    }
+
+    public void nouvellepartie() {
+        Partie p = new Partie();
+        p.ajouterJoueur(new Joueur("Pierre",0));
+        p.ajouterJoueur(new Joueur("Gérard",1));
+        game=new Control_Game(p,this);
     }
 }
