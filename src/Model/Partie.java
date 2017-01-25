@@ -7,11 +7,11 @@ import java.util.*;
  */
 public class Partie implements Serializable{
     private static final long serialVersionUID = 2914403070993434934L;
-    final static int CLASSICO = 0;
-    final static int RAPIDO = 1;
-    final static int THEMEMONDE = 2;
-    final static int THEMEAPOCALYPSE=3;
-    final static int THEMEGLOOGLOO=4;
+    public final static int CLASSICO = 0;
+    public final static int RAPIDO = 1;
+    public final static int THEMEMONDE = 2;
+    public final static int THEMEAPOCALYPSE=3;
+    public final static int THEMEGLOOGLOO=4;
 
     private Random random=new Random();
     private List <Joueur> joueurs;

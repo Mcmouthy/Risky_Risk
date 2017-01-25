@@ -1,8 +1,9 @@
 package View;
 
+import Model.Partie;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -28,6 +29,20 @@ public class Menu_View
     public Button options;
     public Button apropos;
     public ImageView titreJeu;
+    public Label nbJoueurs;
+    public ToggleGroup nbJoueursGroup;
+    public RadioButton joueurButton1;
+    public RadioButton joueurButton2;
+    public RadioButton joueurButton3;
+    public RadioButton joueurButton4;
+    public Label type;
+    public ToggleGroup typeGroup;
+    public RadioButton classique;
+    public RadioButton rapide;
+    public Label carte;
+    public ComboBox listeCarte;
+    public Button suivant;
+    public Button retour;
     private Stage stage; // Le stage est la fenetre principale
     private Scene scene; // La scene est le contenu visile de la fenetre
     private BorderPane root; // Le root est le panel (comme ds java SWING) principal. C'est dedans que vous metterez tout
@@ -81,6 +96,28 @@ public class Menu_View
         apropos.setId("apropos");
         titreJeu = new ImageView(new Image(new File("img/logo_pt_v1.png").toURI().toString(), 300, 300, true, true));
 
+        nbJoueurs = new Label("Nombre de joueurs : ");
+        nbJoueursGroup = new ToggleGroup();
+        joueurButton1= new RadioButton("1");
+        joueurButton2= new RadioButton(("2"));
+        joueurButton3=new RadioButton("3");
+        joueurButton4=new RadioButton("4");
+        joueurButton1.setToggleGroup(nbJoueursGroup);
+        joueurButton2.setToggleGroup(nbJoueursGroup);
+        joueurButton3.setToggleGroup(nbJoueursGroup);
+        joueurButton4.setToggleGroup(nbJoueursGroup);
+
+        type = new Label("Type de partie : ");
+        typeGroup = new ToggleGroup();
+        classique = new RadioButton("Classique");
+        rapide = new RadioButton("Rapide");
+
+        carte=new Label("Carte : ");
+        listeCarte=new ComboBox();
+        listeCarte.getItems().add("Base");
+
+        suivant=new Button();
+        retour=new Button();
 
 
         /*
@@ -160,7 +197,7 @@ public class Menu_View
     }
 
     // TODO ULTRA IMPORTANT
-    public void setNbPlayerAskingView()
+    public void setPartieAskingView()
     {
         /*
         Cette vue doit afficher un input ou l'on peut rentrer le nombre de joueur et
