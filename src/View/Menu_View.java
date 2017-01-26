@@ -1,9 +1,6 @@
 package View;
 
 import Model.Partie;
-import com.sun.webkit.ColorChooser;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
