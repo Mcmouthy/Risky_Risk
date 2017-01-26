@@ -1,6 +1,7 @@
 package View;
 
 import Model.Partie;
+import com.sun.webkit.ColorChooser;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -24,8 +25,8 @@ import static java.lang.System.exit;
 /**
  * Created by yhaffner on 21/11/16.
  */
-public class Menu_View
-{
+public class Menu_View {
+
     public Button startButton;
     public Button nouvellePartie;
     public Button continuer;
@@ -48,6 +49,14 @@ public class Menu_View
     public Button retour;
     public ImageView imagecarte;
     public Button choix;
+    public TextField askNomJoueur1;
+    public TextField askNomJoueur2;
+    public TextField askNomJoueur3;
+    public TextField askNomJoueur4;
+    public Label nomJoueur1;
+    public Label nomJoueur2;
+    public Label nomJoueur3;
+    public Label nomJoueur4;
     private Stage stage; // Le stage est la fenetre principale
     private Scene scene; // La scene est le contenu visile de la fenetre
     private BorderPane root; // Le root est le panel (comme ds java SWING) principal. C'est dedans que vous metterez tout
@@ -63,8 +72,7 @@ public class Menu_View
     }
 
     // TODO ULTRA IPORTANT
-    private void initAttributs()
-    {
+    private void initAttributs() {
         /*
          Initialisation ultra basique de la fenêtre
          Don't forget que vous pouvez rajouter pour chaque element graphique (héritant de Node),
@@ -142,6 +150,16 @@ public class Menu_View
         choix=new Button("CHOISIR");
         choix.setId("choix");
 
+        askNomJoueur1=new TextField();
+        askNomJoueur2=new TextField();
+        askNomJoueur3=new TextField();
+        askNomJoueur4=new TextField();
+
+        nomJoueur1 = new Label("Nom du joueur 1 :");
+        nomJoueur2 = new Label("Nom du joueur 2 :");
+        nomJoueur3 = new Label("Nom du joueur 3 :");
+        nomJoueur4 = new Label("Nom du joueur 4 :");
+
 
         /*
           Initialisation des attributs:
@@ -159,8 +177,7 @@ public class Menu_View
     }
 
     //TODO IMPORTANT
-    public void setLauncherView()
-    {
+    public void setLauncherView(){
         stage.getScene().getRoot().setVisible(false);
 
         VBox panneau = new VBox();
@@ -176,8 +193,7 @@ public class Menu_View
     }
 
     // TODO ULTRA IMPORTANT
-    public void setMainMenuView()
-    {
+    public void setMainMenuView(){
         /*
          Affichage du menu principal
          Prototype pour les autres view de cette classe
@@ -220,8 +236,7 @@ public class Menu_View
     }
 
     // TODO ULTRA IMPORTANT
-    public void setPartieAskingView()
-    {
+    public void setPartieAskingView(){
         /*
         Cette vue doit afficher un input ou l'on peut rentrer le nombre de joueur et
         commencer la partie ou revenir en arrière
@@ -249,17 +264,20 @@ public class Menu_View
 
     }
 
+    //TODO
+    public void setNomCouleurJoueursAskingView() {
+
+    }
+
     // TODO
-    public void setOptionsView()
-    {
+    public void setOptionsView(){
         /*
         Cette vue doit afficher des radio buttons choisir la resolution et le fullscreen
          */
     }
 
     // TODO ULTRA
-    public void setController(EventHandler<MouseEvent> eh)
-    {
+    public void setController(EventHandler<MouseEvent> eh){
         /*
 
         Attribution du controlleur au bouton INSTANCIÉS AU PRÉALABLE (dans initAttributs) par la méthode suivante:
@@ -286,4 +304,5 @@ public class Menu_View
     {
         return stage;
     }
+
 }

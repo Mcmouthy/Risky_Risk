@@ -57,7 +57,7 @@ public class Control_Menu implements EventHandler<MouseEvent>
         }
 
         if (event.getSource().equals(getView().suivant)){
-            //view.setNomCouleurJoueursAskingView();
+            view.setNomCouleurJoueursAskingView();
         }
 
         if (event.getSource().equals(getView().retour)){
