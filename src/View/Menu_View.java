@@ -57,6 +57,11 @@ public class Menu_View {
     public Label nomJoueur2;
     public Label nomJoueur3;
     public Label nomJoueur4;
+    public ColorPicker couleurjoueur1;
+    public ColorPicker couleurjoueur2;
+    public ColorPicker couleurjoueur3;
+    public ColorPicker couleurjoueur4;
+
     private Stage stage; // Le stage est la fenetre principale
     private Scene scene; // La scene est le contenu visile de la fenetre
     private BorderPane root; // Le root est le panel (comme ds java SWING) principal. C'est dedans que vous metterez tout
@@ -159,6 +164,11 @@ public class Menu_View {
         nomJoueur2 = new Label("Nom du joueur 2 :");
         nomJoueur3 = new Label("Nom du joueur 3 :");
         nomJoueur4 = new Label("Nom du joueur 4 :");
+
+        couleurjoueur1= new ColorPicker(Color.RED);
+        couleurjoueur2=new ColorPicker(Color.BLUE);
+        couleurjoueur3=new ColorPicker(Color.GREEN);
+        couleurjoueur4=new ColorPicker(Color.YELLOW);
 
 
         /*
@@ -266,7 +276,21 @@ public class Menu_View {
 
     //TODO
     public void setNomCouleurJoueursAskingView() {
+        stage.getScene().getRoot().setVisible(false);
+        ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
+        VBox panneau = new VBox();
+        HBox joueur1 = new HBox();
+        joueur1.getChildren().addAll(nomJoueur1,askNomJoueur1,couleurjoueur1);
+        HBox joueur2=new HBox();
+        joueur2.getChildren().addAll(nomJoueur2,askNomJoueur2,couleurjoueur2);
+        HBox joueur3=new HBox();
+        joueur3.getChildren().addAll(nomJoueur3,askNomJoueur3,couleurjoueur3);
+        HBox joueur4=new HBox();
+        joueur4.getChildren().addAll(nomJoueur4,askNomJoueur4,couleurjoueur4);
 
+        panneau.getChildren().addAll(joueur1,joueur2,joueur3,joueur4);
+        ((BorderPane) stage.getScene().getRoot()).setCenter(panneau);
+        stage.getScene().getRoot().setVisible(true);
     }
 
     // TODO
