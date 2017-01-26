@@ -69,6 +69,14 @@ public class Control_Menu implements EventHandler<MouseEvent>
             view.imagecarte.setImage(new Image(new File(nomImage).toURI().toString(), 150, 150, true, true));
         }
 
+        if (event.getSource().equals(getView().retour2)){
+            view.setPartieAskingView();
+        }
+
+        if (event.getSource().equals(getView().lancerPartie)){
+            nouvellepartie();
+        }
+
     }
 /*
         pour le début de partie, il faudra juste créer ça:

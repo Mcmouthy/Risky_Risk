@@ -58,6 +58,8 @@ public class Menu_View {
     public ColorPicker couleurjoueur2;
     public ColorPicker couleurjoueur3;
     public ColorPicker couleurjoueur4;
+    public Button lancerPartie;
+    public Button retour2;
 
     private Stage stage; // Le stage est la fenetre principale
     private Scene scene; // La scene est le contenu visile de la fenetre
@@ -166,6 +168,11 @@ public class Menu_View {
         couleurjoueur2=new ColorPicker(Color.BLUE);
         couleurjoueur3=new ColorPicker(Color.GREEN);
         couleurjoueur4=new ColorPicker(Color.YELLOW);
+
+        lancerPartie=new Button("À L'ATTAQUE !");
+        lancerPartie.setId("lancerpartie");
+        retour2=new Button("RETOUR");
+        retour2.setId("retour2");
 
 
         /*
@@ -284,8 +291,10 @@ public class Menu_View {
         joueur3.getChildren().addAll(nomJoueur3,askNomJoueur3,couleurjoueur3);
         HBox joueur4=new HBox();
         joueur4.getChildren().addAll(nomJoueur4,askNomJoueur4,couleurjoueur4);
+        HBox bouton = new HBox();
+        bouton.getChildren().addAll(retour2,lancerPartie);
 
-        panneau.getChildren().addAll(joueur1,joueur2,joueur3,joueur4);
+        panneau.getChildren().addAll(joueur1,joueur2,joueur3,joueur4,bouton);
         ((BorderPane) stage.getScene().getRoot()).setCenter(panneau);
         stage.getScene().getRoot().setVisible(true);
     }
@@ -310,6 +319,8 @@ public class Menu_View {
         nouvellePartie.setOnMouseClicked(eh);
         suivant.setOnMouseClicked(eh);
         retour.setOnMouseClicked(eh);
+        retour2.setOnMouseClicked(eh);
+        lancerPartie.setOnMouseClicked(eh);
         choix.setOnMouseClicked(eh);
 
         // au final rajoute un bouton pour valider parce que sinon c'est chiant
