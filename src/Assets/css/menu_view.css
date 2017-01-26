@@ -11,18 +11,31 @@
     -fx-vgap: 0.3em;
 }
 
-#jouer, #continuer, #nouvellePartie, #continuer, #options, #apropos{
+#jouer, #continuer, #nouvellePartie, #options, #apropos{
     -fx-alignment: center;
+}
+.button{
     -fx-padding: 0.8em;
     -fx-font-weight: bold;
     -fx-background-color: #d6ba51;
     -fx-pref-width: 200px;
 }
-#jouer:hover, #continuer:hover, #nouvellePartie:hover, #continuer:hover, #options:hover, #apropos:hover{
+#choix{
+    -fx-padding: 0em;
+    -fx-font-weight: bold;
+    -fx-background-color: #d6ba51;
+    -fx-pref-width: 80px;
+}
+
+#listecarte{
+    -fx-background-color: #d6ba51;
+}
+.button:hover,#choix:hover{
     -fx-scale-x: 1.02;
     -fx-scale-y: 1.02;
     -fx-background-color: #ccb050;
 }
+
 #titre1{
     -fx-translate-y: -5em;
 }

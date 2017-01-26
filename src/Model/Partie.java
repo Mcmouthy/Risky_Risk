@@ -30,7 +30,7 @@ public class Partie implements Serializable{
         joueurs=new ArrayList<>();
         neutres=new ArrayList<>();
         joueurCourant=0;
-        initialiseSetCasesNeutres("map/TerrainBase");
+        initialiseSetCasesNeutres("map/Base");
         mode=RAPIDO;
         theme=THEMEMONDE;
         nbtour=1;

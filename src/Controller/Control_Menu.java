@@ -4,8 +4,13 @@ package Controller;
 import Model.Joueur;
 import Model.Partie;
 import View.Menu_View;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+
+import java.io.File;
 
 /**
  * Created by yhaffner on 21/11/16.
@@ -48,8 +53,23 @@ public class Control_Menu implements EventHandler<MouseEvent>
 
         if (event.getSource().equals(getView().nouvellePartie))
         {
-            nouvellepartie();
+            view.setPartieAskingView();
         }
+
+        if (event.getSource().equals(getView().suivant)){
+            //view.setNomCouleurJoueursAskingView();
+        }
+
+        if (event.getSource().equals(getView().retour)){
+            view.setMainMenuView();
+        }
+
+        if (event.getSource().equals(getView().choix)){
+            String nomImage="img/"+view.listeCarte.getValue()+".png";
+            view.imagecarte.setImage(new Image(new File(nomImage).toURI().toString(), 150, 150, true, true));
+        }
+
+    }
 /*
         pour le début de partie, il faudra juste créer ça:
                 Partie p = new Partie();
@@ -57,7 +77,6 @@ public class Control_Menu implements EventHandler<MouseEvent>
                 new Control_Game(p,this);
        c tout!
          */
-    }
 
     public Menu_View getView()
     {
