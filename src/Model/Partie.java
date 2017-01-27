@@ -45,6 +45,10 @@ public class Partie implements Serializable{
         return mode;
     }
 
+    public void setMode(int mode){ this.mode=mode;}
+
+    public void setTheme(int theme){this.theme=theme;}
+
     public int getTheme() {
         return theme;
     }
@@ -80,7 +84,7 @@ public class Partie implements Serializable{
 
     public void passeJoueurSuivant() {
         this.joueurCourant +=1;
-        if (joueurCourant>=joueurs.size())joueurCourant=0;
+        while(joueurs.get(joueurCourant).isEliminated())joueurCourant+=1;
     }
 
     public void setFin(boolean fin) {
@@ -127,7 +131,7 @@ public class Partie implements Serializable{
     }
 
     public void findePartieJoueur(Joueur j){
-        if (j.getTerrain().isEmpty())joueurs.remove(j);
+        if (j.getTerrain().isEmpty())j.setEliminated(true);
     }
 
     public void captureTerrainAdverse(Joueur attaquant,Joueur defenseur, Case c, int nbtroupes){
@@ -240,5 +244,13 @@ public class Partie implements Serializable{
             caseArrivee.setNbtroupes(nbtroupes);
         }
 
+    }
+
+    public int nbjoueurRestant(){
+        int nb=0;
+        for (Joueur j : joueurs){
+            if (!j.isEliminated())nb++;
+        }
+        return nb;
     }
 }

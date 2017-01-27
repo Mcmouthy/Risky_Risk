@@ -32,7 +32,6 @@ public class Menu_View {
     public ImageView titreJeu;
     public Label nbJoueurs;
     public ToggleGroup nbJoueursGroup;
-    public RadioButton joueurButton1;
     public RadioButton joueurButton2;
     public RadioButton joueurButton3;
     public RadioButton joueurButton4;
@@ -54,10 +53,10 @@ public class Menu_View {
     public Label nomJoueur2;
     public Label nomJoueur3;
     public Label nomJoueur4;
-    public ColorPicker couleurjoueur1;
-    public ColorPicker couleurjoueur2;
-    public ColorPicker couleurjoueur3;
-    public ColorPicker couleurjoueur4;
+    public ComboBox<String> couleurjoueur1;
+    public ComboBox<String> couleurjoueur2;
+    public ComboBox<String> couleurjoueur3;
+    public ComboBox<String> couleurjoueur4;
     public Button lancerPartie;
     public Button retour2;
 
@@ -116,15 +115,12 @@ public class Menu_View {
         nbJoueurs = new Label("Nombre de joueurs : ");
         nbJoueurs.setId("nbjoueurs");
         nbJoueursGroup = new ToggleGroup();
-        joueurButton1= new RadioButton("1");
-        joueurButton1.setId("joueurButton1");
         joueurButton2= new RadioButton("2");
         joueurButton2.setId("joueurButton2");
         joueurButton3=new RadioButton("3");
         joueurButton3.setId("joueurButton3");
         joueurButton4=new RadioButton("4");
         joueurButton4.setId("joueurButton4");
-        joueurButton1.setToggleGroup(nbJoueursGroup);
         joueurButton2.setToggleGroup(nbJoueursGroup);
         joueurButton3.setToggleGroup(nbJoueursGroup);
         joueurButton4.setToggleGroup(nbJoueursGroup);
@@ -164,10 +160,19 @@ public class Menu_View {
         nomJoueur3 = new Label("Nom du joueur 3 :");
         nomJoueur4 = new Label("Nom du joueur 4 :");
 
-        couleurjoueur1= new ColorPicker(Color.RED);
-        couleurjoueur2=new ColorPicker(Color.BLUE);
-        couleurjoueur3=new ColorPicker(Color.GREEN);
-        couleurjoueur4=new ColorPicker(Color.YELLOW);
+        couleurjoueur1=new ComboBox<>();
+        couleurjoueur2=new ComboBox<>();
+        couleurjoueur3=new ComboBox<>();
+        couleurjoueur4=new ComboBox<>();
+
+        couleurjoueur1.getItems().addAll("ROUGE","BLEU","VERT","JAUNE","NOIR");
+        couleurjoueur1.setValue(couleurjoueur1.getItems().get(0));
+        couleurjoueur2.getItems().addAll("ROUGE","BLEU","VERT","JAUNE","NOIR");
+        couleurjoueur2.setValue(couleurjoueur2.getItems().get(1));
+        couleurjoueur3.getItems().addAll("ROUGE","BLEU","VERT","JAUNE","NOIR");
+        couleurjoueur3.setValue(couleurjoueur3.getItems().get(2));
+        couleurjoueur4.getItems().addAll("ROUGE","BLEU","VERT","JAUNE","NOIR");
+        couleurjoueur4.setValue(couleurjoueur4.getItems().get(3));
 
         lancerPartie=new Button("À L'ATTAQUE !");
         lancerPartie.setId("lancerpartie");
@@ -260,7 +265,7 @@ public class Menu_View {
 
         VBox panneau = new VBox();
         HBox nbjoueurspartie= new HBox();
-        nbjoueurspartie.getChildren().addAll(nbJoueurs,joueurButton1,joueurButton2,joueurButton3,joueurButton4);
+        nbjoueurspartie.getChildren().addAll(nbJoueurs,joueurButton2,joueurButton3,joueurButton4);
         HBox typepartie=new HBox();
         typepartie.getChildren().addAll(type,classique,rapide);
         VBox image=new VBox();
