@@ -84,7 +84,15 @@ public class Partie implements Serializable{
 
     public void passeJoueurSuivant() {
         this.joueurCourant +=1;
-        while(joueurs.get(joueurCourant).isEliminated())joueurCourant+=1;
+        if (joueurCourant>=joueurs.size()){
+            joueurCourant=0;
+        }
+        while(joueurs.get(joueurCourant).isEliminated()) {
+            joueurCourant += 1;
+            if (joueurCourant >= joueurs.size()) {
+                joueurCourant = 0;
+            }
+        }
     }
 
     public void setFin(boolean fin) {
