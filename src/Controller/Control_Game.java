@@ -109,6 +109,7 @@ public class Control_Game implements EventHandler<MouseEvent> {
             menu.getView().getStage().getScene().getStylesheets().add(new File("css/menu_view.css").toURI().toString());
         }else if(event.getSource().equals(view.recommencer)){
             menu.nouvellepartie();
+
         }
 
     }
