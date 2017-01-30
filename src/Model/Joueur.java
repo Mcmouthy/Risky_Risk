@@ -18,14 +18,12 @@ public class Joueur implements Serializable{
     private int couleur;
     private List<Case> terrain;
     private int nbRenforts;
-    private boolean isEliminated;
 
     public Joueur(String nom,int couleur){
         this.nom=nom;
         this.couleur=couleur;
         terrain= new ArrayList<>();
         nbRenforts=0;
-        isEliminated=false;
     }
 
     public void setNom(String nom){
@@ -34,14 +32,6 @@ public class Joueur implements Serializable{
 
     public void setCouleur(int couleur){
         this.couleur=couleur;
-    }
-
-    public void setEliminated(boolean eliminated) {
-        isEliminated = eliminated;
-    }
-
-    public boolean isEliminated() {
-        return isEliminated;
     }
 
     public String getNom(){
