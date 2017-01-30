@@ -71,7 +71,7 @@ public class Generateur {
         voisinCase12.add(case7);voisinCase12.add(case11);voisinCase12.add(case13);voisinCase12.add(case17);
         voisinCase13.add(case8);voisinCase13.add(case12);voisinCase13.add(case14);voisinCase13.add(case18);
         voisinCase14.add(case9);voisinCase14.add(case13);voisinCase14.add(case15);voisinCase14.add(case19);
-        voisinCase15.add(case16);voisinCase15.add(case14);voisinCase15.add(case20);
+        voisinCase15.add(case10);voisinCase15.add(case14);voisinCase15.add(case20);
         voisinCase16.add(case11);voisinCase16.add(case17);
         voisinCase17.add(case12);voisinCase17.add(case16);voisinCase17.add(case18);
         voisinCase18.add(case13);voisinCase18.add(case17);voisinCase18.add(case19);
@@ -122,7 +122,7 @@ public class Generateur {
         liste.add(null);
 
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("map/TerrainBase"));
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("map/Base"));
             for (Case c:liste){
                 oos.writeObject(c);
             }
