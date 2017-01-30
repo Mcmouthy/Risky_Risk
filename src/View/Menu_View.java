@@ -1,7 +1,7 @@
 package View;
 
+import Model.Partie;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -32,7 +32,6 @@ public class Menu_View {
     public ImageView titreJeu;
     public Label nbJoueurs;
     public ToggleGroup nbJoueursGroup;
-    public RadioButton joueurButton1;
     public RadioButton joueurButton2;
     public RadioButton joueurButton3;
     public RadioButton joueurButton4;
@@ -54,10 +53,12 @@ public class Menu_View {
     public Label nomJoueur2;
     public Label nomJoueur3;
     public Label nomJoueur4;
-    public ColorPicker couleurjoueur1;
-    public ColorPicker couleurjoueur2;
-    public ColorPicker couleurjoueur3;
-    public ColorPicker couleurjoueur4;
+    public ComboBox<String> couleurjoueur1;
+    public ComboBox<String> couleurjoueur2;
+    public ComboBox<String> couleurjoueur3;
+    public ComboBox<String> couleurjoueur4;
+    public Button lancerPartie;
+    public Button retour2;
 
     private Stage stage; // Le stage est la fenetre principale
     private Scene scene; // La scene est le contenu visile de la fenetre
@@ -114,15 +115,12 @@ public class Menu_View {
         nbJoueurs = new Label("Nombre de joueurs : ");
         nbJoueurs.setId("nbjoueurs");
         nbJoueursGroup = new ToggleGroup();
-        joueurButton1= new RadioButton("1");
-        joueurButton1.setId("joueurButton1");
         joueurButton2= new RadioButton("2");
         joueurButton2.setId("joueurButton2");
         joueurButton3=new RadioButton("3");
         joueurButton3.setId("joueurButton3");
         joueurButton4=new RadioButton("4");
         joueurButton4.setId("joueurButton4");
-        joueurButton1.setToggleGroup(nbJoueursGroup);
         joueurButton2.setToggleGroup(nbJoueursGroup);
         joueurButton3.setToggleGroup(nbJoueursGroup);
         joueurButton4.setToggleGroup(nbJoueursGroup);
@@ -131,9 +129,9 @@ public class Menu_View {
         type.setId("type");
         typeGroup = new ToggleGroup();
         classique = new RadioButton("Classique");
-        classique.setId("type");
+        classique.setId("classique");
         rapide = new RadioButton("Rapide");
-        rapide.setId("type");
+        rapide.setId("rapide");
         classique.setToggleGroup(typeGroup);
         rapide.setToggleGroup(typeGroup);
 
@@ -146,34 +144,40 @@ public class Menu_View {
         listeCarte.setValue("Base");
 
         suivant=new Button("SUIVANT");
-        suivant.setId("btAsking");
+        suivant.setId("suiv");
         retour=new Button("RETOUR");
-        retour.setId("btAsking");
+        retour.setId("retour");
         choix=new Button("CHOISIR");
-        choix.setId("choisir");
+        choix.setId("choix");
 
         askNomJoueur1=new TextField();
-        askNomJoueur1.setPromptText("Saisissez le nom");
         askNomJoueur2=new TextField();
-        askNomJoueur2.setPromptText("Saisissez le nom");
         askNomJoueur3=new TextField();
-        askNomJoueur3.setPromptText("Saisissez le nom");
         askNomJoueur4=new TextField();
-        askNomJoueur4.setPromptText("Saisissez le nom");
 
-        nomJoueur1 = new Label("Joueur 1 :");
-        nomJoueur1.setId("nomJoueur");
-        nomJoueur2 = new Label("Joueur 2 :");
-        nomJoueur2.setId("nomJoueur");
-        nomJoueur3 = new Label("Joueur 3 :");
-        nomJoueur3.setId("nomJoueur");
-        nomJoueur4 = new Label("Joueur 4 :");
-        nomJoueur4.setId("nomJoueur");
+        nomJoueur1 = new Label("Nom du joueur 1 :");
+        nomJoueur2 = new Label("Nom du joueur 2 :");
+        nomJoueur3 = new Label("Nom du joueur 3 :");
+        nomJoueur4 = new Label("Nom du joueur 4 :");
 
-        couleurjoueur1= new ColorPicker(Color.RED);
-        couleurjoueur2=new ColorPicker(Color.BLUE);
-        couleurjoueur3=new ColorPicker(Color.GREEN);
-        couleurjoueur4=new ColorPicker(Color.YELLOW);
+        couleurjoueur1=new ComboBox<>();
+        couleurjoueur2=new ComboBox<>();
+        couleurjoueur3=new ComboBox<>();
+        couleurjoueur4=new ComboBox<>();
+
+        couleurjoueur1.getItems().addAll("ROUGE","BLEU","VERT","JAUNE","NOIR");
+        couleurjoueur1.setValue(couleurjoueur1.getItems().get(0));
+        couleurjoueur2.getItems().addAll("ROUGE","BLEU","VERT","JAUNE","NOIR");
+        couleurjoueur2.setValue(couleurjoueur2.getItems().get(1));
+        couleurjoueur3.getItems().addAll("ROUGE","BLEU","VERT","JAUNE","NOIR");
+        couleurjoueur3.setValue(couleurjoueur3.getItems().get(2));
+        couleurjoueur4.getItems().addAll("ROUGE","BLEU","VERT","JAUNE","NOIR");
+        couleurjoueur4.setValue(couleurjoueur4.getItems().get(3));
+
+        lancerPartie=new Button("À L'ATTAQUE !");
+        lancerPartie.setId("lancerpartie");
+        retour2=new Button("RETOUR");
+        retour2.setId("retour2");
 
 
         /*
@@ -259,26 +263,17 @@ public class Menu_View {
         stage.getScene().getRoot().setVisible(false);
         ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
 
-        VBox panneau = new VBox(5);
-        panneau.setId("panAsking");
-        panneau.getChildren().add(titreJeu);
-        titreJeu.setId("titre3");
-        HBox nbjoueurspartie= new HBox(5);
-        nbjoueurspartie.setId("nbjoueurspartie");
-        nbjoueurspartie.getChildren().addAll(nbJoueurs,joueurButton1,joueurButton2,joueurButton3,joueurButton4);
-        HBox typepartie=new HBox(5);
-        typepartie.setId("typepartie");
+        VBox panneau = new VBox();
+        HBox nbjoueurspartie= new HBox();
+        nbjoueurspartie.getChildren().addAll(nbJoueurs,joueurButton2,joueurButton3,joueurButton4);
+        HBox typepartie=new HBox();
         typepartie.getChildren().addAll(type,classique,rapide);
-        VBox image=new VBox(8);
-        image.setId("imgcarte");
-        HBox carteMenu=new HBox(5);
-        carteMenu.setId("cartemenu");
-        carteMenu.setAlignment(Pos.CENTER);
+        VBox image=new VBox();
+        HBox carteMenu=new HBox();
         imagecarte= new ImageView();
         carteMenu.getChildren().addAll(listeCarte,choix);
         image.getChildren().addAll(carteMenu,imagecarte);
-        HBox bouton=new HBox(5);
-        bouton.setId("btnHbox");
+        HBox bouton=new HBox();
         bouton.getChildren().addAll(retour,suivant);
 
         panneau.getChildren().addAll(nbjoueurspartie,typepartie,image,bouton);
@@ -292,22 +287,19 @@ public class Menu_View {
     public void setNomCouleurJoueursAskingView() {
         stage.getScene().getRoot().setVisible(false);
         ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
-        VBox panneau = new VBox(25);
-        panneau.setId("panJoueur");
-        HBox joueur1 = new HBox(20);
-        joueur1.setId("panJoueur");
+        VBox panneau = new VBox();
+        HBox joueur1 = new HBox();
         joueur1.getChildren().addAll(nomJoueur1,askNomJoueur1,couleurjoueur1);
-        HBox joueur2=new HBox(20);
-        joueur2.setId("panJoueur");
+        HBox joueur2=new HBox();
         joueur2.getChildren().addAll(nomJoueur2,askNomJoueur2,couleurjoueur2);
-        HBox joueur3=new HBox(20);
-        joueur3.setId("panJoueur");
+        HBox joueur3=new HBox();
         joueur3.getChildren().addAll(nomJoueur3,askNomJoueur3,couleurjoueur3);
-        HBox joueur4=new HBox(20);
-        joueur4.setId("panJoueur");
+        HBox joueur4=new HBox();
         joueur4.getChildren().addAll(nomJoueur4,askNomJoueur4,couleurjoueur4);
+        HBox bouton = new HBox();
+        bouton.getChildren().addAll(retour2,lancerPartie);
 
-        panneau.getChildren().addAll(joueur1,joueur2,joueur3,joueur4);
+        panneau.getChildren().addAll(joueur1,joueur2,joueur3,joueur4,bouton);
         ((BorderPane) stage.getScene().getRoot()).setCenter(panneau);
         stage.getScene().getRoot().setVisible(true);
     }
@@ -332,6 +324,8 @@ public class Menu_View {
         nouvellePartie.setOnMouseClicked(eh);
         suivant.setOnMouseClicked(eh);
         retour.setOnMouseClicked(eh);
+        retour2.setOnMouseClicked(eh);
+        lancerPartie.setOnMouseClicked(eh);
         choix.setOnMouseClicked(eh);
 
         // au final rajoute un bouton pour valider parce que sinon c'est chiant

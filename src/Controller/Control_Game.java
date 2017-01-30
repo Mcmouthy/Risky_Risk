@@ -89,17 +89,14 @@ public class Control_Game implements EventHandler<MouseEvent> {
                     view.caseOnFocus=null;
                 } else view.caseOnFocus=b;
             }
-            ArrayList<Joueur> asupr=new ArrayList<>();
+
             for (Joueur j:model.getJoueurs()){
                 if (j.getTerrain().size()==0){
-                    System.out.println(j.getNom()+" a été éliminé !");
-                    asupr.add(j);
+                    j.setEliminated(true);
                 }
             }
-            for (int i=0;i<asupr.size();i++){
-                model.getJoueurs().remove(asupr.get(i));
-            }
-            if (model.getJoueurs().size()==1){
+
+            if (model.nbjoueurRestant()==1){
                 model.setFin(true);
                 view.setFinDePartieView();
             }
@@ -112,6 +109,7 @@ public class Control_Game implements EventHandler<MouseEvent> {
             menu.getView().getStage().getScene().getStylesheets().add(new File("css/menu_view.css").toURI().toString());
         }else if(event.getSource().equals(view.recommencer)){
             menu.nouvellepartie();
+
         }
 
     }
