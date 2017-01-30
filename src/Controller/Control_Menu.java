@@ -145,4 +145,9 @@ public class Control_Menu implements EventHandler<MouseEvent>
         }
         return true;
     }
+
+    //TODO fonction qui verifie si il n'y a pas deux fois la meme couleur dans les combobox
+    public boolean mauvaisChoixCouleurs(){
+        return true;
+    }
 }
