@@ -1,6 +1,15 @@
 .root{
     -fx-background-image: url('../img/background.jpg');
 }
+#joueurButton1,#joueurButton2, #joueurButton3, #joueurButton4, #nbjoueurs, #type{
+    -fx-text-fill: white;
+    -fx-alignment: bottom-center;
+}
+#panAsking {
+    -fx-alignment: center;
+    -fx-padding: 0 0 4em 0em;
+    -fx-vgap: 0.8em;
+}
 #pan-jouer{
     -fx-alignment: bottom-center;
     -fx-padding: 0 0 12em 0;
@@ -11,7 +20,7 @@
     -fx-vgap: 0.3em;
 }
 
-#jouer, #continuer, #nouvellePartie, #options, #apropos{
+#jouer, #continuer, #nouvellePartie, #options, #apropos, #choisir {
     -fx-alignment: center;
 }
 .button{
@@ -43,3 +52,20 @@
     -fx-translate-y: 7em;
     -fx-translate-x: 15.5em;
 }
+#titre3 {
+    -fx-alignment: top-center !important;
+}
+#btnHbox, #cartemenu, #nbjoueurspartie, #typepartie, #imgcarte {
+    -fx-alignment: center;
+    -fx-padding: 1.5;
+}
+#panJoueur {
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+#nomJoueur {
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-padding : 0 2em 0 0;
+}
+
