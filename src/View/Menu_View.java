@@ -71,18 +71,11 @@ public class Menu_View {
         initAttributs();
         // mise en place de la vue du menu principale
         setLauncherView();
-        //setMainMenuView();
     }
 
     // TODO ULTRA IPORTANT
     private void initAttributs() {
-        /*
-         Initialisation ultra basique de la fenêtre
-         Don't forget que vous pouvez rajouter pour chaque element graphique (héritant de Node),
-         vous pouvez rajouter un ID ou une classe de la sorte:
-            bouton.setId('boutonID');
-            bouton.getStyleClass().add("boutonClass");
-          */
+
         stage.setTitle("Risky Risk");
         stage.getIcons().add(new Image(new File("img/icon.png").toURI().toString()));
         stage.centerOnScreen();
@@ -178,21 +171,6 @@ public class Menu_View {
         lancerPartie.setId("lancerpartie");
         retour2=new Button("RETOUR");
         retour2.setId("retour2");
-
-
-        /*
-          Initialisation des attributs:
-          TOUS LES ELEMENTS DEVRONT ETRE INSTANCIÉS ICI.
-          Voici les classes DE JAVAfx dont vous aurez surement besoin:
-
-          new Button        : bouton
-          new Label         : text
-          new TextField     : input
-          new BorderPane    : panel contenant les regions Center,Top,Bottom,Left et Right
-          new VBox          : panel dont les élements vont de haut en bas
-          new GridPane      : panel avec des coordonnées
-
-         */
     }
 
     //TODO IMPORTANT
@@ -213,28 +191,10 @@ public class Menu_View {
 
     // TODO ULTRA IMPORTANT
     public void setMainMenuView(){
-        /*
-         Affichage du menu principal
-         Prototype pour les autres view de cette classe
-        */
-
-        // Cacher la vue actuelle
         stage.getScene().getRoot().setVisible(false);
 
-
-        // Nettoyer le contenu d'une précédente fenêtre
-        // Manoeuvre a repeter pour tout les panel qui seront utilisées de la sorte:
-        // panel.getChildren().clear()
         ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
 
-
-        // Ajout des éléments de la sorte:
-        // panel.getChildren().add(Node element);
-        // ex:
-        //   vbox.getChildren().add(jLabel);
-        //   gridlayout.getChildren().add(jnomTextField,indexX,indexY);
-        //   borderpane.setCenter(blasonsJ);
-        //   menuSection.getChildren().add(continueButton);
         titreJeu.setId("titre2");
 
         GridPane panneau = new GridPane();
@@ -256,10 +216,7 @@ public class Menu_View {
 
     // TODO ULTRA IMPORTANT
     public void setPartieAskingView(){
-        /*
-        Cette vue doit afficher un input ou l'on peut rentrer le nombre de joueur et
-        commencer la partie ou revenir en arrière
-         */
+
         stage.getScene().getRoot().setVisible(false);
         ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
 
@@ -310,22 +267,26 @@ public class Menu_View {
         stage.getScene().getRoot().setVisible(true);
     }
 
-    // TODO
+    //TODO petit pop up qui apparait si il y a une erreur lors du choix des parametres de la partie
+    public void popUpErreurSetPartie(){
+
+    }
+
+    //TODO petit pop up qui apparait si il y a une erreur lors du choix des couleurs et du nom de joueur
+    public void popUpErreurSetNomCouleur(){
+
+    }
+
+    // TODO menu qui demande de changer les parametres de la fenetre (pas necessaire pour le moment)
     public void setOptionsView(){
         /*
         Cette vue doit afficher des radio buttons choisir la resolution et le fullscreen
          */
     }
 
-    // TODO ULTRA
+    // TODO
     public void setController(EventHandler<MouseEvent> eh){
-        /*
 
-        Attribution du controlleur au bouton INSTANCIÉS AU PRÉALABLE (dans initAttributs) par la méthode suivante:
-
-        bouton.setOnMouseClicked(eh);
-
-         */
         startButton.setOnMouseClicked(eh);
         nouvellePartie.setOnMouseClicked(eh);
         suivant.setOnMouseClicked(eh);
@@ -333,8 +294,6 @@ public class Menu_View {
         retour2.setOnMouseClicked(eh);
         lancerPartie.setOnMouseClicked(eh);
         choix.setOnMouseClicked(eh);
-
-        // au final rajoute un bouton pour valider parce que sinon c'est chiant
 
     }
 
