@@ -81,18 +81,14 @@ public class Control_Menu implements EventHandler<MouseEvent>
         }
 
         if (event.getSource().equals(getView().lancerPartie)){
-
-            nouvellepartie();
+            if (!mauvaisChoixCouleurs() && !nomJoueurNull() && !sameNomJoueur()){
+                nouvellepartie();
+            }else{
+                //TODO petit pop-up qui dit l'erreur qui et détecté
+            }
         }
 
     }
-/*
-        pour le début de partie, il faudra juste créer ça:
-                Partie p = new Partie();
-                ajouter à p les joueurs
-                new Control_Game(p,this);
-       c tout!
-         */
 
     public Menu_View getView()
     {
@@ -146,8 +142,62 @@ public class Control_Menu implements EventHandler<MouseEvent>
         return true;
     }
 
-    //TODO fonction qui verifie si il n'y a pas deux fois la meme couleur dans les combobox
+    //DONE fonction qui verifie si il n'y a pas deux fois la meme couleur dans les combobox
     public boolean mauvaisChoixCouleurs(){
-        return true;
+        if (view.nbJoueursGroup.getToggles().get(0).isSelected()){
+            if (view.couleurjoueur1.getValue().equals(view.couleurjoueur2.getValue())) {
+                return true;
+            }
+        }else if (view.nbJoueursGroup.getToggles().get(1).isSelected()){
+            if (view.couleurjoueur1.getValue().equals(view.couleurjoueur2.getValue()) || view.couleurjoueur1.getValue().equals(view.couleurjoueur3.getValue())
+                    || view.couleurjoueur2.getValue().equals(view.couleurjoueur3.getValue())) {
+                return true;
+            }
+        }else{
+            if (view.couleurjoueur1.getValue().equals(view.couleurjoueur2.getValue()) || view.couleurjoueur1.getValue().equals(view.couleurjoueur3.getValue()) || view.couleurjoueur1.getValue().equals(view.couleurjoueur4.getValue())
+                    || view.couleurjoueur2.getValue().equals(view.couleurjoueur3.getValue()) || view.couleurjoueur2.getValue().equals(view.couleurjoueur4.getValue())
+                    || view.couleurjoueur3.getValue().equals(view.couleurjoueur4.getValue())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean nomJoueurNull(){
+        if (view.nbJoueursGroup.getToggles().get(0).isSelected()){
+            if (view.askNomJoueur1.getText().equals("") || view.askNomJoueur2.getText().equals("")){
+                return true;
+            }
+        }else if (view.nbJoueursGroup.getToggles().get(1).isSelected()){
+            if (view.askNomJoueur1.getText().equals("") || view.askNomJoueur2.getText().equals("") || view.askNomJoueur3.getText().equals("")){
+                return true;
+            }
+        }else{
+            if (view.askNomJoueur1.getText().equals("") || view.askNomJoueur2.getText().equals("")
+                    || view.askNomJoueur3.getText().equals("") || view.askNomJoueur4.getText().equals("")){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean sameNomJoueur() {
+        if (view.nbJoueursGroup.getToggles().get(0).isSelected()){
+            if (view.askNomJoueur1.getText().equals(view.askNomJoueur2.getText())){
+                return true;
+            }
+        }else if (view.nbJoueursGroup.getToggles().get(1).isSelected()){
+            if (view.askNomJoueur1.getText().equals(view.askNomJoueur2.getText()) || view.askNomJoueur1.getText().equals(view.askNomJoueur3.getText())
+                    || view.askNomJoueur2.getText().equals(view.askNomJoueur3.getText())){
+                return true;
+            }
+        }else{
+            if (view.askNomJoueur1.getText().equals(view.askNomJoueur2.getText()) || view.askNomJoueur1.getText().equals(view.askNomJoueur3.getText()) || view.askNomJoueur1.getText().equals(view.askNomJoueur4.getText())
+                    || view.askNomJoueur2.getText().equals(view.askNomJoueur3.getText()) || view.askNomJoueur2.getText().equals(view.askNomJoueur4.getText())
+                    || view.askNomJoueur3.getText().equals(view.askNomJoueur4.getText())){
+                return true;
+            }
+        }
+        return false;
     }
 }

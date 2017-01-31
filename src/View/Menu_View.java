@@ -299,7 +299,13 @@ public class Menu_View {
         HBox bouton = new HBox();
         bouton.getChildren().addAll(retour2,lancerPartie);
 
-        panneau.getChildren().addAll(joueur1,joueur2,joueur3,joueur4,bouton);
+        if (nbJoueursGroup.getToggles().get(0).isSelected()){
+            panneau.getChildren().addAll(joueur1,joueur2,bouton);
+        }else if (nbJoueursGroup.getToggles().get(1).isSelected()){
+            panneau.getChildren().addAll(joueur1,joueur2,joueur3,bouton);
+        }else{
+            panneau.getChildren().addAll(joueur1,joueur2,joueur3,joueur4,bouton);
+        }
         ((BorderPane) stage.getScene().getRoot()).setCenter(panneau);
         stage.getScene().getRoot().setVisible(true);
     }
