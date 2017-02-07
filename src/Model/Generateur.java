@@ -15,7 +15,7 @@ public class Generateur {
     public static void main(String[] args){
         ArrayList<Case>liste = new ArrayList<>();
 
-        Case case1=new Case(null,0,0,0,100,100,new Continent(0,10));
+        /*Case case1=new Case(null,0,0,0,100,100,new Continent(0,10));
         Case case2=new Case(null,0,100,0,100,100,new Continent(0,10));
         Case case3=new Case(null,0,200,0,100,100,new Continent(0,10));
         Case case4=new Case(null,0,300,0,100,100,new Continent(0,10));
@@ -130,6 +130,6 @@ public class Generateur {
             e.printStackTrace();
         }
         System.out.println("Travail terminé !!!");
-        return;
+        return;*/
     }
 }

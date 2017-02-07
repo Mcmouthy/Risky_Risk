@@ -2,6 +2,7 @@ package Model;
 
 import com.sun.org.apache.xpath.internal.SourceTree;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.*;
 
@@ -13,18 +14,26 @@ public class Case implements Serializable{
     private Joueur joueur;
     private int nbtroupes;
     private int x,y,width,height;
+    private ArrayList<Point> points;
     private Set<Case> voisins;
     private Continent continent;
 
-    public Case(Joueur joueur,int nbtroupes,int x,int y,int width,int height,Continent continent){
+    public Case(Joueur joueur,int nbtroupes,int x,int y,ArrayList<Point> points,Continent continent){
         this.joueur=joueur;
         this.nbtroupes=nbtroupes;
         this.x=x;
         this.y=y;
-        this.width=width;
-        this.height=height;
+        this.points = (ArrayList<Point>) points.clone();
         voisins=new HashSet<Case>();
         this.continent=continent;
+
+        int hmax=0,vmax=0;
+        for(Point pt:this.points) {
+            if(pt.x>hmax) hmax=pt.x;
+            if(pt.y>vmax) vmax=pt.y;
+        }
+        this.width = hmax-x;
+        this.height = vmax-y;
     }
 
     public void setJoueur(Joueur joueur) {
@@ -42,17 +51,18 @@ public class Case implements Serializable{
     public void setX(int x) {
         this.x = x;
     }
-
     public void setY(int y) {
         this.y = y;
     }
-
     public void setHeight(int height) {
         this.height = height;
     }
-
     public void setWidth(int width) {
         this.width = width;
+    }
+
+    public void setPoints(ArrayList<Point> points) {
+        this.points = points;
     }
 
     public Joueur getJoueur() {
@@ -70,17 +80,18 @@ public class Case implements Serializable{
     public int getX() {
         return x;
     }
-
     public int getY() {
         return y;
     }
-
+    public int getHeight() {
+        return height;
+    }
     public int getWidth() {
         return width;
     }
 
-    public int getHeight() {
-        return height;
+    public ArrayList<Point> getPoints() {
+        return points;
     }
 
     public void setVoisins(Set<Case> voisins) {

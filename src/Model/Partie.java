@@ -1,7 +1,14 @@
 package Model;
 
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.*;
 import java.util.*;
+import java.util.List;
+
 /**
  * Created by PC-Dylan on 09/11/2016.
  */
@@ -9,36 +16,51 @@ public class Partie implements Serializable{
     private static final long serialVersionUID = 2914403070993434934L;
     public final static int CLASSICO = 0;
     public final static int RAPIDO = 1;
-    public final static int THEMEMONDE = 2;
-    public final static int THEMEAPOCALYPSE=3;
-    public final static int THEMEGLOOGLOO=4;
 
     private Random random=new Random();
     private List <Joueur> joueurs;
     private List <Case> neutres;
     private int joueurCourant;
     private int mode;
-    private int theme;
+    private String mapName;
     private int nbtour;
     private Timer tempstour;
     private boolean brouillard;
     private boolean fin;
     private boolean distributionRenforts;
     private boolean attaque_deplacements;
+    private Image backgroundImage;
 
-    public Partie(){
+    // TODO extract the next value from control_menu
+    public double game_view_width = 700.;
+    public double game_view_height = 500.-100.;
+
+    public double map_zoom = 1.;
+    public Point map_translate = new Point(0,0);
+
+    public Partie(String mapName){
         joueurs=new ArrayList<>();
         neutres=new ArrayList<>();
         joueurCourant=0;
-        initialiseSetCasesNeutres("map/Base");
+        initialiseSetCasesNeutres("map/"+mapName+".map");
         mode=RAPIDO;
-        theme=THEMEMONDE;
+        this.mapName = mapName;
         nbtour=1;
         tempstour=new Timer();
         brouillard=false;
         fin=false;
         distributionRenforts=true;
         attaque_deplacements=false;
+
+
+        map_zoom =  game_view_width / backgroundImage.getHeight();
+        if(map_zoom>1) map_zoom = 1;
+        map_translate.x = (int) (backgroundImage.getWidth() / 2 - game_view_width / 2);
+        map_translate.y = (int) (backgroundImage.getHeight() / 2 - game_view_width / 2);
+    }
+
+    public Image getBackgroundImage() {
+        return backgroundImage;
     }
 
     public int getMode() {
@@ -47,10 +69,10 @@ public class Partie implements Serializable{
 
     public void setMode(int mode){ this.mode=mode;}
 
-    public void setTheme(int theme){this.theme=theme;}
+    public void setMapName(String mapName){this.mapName = mapName;}
 
-    public int getTheme() {
-        return theme;
+    public String getMapName() {
+        return mapName;
     }
 
     public int getNbtour() {
@@ -182,7 +204,8 @@ public class Partie implements Serializable{
         return nbtroupes;
     }
 
-    public int attaqueClassique(Joueur defenseur,Case c,int nbtroupeenvoyer) {  //methode qui lance une attaque contre un joueur
+    public int attaqueClassique(Joueur defenseur,Case c,int nbtroupeenvoyer) {
+        //methode qui lance une attaque contre un joueur
         // et renvoie le nombre de troupes restantes a l'attaquant
         while (nbtroupeenvoyer > 0 && c.getNbtroupes() > 0) {
             int[] deAttaquant;
@@ -234,13 +257,12 @@ public class Partie implements Serializable{
     public void initialiseSetCasesNeutres(String nomFile){
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nomFile));
-            for(int i=0;i<20;i++){
-                Case o = (Case) ois.readObject();
-                neutres.add(o);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+            int nb = ois.readInt();
+            for(int i=0;i<nb;i++)
+                neutres.add((Case) ois.readObject());
+            backgroundImage = SwingFXUtils.toFXImage(ImageIO.read(ois), null);
+            ois.close();
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

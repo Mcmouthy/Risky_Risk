@@ -8,7 +8,9 @@ import View.Game_View;
 import View.Menu_View;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Path;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ import java.util.Random;
 /**
  * Created by yhaffner on 15/12/16.
  */
-public class Control_Game implements EventHandler<MouseEvent> {
+public class Control_Game implements EventHandler<MouseEvent>{
     private final Partie model;
     private final Game_View view;
     private final Control_Menu menu;
@@ -26,8 +28,9 @@ public class Control_Game implements EventHandler<MouseEvent> {
 
     public Control_Game(Partie model,Control_Menu control_menu){
         this.model=model;
+        int n = model.getNeutres().size()/13;
         for(Joueur j:model.getJoueurs())
-            for(int iz=0;iz<3;iz++)
+            for(int iz=0;iz<n;iz++)
                 model.conquerirNeutre(j,model.getNeutres().get(loto.nextInt(model.getNeutres().size())),1);
         this.view = new Game_View(model,control_menu.getView().getStage());
         this.menu = control_menu;
@@ -38,6 +41,33 @@ public class Control_Game implements EventHandler<MouseEvent> {
 
         view.setController(this);
         view.setGameView();
+        view.stage.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case UP:
+                        model.map_translate.y -= 70;
+                        break;
+                    case DOWN:
+                        model.map_translate.y += 70;
+                        break;
+                    case LEFT:
+                        model.map_translate.x -= 70;
+                        break;
+                    case RIGHT:
+                        model.map_translate.x += 70;
+                        break;
+                    case ADD:
+                        model.map_zoom += 0.1;
+                        break;
+                    case SUBTRACT:
+                        model.map_zoom -= 0.1;
+                        break;
+                }
+                view.actualiserAffichage();
+            }
+        });
+        view.actualiserAffichage();
     }
     @Override
     public void handle(MouseEvent event) {
@@ -50,9 +80,9 @@ public class Control_Game implements EventHandler<MouseEvent> {
             view.notice.setText(model.getJoueurCourant().getNom()+"\nPlacez vos renforts!");
             view.caseOnFocus=null;
         }
-        else if(event.getSource() instanceof Button && view.allCases.containsKey((Button) event.getSource()))
+        else if(event.getSource() instanceof Path)
         {
-            Button b = ((Button) event.getSource());
+            Path b = ((Path) event.getSource());
             Case c = view.allCases.get(b);
 
             if(model.isDistributionRenforts() && model.getJoueurCourant().getTerrain().contains(c)) {

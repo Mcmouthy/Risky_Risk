@@ -4,6 +4,7 @@
 }
 
 #panel{
+    -fx-pref-height: 100px;
     -fx-alignment: center;
     -fx-padding: 1em;
     -fx-background-color: rgba(0,0,0,0.7);
@@ -43,43 +44,28 @@
 }
 
 .case-red {
-    -fx-background-color: red;
-    -fx-pref-width: 80px;
-    -fx-pref-height: 60px;
-    -fx-text-fill: white;
-    -fx-font-size: 1.3em;
+    -fx-fill: rgba(255,0,0,0.4);
+    -fx-border-color: trasparent;
 }
 .case-blue {
-    -fx-background-color: blue;
-    -fx-pref-width: 80px;
-    -fx-pref-height: 60px;
-    -fx-text-fill: white;
-    -fx-font-size: 1.3em;
+    -fx-fill: rgba(0,0,255,0.4);
+    -fx-border-color: trasparent;
 }
 .case-green {
-    -fx-background-color: green;
-    -fx-pref-width: 80px;
-    -fx-pref-height: 60px;
-    -fx-text-fill: white;
-    -fx-font-size: 1.3em;
+    -fx-fill: rgba(0,255,0,0.4);
+    -fx-border-color: trasparent;
 }
 .case-yellow {
-    -fx-background-color: yellow;
-    -fx-pref-width: 80px;
-    -fx-pref-height: 60px;
-    -fx-font-size: 1.3em;
+    -fx-fill: rgba(255,255,0,0.4);
+    -fx-border-color: trasparent;
 }
 .case-black {
-    -fx-background-color: black;
-    -fx-pref-width: 80px;
-    -fx-pref-height: 60px;
-    -fx-text-fill: white;
-    -fx-font-size: 1.3em;
+    -fx-fill: rgba(0,0,0,0.4);
+    -fx-border-color: trasparent;
 }
 .case-neutre {
-    -fx-pref-width: 80px;
-    -fx-pref-height: 60px;
-    -fx-font-size: 1.3em;
+    -fx-fill: rgba(255,255,255,0.1);
+    -fx-border-color: trasparent;
 }
 
 .focus {
@@ -124,4 +110,13 @@
 #bouton{
     -fx-alignment: bottom-center;
     -fx-translate-y: -5em;
+}
+.labels {
+    -fx-alignment: center;
+    -fx-padding: 5px;
+    -fx-background-color: white;
+    -fx-text-alignment: center;
+    -fx-font-size: 1.4em;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
 }

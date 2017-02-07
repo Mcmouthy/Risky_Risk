@@ -6,11 +6,11 @@ import Model.Partie;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -35,12 +35,15 @@ public class Game_View {
     public Button endTurn;
     public Label notice;
     public Label mode;
-    public HashMap<Button, Case> allCases;
-    public Button caseOnFocus;
+    public HashMap<Path, Case> allCases;
+    public HashMap<Path, Label> labels;
+    public Path caseOnFocus;
     public Label finDePartie;
     public Label message;
     public Button retour;
     public Button recommencer;
+    private ImageView background;
+    public StackPane game;
 
 
     public Game_View(Partie model, Stage stage) {
@@ -68,15 +71,41 @@ public class Game_View {
         retour.setId("retour");
         recommencer= new Button("Recommencer");
         recommencer.setId("recommencer");
+        background = new ImageView(model.getBackgroundImage());
 
-        allCases = new HashMap<Button, Case>();
-        for (Case c : model.getNeutres()) {
-            allCases.put(new Button(c.getNbtroupes() + ""), c);
-            for (Joueur j : model.getJoueurs())
-                for (Case c2 : j.getTerrain())
-                    allCases.put(new Button(c2.getNbtroupes() + ""), c2);
-        }
+        allCases = new HashMap<Path, Case>();
+        labels = new HashMap<Path, Label>();
+
+        for (Case c : model.getNeutres())
+            createTerritoryFor(c);
+        for (Joueur j : model.getJoueurs())
+            for (Case c : j.getTerrain())
+                createTerritoryFor(c);
         actualizeCases();
+    }
+
+
+    public void createTerritoryFor(Case c) {
+        int w=50,h=20;
+        Point lastPoint = null;
+        Path p = new Path();
+        for(Point pt:c.getPoints()) {
+            if(lastPoint==null) {
+                lastPoint=pt;
+                p.getElements().add(new MoveTo(pt.x,pt.y));
+            }
+            else p.getElements().add(new LineTo(pt.x,pt.y));
+        }
+        p.getElements().add(new ClosePath());
+        p.setTranslateX(c.getX());
+        p.setTranslateY(c.getY());
+        allCases.put(p, c);
+        Label label = new Label("0");
+        label.getStyleClass().add("labels");
+        label.setPrefWidth(w);label.setPrefHeight(h);
+        label.setTranslateX(c.getX()+c.getWidth()/2-w/2);
+        label.setTranslateY(c.getY()+c.getHeight()/2-h/2);
+        labels.put(p,label);
     }
 
 
@@ -84,11 +113,22 @@ public class Game_View {
         stage.getScene().getRoot().setVisible(false);
         ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
 
-        GridPane game = new GridPane();
+        //divide pane in 3
 
-        game.setId("game");
-        for(Map.Entry<Button,Case> e: allCases.entrySet())
-            game.add(e.getKey(),e.getValue().getX()/100,e.getValue().getY()/100);
+        StackPane territory_pane = new StackPane();
+        StackPane labels_pane = new StackPane();
+
+
+        territory_pane.setId("territory-pane");
+        territory_pane.setStyle("-fx-pref-width: " + model.getBackgroundImage().getWidth() + ";-fx-pref-height: " + model.getBackgroundImage().getHeight() + ";-fx-alignment: top-left");
+        for(Map.Entry<Path,Case> e: allCases.entrySet())
+            territory_pane.getChildren().add(e.getKey());
+        labels_pane.setId("labels-pane");
+        labels_pane.setMouseTransparent(true);
+        labels_pane.setFocusTraversable(true);
+        labels_pane.setStyle("-fx-pref-width: " + model.getBackgroundImage().getWidth() + ";-fx-pref-height: " + model.getBackgroundImage().getHeight() + ";-fx-alignment: top-left");
+        for(Map.Entry<Path,Label> e: labels.entrySet())
+            labels_pane.getChildren().add(e.getValue());
 
         HBox panel = new HBox();
         panel.setId("panel");
@@ -97,14 +137,21 @@ public class Game_View {
         panel.getChildren().add(notice);
         panel.getChildren().add(mode);
 
-        ((BorderPane) stage.getScene().getRoot()).setCenter(game);
+
+        game = new StackPane(background,territory_pane,labels_pane);
+
+        Pane limit_buf = new Pane(game);
+        limit_buf.setMaxWidth(model.game_view_width);
+        limit_buf.setMaxHeight(model.game_view_height);
+
+        ((BorderPane) stage.getScene().getRoot()).setCenter(limit_buf);
         ((BorderPane) stage.getScene().getRoot()).setBottom(panel);
 
         stage.getScene().getRoot().setVisible(true);
     }
 
     public void setController(EventHandler<MouseEvent> eh) {
-        for (Map.Entry<Button, Case> e : allCases.entrySet())
+        for (Map.Entry<Path, Case> e : allCases.entrySet())
             e.getKey().setOnMouseClicked(eh);
         endTurn.setOnMouseClicked(eh);
         retour.setOnMouseClicked(eh);
@@ -112,10 +159,9 @@ public class Game_View {
     }
 
     public void actualizeCases() {
-        for (Map.Entry<Button, Case> e : allCases.entrySet()) {
-            e.getKey().setText(e.getValue().getNbtroupes() + "");
+        for (Map.Entry<Path, Case> e : allCases.entrySet()) {
+            labels.get(e.getKey()).setText(e.getValue().getNbtroupes()+"");
             e.getKey().getStyleClass().clear();
-            e.getKey().getStyleClass().add("button");
             if(caseOnFocus!=null && caseOnFocus.equals(e.getKey()))
                 e.getKey().getStyleClass().add("focus");
             if (e.getValue().getJoueur() != null)
@@ -161,5 +207,22 @@ public class Game_View {
         ((BorderPane) stage.getScene().getRoot()).setBottom(bouton);
 
         stage.getScene().getRoot().setVisible(true);
+    }
+
+    public void actualiserAffichage() {
+        if(model.map_zoom<model.game_view_width /model.getBackgroundImage().getHeight()) model.map_zoom=model.game_view_width /model.getBackgroundImage().getHeight();
+        if(model.map_zoom>1.7) model.map_zoom=1.7;
+
+        game.setScaleX(model.map_zoom);
+        game.setScaleY(model.map_zoom);
+
+        if(model.map_translate.x < model.getBackgroundImage().getWidth() * (1-model.map_zoom) / 2) model.map_translate.x = (int) (model.getBackgroundImage().getWidth() * (1-model.map_zoom) / 2);
+        if(model.map_translate.x > model.getBackgroundImage().getWidth()*model.map_zoom +model.getBackgroundImage().getWidth() * (1-model.map_zoom) / 2-model.game_view_width) model.map_translate.x = (int) (model.getBackgroundImage().getWidth()*model.map_zoom +model.getBackgroundImage().getWidth() * (1-model.map_zoom) / 2-model.game_view_width);
+        if(model.map_translate.y < model.getBackgroundImage().getHeight() * (1-model.map_zoom) / 2) model.map_translate.y = (int) (model.getBackgroundImage().getHeight() * (1-model.map_zoom) / 2);
+        if(model.map_translate.y > model.getBackgroundImage().getHeight()*model.map_zoom +model.getBackgroundImage().getHeight() * (1-model.map_zoom) / 2-model.game_view_height) model.map_translate.y = (int) (model.getBackgroundImage().getHeight()*model.map_zoom +model.getBackgroundImage().getHeight() * (1-model.map_zoom) / 2-model.game_view_height);
+
+
+        game.setTranslateX(-model.map_translate.x);
+        game.setTranslateY(-model.map_translate.y);
     }
 }

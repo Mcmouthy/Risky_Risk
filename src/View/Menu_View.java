@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Control_Menu;
 import Model.Partie;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -45,7 +46,6 @@ public class Menu_View {
     public Button suivant;
     public Button retour;
     public ImageView imagecarte;
-    public Button choix;
     public TextField askNomJoueur1;
     public TextField askNomJoueur2;
     public TextField askNomJoueur3;
@@ -76,7 +76,6 @@ public class Menu_View {
 
     // TODO ULTRA IPORTANT
     private void initAttributs() {
-
         stage.setTitle("Risky Risk");
         stage.getIcons().add(new Image(new File("img/icon.png").toURI().toString()));
         stage.centerOnScreen();
@@ -118,6 +117,7 @@ public class Menu_View {
         joueurButton2.setToggleGroup(nbJoueursGroup);
         joueurButton3.setToggleGroup(nbJoueursGroup);
         joueurButton4.setToggleGroup(nbJoueursGroup);
+        joueurButton2.setSelected(true);
 
         type = new Label("Type de partie : ");
         type.setId("type");
@@ -128,21 +128,20 @@ public class Menu_View {
         rapide.setId("type");
         classique.setToggleGroup(typeGroup);
         rapide.setToggleGroup(typeGroup);
+        classique.setSelected(true);
 
         carte=new Label("Carte : ");
         carte.setId("carte");
+        imagecarte= new ImageView();
+        imagecarte.setFitWidth(150);
+        imagecarte.setFitHeight(150);
         listeCarte=new ComboBox<>();
-        listeCarte.getItems().add("Base");
-        listeCarte.getItems().add("icon");
         listeCarte.setId("listecarte");
-        listeCarte.setValue("Base");
 
         suivant=new Button("SUIVANT");
         suivant.setId("btAsking");
         retour=new Button("RETOUR");
         retour.setId("btAsking");
-        choix=new Button("CHOISIR");
-        choix.setId("choisir");
 
         askNomJoueur1=new TextField();
         askNomJoueur1.setPromptText("Saisissez le nom");
@@ -243,8 +242,7 @@ public class Menu_View {
         HBox carteMenu=new HBox(5);
         carteMenu.setId("cartemenu");
         carteMenu.setAlignment(Pos.CENTER);
-        imagecarte= new ImageView();
-        carteMenu.getChildren().addAll(listeCarte,choix);
+        carteMenu.getChildren().addAll(listeCarte);
         image.getChildren().addAll(carteMenu,imagecarte);
         HBox bouton=new HBox(5);
         bouton.setId("btnHbox");
@@ -308,7 +306,7 @@ public class Menu_View {
     }
 
     // TODO
-    public void setController(EventHandler<MouseEvent> eh){
+    public void setController(Control_Menu eh){
 
         startButton.setOnMouseClicked(eh);
         nouvellePartie.setOnMouseClicked(eh);
@@ -316,7 +314,8 @@ public class Menu_View {
         retour.setOnMouseClicked(eh);
         retour2.setOnMouseClicked(eh);
         lancerPartie.setOnMouseClicked(eh);
-        choix.setOnMouseClicked(eh);
+        listeCarte.valueProperty().addListener(eh);
+
 
     }
 

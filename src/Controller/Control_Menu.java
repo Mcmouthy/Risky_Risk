@@ -1,26 +1,29 @@
 package Controller;
 
 
+import Model.Case;
 import Model.Joueur;
 import Model.Partie;
 import View.Menu_View;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
-import javafx.scene.control.RadioButton;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
-import java.io.File;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+
+import static java.lang.System.exit;
 
 /**
  * Created by yhaffner on 21/11/16.
  */
-public class Control_Menu implements EventHandler<MouseEvent>
+public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.value.ChangeListener<String>
 {
     private Menu_View view;
     private Control_Game game;
+    private File[] maps;
 
     public Control_Menu(Menu_View menu)
     {
@@ -55,6 +58,10 @@ public class Control_Menu implements EventHandler<MouseEvent>
 
         if (event.getSource().equals(getView().nouvellePartie))
         {
+            view.listeCarte.getItems().clear();
+            for(String s:getCartesNames())
+                view.listeCarte.getItems().add(s);
+            view.listeCarte.setValue(view.listeCarte.getItems().get(0));
             view.setPartieAskingView();
         }
 
@@ -68,12 +75,6 @@ public class Control_Menu implements EventHandler<MouseEvent>
 
         if (event.getSource().equals(getView().retour)){
             view.setMainMenuView();
-        }
-
-        if (event.getSource().equals(getView().choix)){
-            String nomImage="img/"+view.listeCarte.getValue()+".png";
-            view.imagecarte.setImage(new Image(new File(nomImage).toURI().toString(), 150, 150, true, true));
-
         }
 
         if (event.getSource().equals(getView().retour2)){
@@ -96,7 +97,7 @@ public class Control_Menu implements EventHandler<MouseEvent>
     }
 
     public void nouvellepartie() {
-        Partie p = new Partie();
+        Partie p = new Partie(view.listeCarte.getValue());
         if (view.nbJoueursGroup.getToggles().get(0).isSelected()){
             p.ajouterJoueur(new Joueur(view.askNomJoueur1.getText(),view.couleurjoueur1.getItems().indexOf(view.couleurjoueur1.getValue())));
             p.ajouterJoueur(new Joueur(view.askNomJoueur2.getText(),view.couleurjoueur2.getItems().indexOf(view.couleurjoueur2.getValue())));
@@ -117,10 +118,6 @@ public class Control_Menu implements EventHandler<MouseEvent>
             p.setMode(1);
         }
 
-        switch (view.listeCarte.getValue()){
-            case "Base":
-                p.setTheme(2);
-        }
         game=new Control_Game(p,this);
     }
 
@@ -199,5 +196,48 @@ public class Control_Menu implements EventHandler<MouseEvent>
             }
         }
         return false;
+    }
+
+    public String[] getCartesNames() {
+        maps = new File("map").listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                String[] parts = name.split("\\.");
+                return parts.length>0 && parts[parts.length-1].equals("map");
+            }
+        });
+
+
+        // TODO AMENER L'UTILISATEUR À CRÉER SA MAP EN CAS D'ERREUR
+        if(maps==null) {System.out.println("PAS DE MAPS DISPO, EN CRÉER UNE AVEC LE GÉNÉRATEUR");exit(-1);}
+
+        String[] cartesName = new String[maps.length];
+        for(int i=0;i<maps.length;i++) {
+            String name = "";
+            for(int j=0;j<maps[i].getName().split("\\.").length-1;j++)
+                name+=maps[i].getName().split("\\.")[j];
+            cartesName[i]=name;
+        }
+        return cartesName;
+    }
+    public BufferedImage getImageForCarteId(int id) {
+        BufferedImage image = null;
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("map/"+maps[id].getName()));
+            int nb = ois.readInt();
+            for(int i=0;i<nb;i++) ois.readObject();
+            image = ImageIO.read(ois);
+            ois.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
+    @Override
+    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        for(int i=0;i<view.listeCarte.getItems().size();i++)
+            if(view.listeCarte.getItems().get(i).equals(newValue))
+                view.imagecarte.setImage(SwingFXUtils.toFXImage(getImageForCarteId(i), null));
     }
 }
