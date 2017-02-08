@@ -248,40 +248,36 @@ public class Partie implements Serializable{
     public int attaqueClassique(Joueur defenseur,Case c,int nbtroupeenvoyer) {
         //methode qui lance une attaque contre un joueur
         // et renvoie le nombre de troupes restantes a l'attaquant
-        while (nbtroupeenvoyer > 0 && c.getNbtroupes() > 0) {
-            if (nbtroupeenvoyer >= 3) {
-                deAttaquant = new int[3];
-            } else if (nbtroupeenvoyer == 2) {
-                deAttaquant = new int[2];
-            } else {
-                deAttaquant = new int[1];
-            }
-
-            if (nbtroupeenvoyer >= 2) {
-                deDefenseur = new int[2];
-            } else {
-                deDefenseur = new int[1];
-            }
-
-            while (nbtroupeenvoyer > 0 || c.getNbtroupes() < 0) {
-                if (nbtroupeenvoyer > c.getNbtroupes()) {
-                    int tempo = 6;
-                    int totalAttaque = 0, totalDefense = 0;
-                    for (int i = 0; i < deAttaquant.length; i++) {
-                        deAttaquant[i] = random.nextInt(7);
-                        totalAttaque += deAttaquant[i];
-                        if (deAttaquant[i] < tempo) tempo = deAttaquant[i];
-                    }
-                    totalAttaque -= tempo;
-                    for (int j = 0; j < deDefenseur.length; j++) {
-                        deDefenseur[j] = random.nextInt(7);
-                        totalDefense += deDefenseur[j];
-                    }
-                    if (totalAttaque > totalDefense) c.setNbtroupes(c.getNbtroupes() - (totalAttaque - totalDefense));
-                    else nbtroupeenvoyer -= totalDefense - totalAttaque;
-                }
-            }
+        if (nbtroupeenvoyer >= 3) {
+            deAttaquant = new int[3];
+        } else if (nbtroupeenvoyer == 2) {
+            deAttaquant = new int[2];
+        } else {
+            deAttaquant = new int[1];
         }
+        if (nbtroupeenvoyer >= 2) {
+            deDefenseur = new int[2];
+        } else {
+            deDefenseur = new int[1];
+        }
+         while (nbtroupeenvoyer > 0 && c.getNbtroupes() > 0) {
+             if (nbtroupeenvoyer > c.getNbtroupes()) {
+                 int tempo = 6;
+                 int totalAttaque = 0, totalDefense = 0;
+                 for (int i = 0; i < deAttaquant.length; i++) {
+                     deAttaquant[i] = random.nextInt(7);
+                     totalAttaque += deAttaquant[i];
+                     if (deAttaquant[i] < tempo) tempo = deAttaquant[i];
+                 }
+                 totalAttaque -= tempo;
+                 for (int j = 0; j < deDefenseur.length; j++) {
+                     deDefenseur[j] = random.nextInt(7);
+                     totalDefense += deDefenseur[j];
+                 }
+                 if (totalAttaque > totalDefense) c.setNbtroupes(c.getNbtroupes() - (totalAttaque - totalDefense));
+                 else nbtroupeenvoyer -= totalDefense - totalAttaque;
+                }
+         }
         if (c.getNbtroupes() == 0 && nbtroupeenvoyer > 0) return nbtroupeenvoyer;
         else return 0;
     }
