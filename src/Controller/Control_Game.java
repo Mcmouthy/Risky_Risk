@@ -28,10 +28,9 @@ public class Control_Game implements EventHandler<MouseEvent>{
 
     public Control_Game(Partie model,Control_Menu control_menu){
         this.model=model;
-        int n = model.getNeutres().size()/13;
+        model.setJoueurCourant(loto.nextInt(model.getJoueurs().size()));
         for(Joueur j:model.getJoueurs())
-            for(int iz=0;iz<n;iz++)
-                model.conquerirNeutre(j,model.getNeutres().get(loto.nextInt(model.getNeutres().size())),1);
+            model.conquerirNeutre(j,model.getNeutres().get(loto.nextInt(model.getNeutres().size())),1);
         this.view = new Game_View(model,control_menu.getView().getStage());
         this.menu = control_menu;
 

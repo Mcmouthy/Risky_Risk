@@ -327,4 +327,8 @@ public class Partie implements Serializable{
         game_view_width = width;
         game_view_height = height;
     }
+
+    public void setJoueurCourant(int joueurCourant) {
+        this.joueurCourant = joueurCourant;
+    }
 }

@@ -25,6 +25,11 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
     private Control_Game game;
     private File[] maps;
 
+    /*
+    SETTINGS
+     */
+
+
     public Control_Menu(Menu_View menu)
     {
         this.view = menu;
