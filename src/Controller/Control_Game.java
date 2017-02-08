@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Path;
@@ -40,10 +41,8 @@ public class Control_Game implements EventHandler<MouseEvent>{
         setEvenHandlers();
 
         File file = new File("musics/RiskSoundtrack.wav");
-        Media media = new Media(file.toURI().toString());
-        MediaPlayer player=new MediaPlayer(media);
-        player.play();
-
+        AudioClip clip= new AudioClip(file.toURI().toString());
+        clip.play();
 
         view.setGameView();
         view.actualiserAffichage();
