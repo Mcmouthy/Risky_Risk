@@ -331,4 +331,26 @@ public class Partie implements Serializable{
     public void setJoueurCourant(int joueurCourant) {
         this.joueurCourant = joueurCourant;
     }
+
+    public void saveStation(String nomFile){
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nomFile));
+            oos.writeObject(this);
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Partie loadGame(String nomFile){
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nomFile));
+            return (Partie)ois.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
