@@ -83,7 +83,7 @@ public class Menu_View {
             // TEST fullscreen
         stage.setFullScreen(true);
         scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight(), Color.BLACK);
-//             scene = new Scene(root, 700, 500, Color.BLACK);
+    //         scene = new Scene(root, 700, 500, Color.BLACK);
         /* ************************************* */
 
 
