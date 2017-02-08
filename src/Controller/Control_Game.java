@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.shape.Path;
 
 import java.io.File;
@@ -38,8 +39,14 @@ public class Control_Game implements EventHandler<MouseEvent>{
         model.calculRenforts(model.getJoueurCourant());
         view.notice.setText(model.getJoueurCourant().getNom()+"\nPlacez vos renforts!");
 
-        view.setController(this);
+        setEvenHandlers();
+
         view.setGameView();
+        view.actualiserAffichage();
+    }
+
+    private void setEvenHandlers() {
+        view.setController(this);
         view.stage.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -66,8 +73,25 @@ public class Control_Game implements EventHandler<MouseEvent>{
                 view.actualiserAffichage();
             }
         });
-        view.actualiserAffichage();
+        view.stage.getScene().setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(event.getX()<15) {model.map_translate.x -= 30;view.actualiserAffichage();}
+                if(Math.abs(event.getX()-view.stage.getScene().getWidth())<15) {model.map_translate.x += 30;view.actualiserAffichage();}
+
+                if(event.getY()<15) {model.map_translate.y -= 30;view.actualiserAffichage();}
+                if(Math.abs(event.getY()-view.stage.getScene().getHeight())<15) {model.map_translate.y += 30;view.actualiserAffichage();}
+            }
+        });
+        view.stage.getScene().setOnScroll(new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                model.map_zoom += event.getDeltaY()/400;
+                view.actualiserAffichage();
+            }
+        });
     }
+
     @Override
     public void handle(MouseEvent event) {
         if(event.getSource().equals(view.endTurn))
