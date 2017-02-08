@@ -1,14 +1,21 @@
 package Controller;
 
 
-import Model.Case;
 import Model.Joueur;
 import Model.Partie;
 import View.Menu_View;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -21,72 +28,132 @@ import static java.lang.System.exit;
  */
 public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.value.ChangeListener<String>
 {
+    public final static String[] resolutions = {
+                        		"800 x 600",		"1024 x 600",		"1024 x 768",
+            "1280 x 800",		"1366 x 768",		"1440 x 900",		"1600 x 900",
+            "1680 x 900",		"1920 x 1080",		"1920 x 1200",		"2560 x 1440"
+    };
+
     private Menu_View view;
     private Control_Game game;
     private File[] maps;
 
-    /*
-    SETTINGS
-     */
+    // SETTINGS
+    int resolution = 0;
+    boolean fullscreen = true;
+    double soundVolume = 1;
+    double musicVolume = 1;
 
-
-    public Control_Menu(Menu_View menu)
+    public Control_Menu(Stage stage)
     {
-        this.view = menu;
-        this.view.setController(this);
+        BorderPane root = new BorderPane();
+        Scene scene;
+        initFromConfigFile();
 
-        // En attendant un menu fonctionnel, pour passer direct au jeu:
-        // Partie p = new Partie();
-        // p.ajouterJoueur(new Joueur("Pierre",0));
-        // p.ajouterJoueur(new Joueur("Gérard",1));
-        // new Control_Game(p,this);
-        // fin truc inutile
+
+        stage.setFullScreen(fullscreen);
+        if(fullscreen)
+            scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight(), Color.BLACK);
+        else
+            scene = new Scene(root, Double.parseDouble(resolutions[resolution].split(" x ")[0]), Double.parseDouble(resolutions[resolution].split(" x ")[1]), Color.BLACK);
+
+
+
+        stage.setScene(scene);
+        stage.show();
+
+        this.view = new Menu_View(stage);
+        setEvenHandlers();
+        this.view.askFullscreen.setSelected(fullscreen);
+        for (String s : Control_Menu.resolutions) if(
+                Screen.getPrimary().getBounds().getWidth()>=Double.parseDouble(s.split(" x ")[0]) &&
+                        Screen.getPrimary().getBounds().getHeight()>=Double.parseDouble(s.split(" x ")[1]))
+            view.listeResolution.getItems().add(s);
+        this.view.listeResolution.setValue(resolutions[resolution]);
+        this.view.listeResolution.setDisable(fullscreen);
+        this.view.sliderSoundVolume.setValue(soundVolume);
+        this.view.sliderMusicVolume.setValue(musicVolume);
+    }
+
+    private void setEvenHandlers() {
+        view.getStage().setOnCloseRequest(event -> {
+            view.getStage().close();
+            exit(0);
+        });
+        this.view.setController(this);
+        this.view.sliderSoundVolume.setOnMouseReleased(event -> {
+            AudioClip clip = new AudioClip(new File("sounds/button.wav").toURI().toString());
+            clip.setVolume(view.sliderSoundVolume.getValue());
+            clip.play();
+        });
+        this.view.sliderMusicVolume.setOnMouseReleased(event -> {
+            AudioClip clip = new AudioClip(new File("sounds/button.wav").toURI().toString());
+            clip.setVolume(view.sliderMusicVolume.getValue());
+            clip.play();
+        });
     }
 
     @Override
-    // TODO ULTRA IMPORTANT
     public void handle(MouseEvent event) {
-        /*
-        Réception des objets du genre:
-
-        si(event.getSource().equals(view.bouton){
-            traiter...
-            ex: view.setOptionsView();
+        /* BRUITAGES */
+        if (event.getSource() instanceof Button) {
+            AudioClip clip = new AudioClip(new File("sounds/button.wav").toURI().toString());
+            clip.setVolume(soundVolume);
+            clip.play();;
         }
-        */
 
+
+        /* ACTIONS */
         if (event.getSource().equals(getView().startButton)) {
             view.setMainMenuView();
-        }
-
-        if (event.getSource().equals(getView().nouvellePartie)) {
+        } else if (event.getSource().equals(getView().nouvellePartie)) {
             view.listeCarte.getItems().clear();
             for (String s : getCartesNames())
                 view.listeCarte.getItems().add(s);
             view.listeCarte.setValue(view.listeCarte.getItems().get(0));
             view.setPartieAskingView();
-        }
-
-        if (event.getSource().equals(getView().suivant)) {
+        } else if (event.getSource().equals(getView().suivant)) {
             if (!nbJoueursNonChoisi() && !typePartieChoisi()) {
                 view.setNomCouleurJoueursAskingView();
             }
-        }
-
-        if (event.getSource().equals(getView().retour)) {
+        } else if (event.getSource().equals(getView().retour)) {
             view.setMainMenuView();
-        }
-
-        if (event.getSource().equals(getView().retour2)) {
+        } else if (event.getSource().equals(getView().retour2)) {
             view.setPartieAskingView();
-        }
-
-        if (event.getSource().equals(getView().lancerPartie)) {
+        } else if (event.getSource().equals(getView().lancerPartie)) {
             if (!mauvaisChoixCouleurs() && !nomJoueurNull() && !sameNomJoueur()) {
                 nouvellepartie();
             } else {
                 view.popUpErreurSetNomCouleur();
             }
+        } else if (event.getSource().equals(getView().options)) {
+            view.setOptionsView();
+        } else if (event.getSource().equals(getView().saveSettings)) {
+            boolean changement = fullscreen!=view.askFullscreen.isSelected();
+            fullscreen = view.askFullscreen.isSelected();
+            for(int i=0;i<resolutions.length;i++) if(resolutions[i].equals(view.listeResolution.getValue())) {
+                changement |= resolution!=i;
+                resolution = i;
+            }
+            soundVolume = view.sliderSoundVolume.getValue();
+
+            if(changement) view.getStage().hide();
+            view.getStage().setFullScreen(fullscreen);
+            if(fullscreen) {
+                view.getScene().getWindow().setWidth(Screen.getPrimary().getBounds().getWidth());
+                view.getScene().getWindow().setHeight(Screen.getPrimary().getBounds().getHeight());
+            } else {
+                view.getScene().getWindow().setWidth(Double.parseDouble(resolutions[resolution].split(" x ")[0]));
+                view.getScene().getWindow().setHeight(Double.parseDouble(resolutions[resolution].split(" x ")[1]));
+            }
+            if(changement) view.getStage().show();
+
+            writeConfigFile();
+            view.setMainMenuView();
+        } else if(event.getSource().equals(getView().askFullscreen)) {
+            view.listeResolution.setDisable(view.askFullscreen.isSelected());
+        } else if(event.getSource().equals(getView().quitter)) {
+            view.getStage().close();exit(0);
         }
     }
 
@@ -232,6 +299,34 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
             e.printStackTrace();
         }
         return image;
+    }
+
+
+
+    private void initFromConfigFile() {
+        File config = new File("setup.cfg");
+        if(config.exists()){
+            try {
+                DataInputStream dis = new DataInputStream(new FileInputStream(config));
+                fullscreen = dis.readBoolean();
+                if(!fullscreen) resolution = dis.readInt();
+                soundVolume = dis.readDouble();
+                musicVolume = dis.readDouble();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else writeConfigFile();
+    }
+    private void writeConfigFile(){
+        try {
+            DataOutputStream dos = new DataOutputStream(new FileOutputStream(new File("setup.cfg")));
+            dos.writeBoolean(fullscreen);
+            if(!fullscreen) dos.writeInt(resolution);
+            dos.writeDouble(soundVolume);
+            dos.writeDouble(musicVolume);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -1,7 +1,17 @@
 import Controller.Control_Menu;
 import View.Menu_View;
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
+import java.io.File;
+
+import static java.lang.System.exit;
 
 public class Appli extends Application{
 
@@ -11,7 +21,6 @@ public class Appli extends Application{
 
     @Override
     public void start(Stage stage) throws Exception {
-        Menu_View menu = new Menu_View(stage);
-        Control_Menu control_menu = new Control_Menu(menu);
+        Control_Menu control_menu = new Control_Menu(stage);
     }
 }
