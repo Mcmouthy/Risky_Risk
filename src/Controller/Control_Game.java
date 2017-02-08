@@ -5,16 +5,14 @@ import Model.Case;
 import Model.Joueur;
 import Model.Partie;
 import View.Game_View;
-import View.Menu_View;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Path;
-
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -40,6 +38,12 @@ public class Control_Game implements EventHandler<MouseEvent>{
         view.notice.setText(model.getJoueurCourant().getNom()+"\nPlacez vos renforts!");
 
         setEvenHandlers();
+
+        File file = new File("musics/RiskSoundtrack.wav");
+        Media media = new Media(file.toURI().toString());
+        MediaPlayer player=new MediaPlayer(media);
+        player.play();
+
 
         view.setGameView();
         view.actualiserAffichage();
