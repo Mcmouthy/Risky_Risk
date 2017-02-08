@@ -105,13 +105,13 @@ public class Control_Game implements EventHandler<MouseEvent>{
                 if((view.caseOnFocus != null) && (view.allCases.get(view.caseOnFocus).getNbtroupes() > 1) && (view.allCases.get(view.caseOnFocus).getJoueur() == model.getJoueurCourant()) && model.getJoueurCourant().getTerrain().get(model.getJoueurCourant().getindexTerrain(view.allCases.get(view.caseOnFocus))).getVoisins().contains(c)) {
                     if (model.getNeutres().contains(c)) {
                         if (c.getNbtroupes() == 0) {
-                            model.conquerirNeutre(model.getJoueurCourant(), c, caseattaquante.getNbtroupes() - 1);
+                            model.conquerirNeutre(model.getJoueurCourant(), c, caseattaquante.getNbtroupes()-1);
                             model.getJoueurCourant().getTerrain().get(model.getJoueurCourant().getindexTerrain(caseattaquante)).setNbtroupes(1);
                         }
                     } else if (!model.getJoueurCourant().getTerrain().contains(c)){
                         for (Joueur j : model.getJoueurs()) {
                             if (j.getTerrain().contains(c)) {
-                                model.captureTerrainAdverse(model.getJoueurCourant(), j, c, caseattaquante.getNbtroupes() - 1);
+                                model.captureTerrainAdverse(model.getJoueurCourant(), j, c, caseattaquante.getNbtroupes());
                                 model.getJoueurCourant().getTerrain().get(model.getJoueurCourant().getindexTerrain(caseattaquante)).setNbtroupes(1);
                             }
                         }

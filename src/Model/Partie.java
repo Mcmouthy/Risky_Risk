@@ -35,6 +35,8 @@ public class Partie implements Serializable{
 
     public double map_zoom = 1.;
     public Point map_translate = new Point(0,0);
+    private int[] deAttaquant;
+    private int[] deDefenseur;
 
     public Partie(String mapName){
         joueurs=new ArrayList<>();
@@ -59,6 +61,22 @@ public class Partie implements Serializable{
 
     public Image getBackgroundImage() {
         return backgroundImage;
+    }
+
+    public int[] getDeAttaquant() {
+        return deAttaquant;
+    }
+
+    public int[] getDeDefenseur() {
+        return deDefenseur;
+    }
+
+    public void setDeAttaquant(int[] deAttaquant) {
+        this.deAttaquant = deAttaquant;
+    }
+
+    public void setDeDefenseur(int[] deDefenseur) {
+        this.deDefenseur = deDefenseur;
     }
 
     public int getMode() {
@@ -183,21 +201,46 @@ public class Partie implements Serializable{
         * alors la probabilité de gagner est plus grande. on renvoie aussi le nombre de troupe restantes*/
         double chanceAtt=0f;
         double chanceDef=0f;
-        if (nbtroupes==c.getNbtroupes()){
+        if(nbtroupes==c.getNbtroupes()){
             chanceAtt=random.nextDouble();
             chanceDef=random.nextDouble();
             if (chanceAtt>chanceDef){
+                nbtroupes=1;
                 c.setNbtroupes(0);
-            }else if (chanceAtt<chanceDef){
-                c.setNbtroupes(1);
+            }else{
                 nbtroupes=0;
+                c.setNbtroupes(1);
             }
-        }else if(nbtroupes>c.getNbtroupes()){
-            nbtroupes= nbtroupes-c.getNbtroupes();
-            c.setNbtroupes(0);
-        }else if(nbtroupes<c.getNbtroupes()){
-            c.setNbtroupes(c.getNbtroupes()-nbtroupes);
-            nbtroupes=0;
+        }else if(Math.abs(nbtroupes-c.getNbtroupes())==1){
+            if (nbtroupes>c.getNbtroupes()){
+                chanceAtt=random.nextDouble()+0.50;
+                chanceDef=random.nextDouble();
+                if (chanceAtt>=chanceDef){
+                    nbtroupes=nbtroupes-c.getNbtroupes();
+                    c.setNbtroupes(0);
+                }else{
+                    nbtroupes=0;
+                    c.setNbtroupes(1);
+                }
+            }else {
+                chanceAtt = random.nextDouble();
+                chanceDef = random.nextDouble() + 0.50;
+                if (chanceAtt >= chanceDef) {
+                    nbtroupes = nbtroupes - c.getNbtroupes();
+                    c.setNbtroupes(0);
+                } else {
+                    nbtroupes = 0;
+                    c.setNbtroupes(1);
+                }
+            }
+        }else if (Math.abs(nbtroupes-c.getNbtroupes())>=2){
+            if (nbtroupes>c.getNbtroupes()){
+                nbtroupes=nbtroupes-c.getNbtroupes();
+                c.setNbtroupes(0);
+            }else{
+                nbtroupes=0;
+                c.setNbtroupes(c.getNbtroupes()-nbtroupes);
+            }
         }
         return nbtroupes;
     }
@@ -206,7 +249,6 @@ public class Partie implements Serializable{
         //methode qui lance une attaque contre un joueur
         // et renvoie le nombre de troupes restantes a l'attaquant
         while (nbtroupeenvoyer > 0 && c.getNbtroupes() > 0) {
-            int[] deAttaquant;
             if (nbtroupeenvoyer >= 3) {
                 deAttaquant = new int[3];
             } else if (nbtroupeenvoyer == 2) {
@@ -215,7 +257,6 @@ public class Partie implements Serializable{
                 deAttaquant = new int[1];
             }
 
-            int[] deDefenseur;
             if (nbtroupeenvoyer >= 2) {
                 deDefenseur = new int[2];
             } else {
