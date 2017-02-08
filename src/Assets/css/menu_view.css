@@ -1,33 +1,46 @@
 .root{
     -fx-background-image: url('../img/background.jpg');
 }
+
 #joueurButton1,#joueurButton2, #joueurButton3, #joueurButton4, #nbjoueurs, #type{
     -fx-text-fill: white;
     -fx-alignment: bottom-center;
 }
 #panAsking {
     -fx-alignment: center;
-    -fx-padding: 0 0 4em 0em;
+    -fx-padding: 1.5em 0 4em 0em;
     -fx-vgap: 0.8em;
 }
-#pan-jouer{
-    -fx-alignment: bottom-center;
-    -fx-padding: 0 0 12em 0;
+#jouer{
+    -fx-alignment: center;
+    -fx-font-size: 2.5em;
+    -fx-padding: 1em;
+    -fx-font-weight: 100;
 }
+
+#btnHbox, #titre{
+    -fx-pref-height: 200px;
+    -fx-alignment: center;
+}
+
 #panneau{
-    -fx-alignment: bottom-center;
-    -fx-padding: 0 0 7em 0em;
+    -fx-alignment: center;
     -fx-vgap: 0.3em;
 }
 
-#jouer, #continuer, #nouvellePartie, #options, #apropos, #choisir {
+#titre{
+    -fx-translate-y: 2em;
+}
+
+#continuer, #nouvellePartie, #options, #apropos, #choisir {
     -fx-alignment: center;
 }
 .button{
+    -fx-font-size: 1.2em;
     -fx-padding: 0.8em;
     -fx-font-weight: bold;
     -fx-background-color: #d6ba51;
-    -fx-pref-width: 200px;
+    -fx-pref-width: 300px;
 }
 #choix{
     -fx-padding: 0em;
@@ -45,17 +58,10 @@
     -fx-background-color: #ccb050;
 }
 
-#titre1{
-    -fx-translate-y: -5em;
-}
-#titre2{
-    -fx-translate-y: 7em;
-    -fx-translate-x: 15.5em;
-}
 #titre3 {
     -fx-alignment: top-center !important;
 }
-#btnHbox, #cartemenu, #nbjoueurspartie, #typepartie, #imgcarte {
+#cartemenu, #nbjoueurspartie, #typepartie, #imgcarte {
     -fx-alignment: center;
     -fx-padding: 1.5;
 }

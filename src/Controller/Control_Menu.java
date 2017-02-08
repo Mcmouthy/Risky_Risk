@@ -98,6 +98,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
 
     public void nouvellepartie() {
         Partie p = new Partie(view.listeCarte.getValue());
+        p.setPlateauDimensions(view.getScene().getWidth(),view.getScene().getHeight());
         if (view.nbJoueursGroup.getToggles().get(0).isSelected()){
             p.ajouterJoueur(new Joueur(view.askNomJoueur1.getText(),view.couleurjoueur1.getItems().indexOf(view.couleurjoueur1.getValue())));
             p.ajouterJoueur(new Joueur(view.askNomJoueur2.getText(),view.couleurjoueur2.getItems().indexOf(view.couleurjoueur2.getValue())));

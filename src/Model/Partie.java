@@ -30,10 +30,8 @@ public class Partie implements Serializable{
     private boolean distributionRenforts;
     private boolean attaque_deplacements;
     private Image backgroundImage;
-
-    // TODO extract the next value from control_menu
-    public double game_view_width = 700.;
-    public double game_view_height = 500.-100.;
+    public double game_view_width;
+    public double game_view_height;
 
     public double map_zoom = 1.;
     public Point map_translate = new Point(0,0);
@@ -282,5 +280,10 @@ public class Partie implements Serializable{
             if (!j.isEliminated())nb++;
         }
         return nb;
+    }
+
+    public void setPlateauDimensions(double width, double height) {
+        game_view_width = width;
+        game_view_height = height;
     }
 }

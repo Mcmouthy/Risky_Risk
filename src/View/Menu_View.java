@@ -1,19 +1,15 @@
 package View;
 
 import Controller.Control_Menu;
-import Model.Partie;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -31,7 +27,7 @@ public class Menu_View {
     public Button continuer;
     public Button options;
     public Button apropos;
-    public ImageView titreJeu;
+    public Pane titreJeu;
     public Label nbJoueurs;
     public ToggleGroup nbJoueursGroup;
     public RadioButton joueurButton2;
@@ -74,14 +70,22 @@ public class Menu_View {
         setLauncherView();
     }
 
-    // TODO ULTRA IPORTANT
     private void initAttributs() {
         stage.setTitle("Risky Risk");
         stage.getIcons().add(new Image(new File("img/icon.png").toURI().toString()));
         stage.centerOnScreen();
         stage.setResizable(false);
         root = new BorderPane();
-        scene = new Scene(root, 700, 500, Color.BLACK);
+
+
+        /* TODO remove that ugly following thing */
+            // TEST fullscreen
+          stage.setFullScreen(true);
+        //scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight(), Color.BLACK);
+             scene = new Scene(root, 700, 500, Color.BLACK);
+        /* ************************************* */
+
+
         stage.setScene(scene);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -90,6 +94,8 @@ public class Menu_View {
                 exit(0);
             }
         });
+
+
         // attribution du fichier CSS
         stage.getScene().getStylesheets().add(new File("css/menu_view.css").toURI().toString());
         stage.show();
@@ -103,7 +109,9 @@ public class Menu_View {
         options.setId("options");
         apropos = new Button("À PROPOS");
         apropos.setId("apropos");
-        titreJeu = new ImageView(new Image(new File("img/logo_pt_v1.png").toURI().toString(), 300, 300, true, true));
+        titreJeu = new VBox(new ImageView(new Image(new File("img/logo_pt_v1.png").toURI().toString(), 200+scene.getWidth()*30/192, 30000, true, true)));
+        titreJeu.setId("titre");
+        titreJeu.setMaxHeight(75+scene.getWidth()*10/192);
 
         nbJoueurs = new Label("Nombre de joueurs : ");
         nbJoueurs.setId("nbjoueurs");
@@ -133,8 +141,9 @@ public class Menu_View {
         carte=new Label("Carte : ");
         carte.setId("carte");
         imagecarte= new ImageView();
-        imagecarte.setFitWidth(150);
-        imagecarte.setFitHeight(150);
+        imagecarte.setFitWidth(scene.getWidth()/3);
+        imagecarte.setFitHeight(scene.getHeight()/3);
+        imagecarte.setPreserveRatio(true);
         listeCarte=new ComboBox<>();
         listeCarte.setId("listecarte");
 
@@ -181,29 +190,21 @@ public class Menu_View {
         retour2.setId("retour2");
     }
 
-    //TODO IMPORTANT
     public void setLauncherView(){
         stage.getScene().getRoot().setVisible(false);
 
-        VBox panneau = new VBox();
-        panneau.setId("pan-jouer");
-        titreJeu.setId("titre1");
+        ((BorderPane) stage.getScene().getRoot()).setTop(titreJeu);
+        ((BorderPane) stage.getScene().getRoot()).setCenter(startButton);
 
-        panneau.getChildren().add(titreJeu);
-        panneau.getChildren().add(startButton);
-
-        ((BorderPane) stage.getScene().getRoot()).setCenter(/* élément principal au lieu de null */panneau);
 
         stage.getScene().getRoot().setVisible(true);
     }
 
-    // TODO ULTRA IMPORTANT
     public void setMainMenuView(){
         stage.getScene().getRoot().setVisible(false);
 
         ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
 
-        titreJeu.setId("titre2");
 
         GridPane panneau = new GridPane();
         panneau.setId("panneau");
@@ -222,15 +223,12 @@ public class Menu_View {
         stage.getScene().getRoot().setVisible(true);
     }
 
-    // TODO ULTRA IMPORTANT
     public void setPartieAskingView(){
         stage.getScene().getRoot().setVisible(false);
         ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
 
         VBox panneau = new VBox(5);
         panneau.setId("panAsking");
-        panneau.getChildren().add(titreJeu);
-        titreJeu.setId("titre3");
         HBox nbjoueurspartie= new HBox(5);
         nbjoueurspartie.setId("nbjoueurspartie");
         nbjoueurspartie.getChildren().addAll(nbJoueurs,joueurButton2,joueurButton3,joueurButton4);
@@ -244,18 +242,20 @@ public class Menu_View {
         carteMenu.setAlignment(Pos.CENTER);
         carteMenu.getChildren().addAll(listeCarte);
         image.getChildren().addAll(carteMenu,imagecarte);
-        HBox bouton=new HBox(5);
+        HBox bouton=new HBox(20);
         bouton.setId("btnHbox");
         bouton.getChildren().addAll(retour,suivant);
+        bouton.setMaxHeight(50+scene.getWidth()*10/1920);
 
-        panneau.getChildren().addAll(nbjoueurspartie,typepartie,image,bouton);
+        panneau.getChildren().addAll(nbjoueurspartie,typepartie,image);
 
+        ((BorderPane) stage.getScene().getRoot()).setTop(titreJeu);
         ((BorderPane) stage.getScene().getRoot()).setCenter(panneau);
+        ((BorderPane) stage.getScene().getRoot()).setBottom(bouton);
         stage.getScene().getRoot().setVisible(true);
 
     }
 
-    //TODO
     public void setNomCouleurJoueursAskingView() {
         stage.getScene().getRoot().setVisible(false);
         ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
@@ -274,17 +274,20 @@ public class Menu_View {
         joueur4.setId("panJoueur");
         joueur4.getChildren().addAll(nomJoueur4,askNomJoueur4,couleurjoueur4);
         HBox bouton = new HBox(20);
-        bouton.setId("panJoueur");
+        bouton.setId("btnHbox");
         bouton.getChildren().addAll(retour2,lancerPartie);
 
+        bouton.setMaxHeight(50+scene.getWidth()*10/1920);
         if (nbJoueursGroup.getToggles().get(0).isSelected()){
-            panneau.getChildren().addAll(joueur1,joueur2,bouton);
+            panneau.getChildren().addAll(joueur1,joueur2);
         }else if (nbJoueursGroup.getToggles().get(1).isSelected()){
-            panneau.getChildren().addAll(joueur1,joueur2,joueur3,bouton);
+            panneau.getChildren().addAll(joueur1,joueur2,joueur3);
         }else{
-            panneau.getChildren().addAll(joueur1,joueur2,joueur3,joueur4,bouton);
+            panneau.getChildren().addAll(joueur1,joueur2,joueur3,joueur4);
         }
+        ((BorderPane) stage.getScene().getRoot()).setTop(titreJeu);
         ((BorderPane) stage.getScene().getRoot()).setCenter(panneau);
+        ((BorderPane) stage.getScene().getRoot()).setBottom(bouton);
         stage.getScene().getRoot().setVisible(true);
     }
 
@@ -305,7 +308,6 @@ public class Menu_View {
          */
     }
 
-    // TODO
     public void setController(Control_Menu eh){
 
         startButton.setOnMouseClicked(eh);
