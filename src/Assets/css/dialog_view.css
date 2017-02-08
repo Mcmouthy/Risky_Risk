@@ -1,0 +1,21 @@
+.root {
+    -fx-background-image: none;
+    -fx-background-color: #f5f5f5;
+}
+
+.button{
+    -fx-font-size: 100%;
+    -fx-padding: 0.1em;
+    -fx-font-weight: normal;
+    -fx-background-color: white;
+    -fx-border-color:#dddddd;
+    -fx-border-radius: 3px;
+    -fx-pref-width: inherit;
+}
+.button:hover{
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+    -fx-border-color:#aaaaaa;
+    -fx-border-radius: 3px;
+    -fx-background-color: white;
+}

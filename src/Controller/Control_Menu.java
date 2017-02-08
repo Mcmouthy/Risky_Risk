@@ -40,8 +40,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
 
     @Override
     // TODO ULTRA IMPORTANT
-    public void handle(MouseEvent event)
-    {
+    public void handle(MouseEvent event) {
         /*
         Réception des objets du genre:
 
@@ -51,44 +50,39 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         }
         */
 
-        if (event.getSource().equals(getView().startButton))
-        {
+        if (event.getSource().equals(getView().startButton)) {
             view.setMainMenuView();
         }
 
-        if (event.getSource().equals(getView().nouvellePartie))
-        {
+        if (event.getSource().equals(getView().nouvellePartie)) {
             view.listeCarte.getItems().clear();
-            for(String s:getCartesNames())
+            for (String s : getCartesNames())
                 view.listeCarte.getItems().add(s);
             view.listeCarte.setValue(view.listeCarte.getItems().get(0));
             view.setPartieAskingView();
         }
 
-        if (event.getSource().equals(getView().suivant)){
+        if (event.getSource().equals(getView().suivant)) {
             if (!nbJoueursNonChoisi() && !typePartieChoisi()) {
                 view.setNomCouleurJoueursAskingView();
-            }else{
-                //TODO faut faire un petit affichage qui dit nique ta maman t'as pas choisi les trucs
             }
         }
 
-        if (event.getSource().equals(getView().retour)){
+        if (event.getSource().equals(getView().retour)) {
             view.setMainMenuView();
         }
 
-        if (event.getSource().equals(getView().retour2)){
+        if (event.getSource().equals(getView().retour2)) {
             view.setPartieAskingView();
         }
 
-        if (event.getSource().equals(getView().lancerPartie)){
-            if (!mauvaisChoixCouleurs() && !nomJoueurNull() && !sameNomJoueur()){
+        if (event.getSource().equals(getView().lancerPartie)) {
+            if (!mauvaisChoixCouleurs() && !nomJoueurNull() && !sameNomJoueur()) {
                 nouvellepartie();
-            }else{
-                //TODO petit pop-up qui dit l'erreur qui et détecté
+            } else {
+                view.popUpErreurSetNomCouleur();
             }
         }
-
     }
 
     public Menu_View getView()

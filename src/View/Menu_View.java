@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.File;
+import java.net.URL;
 
 import static java.lang.System.exit;
 
@@ -291,14 +292,16 @@ public class Menu_View {
         stage.getScene().getRoot().setVisible(true);
     }
 
-    //TODO petit pop up qui apparait si il y a une erreur lors du choix des parametres de la partie
-    public void popUpErreurSetPartie(){
-
-    }
-
-    //TODO petit pop up qui apparait si il y a une erreur lors du choix des couleurs et du nom de joueur
     public void popUpErreurSetNomCouleur(){
-
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(new File("css/dialog_view.css").toURI().toString());
+        dialogPane.getStyleClass().add("dialog");
+        alert.initOwner(stage);
+        alert.setTitle("Erreur");
+        alert.setHeaderText("Impossible de continuer");
+        alert.setContentText("Les noms et couleurs doivent être différents");
+        alert.showAndWait();
     }
 
     // TODO menu qui demande de changer les parametres de la fenetre (pas necessaire pour le moment)
