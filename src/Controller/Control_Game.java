@@ -208,6 +208,9 @@ public class Control_Game implements EventHandler<MouseEvent>{
             view.bouton_volume.setImage(new Image(new File("img/sound_"+(model.mute?"off":"on")+".png").toURI().toString()));
             if(model.mute) clip.stop();
             else clip.play();
+        } else if(event.getSource().equals(view.reprendre)){
+            model.pause = !model.pause;
+            view.menu_pane.setVisible(model.pause);
         }
 
 

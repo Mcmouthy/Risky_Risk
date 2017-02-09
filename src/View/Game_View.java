@@ -45,9 +45,8 @@ public class Game_View {
     public StackPane game;
     public VBox menu;
     public StackPane menu_pane;
-    private Button reprendre;
+    public Button reprendre;
     private Button sauvegarder;
-    private Button returnToMenu;
     public ImageView bouton_volume;
 
 
@@ -182,6 +181,7 @@ public class Game_View {
         endTurn.setOnMouseClicked(eh);
         retour.setOnMouseClicked(eh);
         recommencer.setOnMouseClicked(eh);
+        reprendre.setOnMouseClicked(eh);
         bouton_volume.setOnMouseClicked(eh);
     }
 
