@@ -124,7 +124,7 @@
     -fx-border-width: 2px;
     -fx-border-color: black;
     -fx-max-width: 300;
-    -fx-max-height: 500;
+    -fx-max-height: 425;
 }
 #menu > * {
     -fx-alignment: center;
@@ -132,4 +132,11 @@
 
 .menu_button {
     -fx-pref-width: 250px;
+}
+#pause_label {
+    -fx-text-fill: white;
+    -fx-font-size: 4em;
+}
+#volume {
+    -fx-background-color: white;
 }

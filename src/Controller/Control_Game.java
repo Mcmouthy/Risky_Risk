@@ -29,7 +29,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
     private final Control_Menu menu;
     private final Random loto = new Random();
     private final AudioClip clip;
-    private boolean[] isMoving = new boolean[4]; // DIRECTIO selon le sens horaire, comme en CSS
+    private boolean[] isMoving = new boolean[4]; // DIRECTION selon le sens horaire, comme en CSS
 
     public Control_Game(Partie model,Control_Menu control_menu){
         this.model=model;
@@ -68,7 +68,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
         File file = new File("musics/RiskSoundtrack.wav");
         clip = new AudioClip(file.toURI().toString());
         clip.setVolume(control_menu.musicVolume);
-        clip.setCycleCount(30);
+        clip.setCycleCount(AudioClip.INDEFINITE);
         clip.play();
 
         view.setGameView();
@@ -80,47 +80,53 @@ public class Control_Game implements EventHandler<MouseEvent>{
         view.stage.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                switch (event.getCode()) {
-                    case UP:
-                        model.map_translate.y -= 70;
-                        break;
-                    case DOWN:
-                        model.map_translate.y += 70;
-                        break;
-                    case LEFT:
-                        model.map_translate.x -= 70;
-                        break;
-                    case RIGHT:
-                        model.map_translate.x += 70;
-                        break;
-                    case ADD:
-                        model.map_zoom += 0.1;
-                        break;
-                    case SUBTRACT:
-                        model.map_zoom -= 0.1;
-                        break;
-                    case ESCAPE:
-                        view.menu_pane.setVisible(!view.menu_pane.isVisible());
-                        //view.menu_pane.setFocusTraversable(!view.menu_pane.isFocusTraversable());
-                        break;
+                if(!model.pause || event.getCode()==KeyCode.ESCAPE) {
+                    switch (event.getCode()) {
+                        case UP:
+                            model.map_translate.y -= 70;
+                            break;
+                        case DOWN:
+                            model.map_translate.y += 70;
+                            break;
+                        case LEFT:
+                            model.map_translate.x -= 70;
+                            break;
+                        case RIGHT:
+                            model.map_translate.x += 70;
+                            break;
+                        case ADD:
+                            model.map_zoom += 0.1;
+                            break;
+                        case SUBTRACT:
+                            model.map_zoom -= 0.1;
+                            break;
+                        case ESCAPE:
+                            model.pause = !model.pause;
+                            view.menu_pane.setVisible(model.pause);
+                            break;
+                    }
+                    view.actualiserAffichage();
                 }
-                view.actualiserAffichage();
             }
         });
         view.stage.getScene().setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                isMoving[0] = event.getY()<15;
-                isMoving[1] = Math.abs(event.getX()-view.stage.getScene().getWidth())<15;
-                isMoving[2] = Math.abs(event.getY()-view.stage.getScene().getHeight())<15;
-                isMoving[3] = event.getX()<15;
+                if(!model.pause) {
+                    isMoving[0] = event.getY() < 15;
+                    isMoving[1] = Math.abs(event.getX() - view.stage.getScene().getWidth()) < 15;
+                    isMoving[2] = Math.abs(event.getY() - view.stage.getScene().getHeight()) < 15;
+                    isMoving[3] = event.getX() < 15;
+                }
             }
         });
         view.stage.getScene().setOnScroll(new EventHandler<ScrollEvent>() {
             @Override
             public void handle(ScrollEvent event) {
-                model.map_zoom += event.getDeltaY()/400;
-                view.actualiserAffichage();
+                if(!model.pause) {
+                    model.map_zoom += event.getDeltaY() / 400;
+                    view.actualiserAffichage();
+                }
             }
         });
     }

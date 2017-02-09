@@ -33,6 +33,7 @@ public class Partie implements Serializable{
     public double game_view_width;
     public double game_view_height;
     public boolean mute = false;
+    public boolean pause = false;
 
     public double map_zoom = 1.;
     public Point map_translate = new Point(0,0);

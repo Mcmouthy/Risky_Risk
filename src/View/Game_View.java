@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
 
@@ -76,7 +75,7 @@ public class Game_View {
         retour = new Button("MENU PRINCIPAL");
         retour.setId("retour");
         retour.getStyleClass().add("menu_button");
-        menu = new VBox(5);
+        menu = new VBox(50);
         menu.setId("menu");
         menu_pane = new StackPane();
         menu_pane.setVisible(false);
@@ -91,6 +90,7 @@ public class Game_View {
         bouton_volume = new ImageView();
         bouton_volume.setFitWidth(50);
         bouton_volume.setFitHeight(50);
+        bouton_volume.setId("volume");
 
         allCases = new HashMap<Path, Case>();
         labels = new HashMap<Path, Label>();
@@ -139,8 +139,8 @@ public class Game_View {
         menu.getChildren().clear();
         menu_pane.getChildren().clear();
         Label titre_pause = new Label("PAUSE");
-        VBox boutons = new VBox(2,reprendre,sauvegarder,retour);
-        boutons.setId("menu_boutons");
+        titre_pause.setId("pause_label");
+        VBox boutons = new VBox(10,reprendre,sauvegarder,retour);
         menu.getChildren().addAll(titre_pause,boutons,bouton_volume);
         menu_pane.getChildren().add(menu);
         menu_pane.setPrefSize(model.game_view_width,model.game_view_height);
