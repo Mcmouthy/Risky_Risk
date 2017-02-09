@@ -329,6 +329,14 @@ public class Menu_View {
         stage.getScene().getRoot().setVisible(true);
     }
 
+    public void resetComponentsSize() {
+        titreJeu.getChildren().clear();
+        titreJeu.getChildren().add(new ImageView(new Image(new File("img/logo_pt_v1.png").toURI().toString(), 200 + stage.getScene().getWidth() * 30 / 192, 30000, true, true)));
+        titreJeu.setMaxHeight(75 + stage.getScene().getWidth() * 10 / 192);
+        imagecarte.setFitWidth(stage.getScene().getWidth() / 3);
+        imagecarte.setFitHeight(stage.getScene().getHeight() / 3);
+    }
+
     public void setController(Control_Menu eh){
         startButton.setOnMouseClicked(eh);
         nouvellePartie.setOnMouseClicked(eh);

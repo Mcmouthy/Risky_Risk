@@ -50,7 +50,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
             @Override
             public void run() {
                 if(isMoving[0]){
-                    model.map_translate.y -= view.stage.getScene().getHeight();
+                    model.map_translate.y -= view.stage.getScene().getHeight()/75;
                     view.actualiserAffichage();
                 } else if (isMoving[1]) {
                     model.map_translate.x += view.stage.getScene().getWidth()/125;

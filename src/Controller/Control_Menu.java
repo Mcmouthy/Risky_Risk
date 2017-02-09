@@ -148,7 +148,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
                 view.getScene().getWindow().setWidth(Double.parseDouble(resolutions[resolution].split(" x ")[0]));
                 view.getScene().getWindow().setHeight(Double.parseDouble(resolutions[resolution].split(" x ")[1]));
             }
-            if(changement) view.getStage().show();
+            if(changement) {view.getStage().show();view.resetComponentsSize();}
 
             writeConfigFile();
             view.setMainMenuView();
