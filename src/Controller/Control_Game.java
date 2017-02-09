@@ -7,6 +7,8 @@ import Model.Partie;
 import View.Game_View;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -14,6 +16,8 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.shape.Path;
 import java.io.File;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -25,6 +29,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
     private final Control_Menu menu;
     private final Random loto = new Random();
     private final AudioClip clip;
+    private boolean[] isMoving = new boolean[4]; // DIRECTIO selon le sens horaire, comme en CSS
 
     public Control_Game(Partie model,Control_Menu control_menu){
         this.model=model;
@@ -37,8 +42,28 @@ public class Control_Game implements EventHandler<MouseEvent>{
         view.endTurn.disableProperty().setValue(true);
         model.calculRenforts(model.getJoueurCourant());
         view.notice.setText(model.getJoueurCourant().getNom()+"\nPlacez vos renforts!");
+        view.bouton_volume.setImage(new Image(new File("img/sound_"+(model.mute?"off":"on")+".png").toURI().toString()));
 
         setEvenHandlers();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(isMoving[0]){
+                    model.map_translate.y -= view.stage.getScene().getHeight();
+                    view.actualiserAffichage();
+                } else if (isMoving[1]) {
+                    model.map_translate.x += view.stage.getScene().getWidth()/125;
+                    view.actualiserAffichage();
+                } else if (isMoving[2]) {
+                    model.map_translate.y += view.stage.getScene().getHeight()/75;
+                    view.actualiserAffichage();
+                } else if (isMoving[3]) {
+                    model.map_translate.x -= view.stage.getScene().getWidth()/125;
+                    view.actualiserAffichage();
+                }
+            }
+        },10,50);
 
         File file = new File("musics/RiskSoundtrack.wav");
         clip = new AudioClip(file.toURI().toString());
@@ -74,6 +99,10 @@ public class Control_Game implements EventHandler<MouseEvent>{
                     case SUBTRACT:
                         model.map_zoom -= 0.1;
                         break;
+                    case ESCAPE:
+                        view.menu_pane.setVisible(!view.menu_pane.isVisible());
+                        //view.menu_pane.setFocusTraversable(!view.menu_pane.isFocusTraversable());
+                        break;
                 }
                 view.actualiserAffichage();
             }
@@ -81,11 +110,10 @@ public class Control_Game implements EventHandler<MouseEvent>{
         view.stage.getScene().setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(event.getX()<15) {model.map_translate.x -= 30;view.actualiserAffichage();}
-                if(Math.abs(event.getX()-view.stage.getScene().getWidth())<15) {model.map_translate.x += 30;view.actualiserAffichage();}
-
-                if(event.getY()<15) {model.map_translate.y -= 30;view.actualiserAffichage();}
-                if(Math.abs(event.getY()-view.stage.getScene().getHeight())<15) {model.map_translate.y += 30;view.actualiserAffichage();}
+                isMoving[0] = event.getY()<15;
+                isMoving[1] = Math.abs(event.getX()-view.stage.getScene().getWidth())<15;
+                isMoving[2] = Math.abs(event.getY()-view.stage.getScene().getHeight())<15;
+                isMoving[3] = event.getX()<15;
             }
         });
         view.stage.getScene().setOnScroll(new EventHandler<ScrollEvent>() {
@@ -100,7 +128,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
     @Override
     public void handle(MouseEvent event) {
         /* SOUND */
-        if (event.getSource() instanceof Button) {
+        if (!model.mute && event.getSource() instanceof Button) {
             AudioClip clip = new AudioClip(new File("sounds/button.wav").toURI().toString());
             clip.setVolume(menu.soundVolume);
             clip.play();;
@@ -169,6 +197,11 @@ public class Control_Game implements EventHandler<MouseEvent>{
             menu.getView().getStage().getScene().getStylesheets().add(new File("css/menu_view.css").toURI().toString());
         } else if(event.getSource().equals(view.recommencer)){
             menu.nouvellepartie();
+        } else if(event.getSource().equals(view.bouton_volume)){
+            model.mute = !model.mute;
+            view.bouton_volume.setImage(new Image(new File("img/sound_"+(model.mute?"off":"on")+".png").toURI().toString()));
+            if(model.mute) clip.stop();
+            else clip.play();
         }
 
 

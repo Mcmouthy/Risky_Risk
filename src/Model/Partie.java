@@ -32,9 +32,12 @@ public class Partie implements Serializable{
     private Image backgroundImage;
     public double game_view_width;
     public double game_view_height;
+    public boolean mute = false;
 
     public double map_zoom = 1.;
     public Point map_translate = new Point(0,0);
+    public double old_map_zoom = 1.;
+    public Point old_map_translate = new Point(0,0);
     private int[] deAttaquant;
     private int[] deDefenseur;
 

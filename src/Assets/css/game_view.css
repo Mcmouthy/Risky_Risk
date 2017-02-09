@@ -1,6 +1,5 @@
 .root{
     -fx-background-image: url("../img/background.jpg");
-
 }
 
 #panel{
@@ -88,19 +87,16 @@
 
 }
 
-#retour, #recommencer{
+#retour, #recommencer, .menu_button{
     -fx-background-color: #d6ba51;
     -fx-padding: 0.8em;
     -fx-font-weight: bold;
 }
 
-#retour:hover, #recommencer:hover{
+#retour:hover, #recommencer:hover, .menu_button{
     -fx-scale-x: 1.02;
     -fx-scale-y: 1.02;
     -fx-background-color: #ccb050;
-}
-#retour{
-    -fx-translate-x:-2em;
 }
 
 #recommencer{
@@ -119,4 +115,21 @@
     -fx-font-size: 1.4em;
     -fx-font-weight: bold;
     -fx-border-radius: 5px;
+}
+#menu {
+    -fx-alignment: center;
+    -fx-background-image: url("../img/background.jpg");
+    -fx-paddding: 5px;
+    -fx-border-radius: 2px;
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+    -fx-max-width: 300;
+    -fx-max-height: 500;
+}
+#menu > * {
+    -fx-alignment: center;
+}
+
+.menu_button {
+    -fx-pref-width: 250px;
 }

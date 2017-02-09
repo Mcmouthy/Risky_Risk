@@ -9,6 +9,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.AudioClip;
@@ -60,6 +61,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
 
 
         stage.setScene(scene);
+        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         stage.show();
 
         this.view = new Menu_View(stage);

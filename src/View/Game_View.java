@@ -44,6 +44,12 @@ public class Game_View {
     public Button recommencer;
     private ImageView background;
     public StackPane game;
+    public VBox menu;
+    public StackPane menu_pane;
+    private Button reprendre;
+    private Button sauvegarder;
+    private Button returnToMenu;
+    public ImageView bouton_volume;
 
 
     public Game_View(Partie model, Stage stage) {
@@ -67,11 +73,24 @@ public class Game_View {
         finDePartie.setId("fin");
         message=new Label("Vous pouvez revenir au menu principal ou rejouer avec les mêmes paramètres.");
         message.setId("message");
-        retour = new Button("Menu Principal");
+        retour = new Button("MENU PRINCIPAL");
         retour.setId("retour");
-        recommencer= new Button("Recommencer");
+        retour.getStyleClass().add("menu_button");
+        menu = new VBox(5);
+        menu.setId("menu");
+        menu_pane = new StackPane();
+        menu_pane.setVisible(false);
+        //menu_pane.setFocusTraversable(true);
+        reprendre = new Button("REPRENDRE");
+        reprendre.getStyleClass().add("menu_button");
+        sauvegarder = new Button("SAUVEGARDER");
+        sauvegarder.getStyleClass().add("menu_button");
+        recommencer= new Button("RECOMMENCER");
         recommencer.setId("recommencer");
         background = new ImageView(model.getBackgroundImage());
+        bouton_volume = new ImageView();
+        bouton_volume.setFitWidth(50);
+        bouton_volume.setFitHeight(50);
 
         allCases = new HashMap<Path, Case>();
         labels = new HashMap<Path, Label>();
@@ -117,6 +136,14 @@ public class Game_View {
 
         StackPane territory_pane = new StackPane();
         StackPane labels_pane = new StackPane();
+        menu.getChildren().clear();
+        menu_pane.getChildren().clear();
+        Label titre_pause = new Label("PAUSE");
+        VBox boutons = new VBox(2,reprendre,sauvegarder,retour);
+        boutons.setId("menu_boutons");
+        menu.getChildren().addAll(titre_pause,boutons,bouton_volume);
+        menu_pane.getChildren().add(menu);
+        menu_pane.setPrefSize(model.game_view_width,model.game_view_height);
 
 
         territory_pane.setId("territory-pane");
@@ -140,9 +167,8 @@ public class Game_View {
 
         game = new StackPane(background,territory_pane,labels_pane);
 
-        Pane limit_buf = new Pane(game);
-        limit_buf.setMaxWidth(model.game_view_width);
-        limit_buf.setMaxHeight(model.game_view_height);
+        Pane limit_buf = new Pane(game, menu_pane);
+        limit_buf.setMaxSize(model.game_view_width,model.game_view_height);
 
         ((BorderPane) stage.getScene().getRoot()).setCenter(limit_buf);
         ((BorderPane) stage.getScene().getRoot()).setBottom(panel);
@@ -156,6 +182,7 @@ public class Game_View {
         endTurn.setOnMouseClicked(eh);
         retour.setOnMouseClicked(eh);
         recommencer.setOnMouseClicked(eh);
+        bouton_volume.setOnMouseClicked(eh);
     }
 
     public void actualizeCases() {
@@ -191,6 +218,9 @@ public class Game_View {
 
     public void setFinDePartieView(){
         stage.getScene().getRoot().setVisible(false);
+        ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
+
+        menu.getChildren().clear();
 
         VBox panneau=new VBox();
         panneau.setId("panneauFinPartie");
