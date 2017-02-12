@@ -4,6 +4,7 @@ import Model.Case;
 import Model.Joueur;
 import Model.Partie;
 import javafx.event.EventHandler;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -16,6 +17,7 @@ import java.awt.*;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by yhaffner on 08/12/16
@@ -46,7 +48,7 @@ public class Game_View {
     public VBox menu;
     public StackPane menu_pane;
     public Button reprendre;
-    private Button sauvegarder;
+    public Button sauvegarder;
     public ImageView bouton_volume;
 
 
@@ -183,6 +185,7 @@ public class Game_View {
         recommencer.setOnMouseClicked(eh);
         reprendre.setOnMouseClicked(eh);
         bouton_volume.setOnMouseClicked(eh);
+        sauvegarder.setOnMouseClicked(eh);
     }
 
     public void actualizeCases() {
@@ -254,5 +257,20 @@ public class Game_View {
 
         game.setTranslateX(-model.map_translate.x);
         game.setTranslateY(-model.map_translate.y);
+    }
+
+    public String popUpSetNomSauvegarde(){
+        TextInputDialog dialog = new TextInputDialog("walter");
+        dialog.initOwner(stage);
+        dialog.initStyle(stage.getStyle());
+        dialog.setTitle("Sauvegarder");
+        dialog.setHeaderText("Nom du fichier de sauvegarde");
+        dialog.setContentText("Entrez le nom du fichier");
+
+        // Traditional way to get the response value.
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            return "save/"+result.get();
+        }else return "";
     }
 }

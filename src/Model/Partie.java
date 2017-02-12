@@ -95,6 +95,50 @@ public class Partie implements Serializable{
         return mapName;
     }
 
+    public void setJoueurs(List<Joueur> joueurs) {
+        this.joueurs = joueurs;
+    }
+
+    public void setNbtour(int nbtour) {
+        this.nbtour = nbtour;
+    }
+
+    public void setNeutres(List<Case> neutres) {
+        this.neutres = neutres;
+    }
+
+    public void setGame_view_height(double game_view_height) {
+        this.game_view_height = game_view_height;
+    }
+
+    public void setGame_view_width(double game_view_width) {
+        this.game_view_width = game_view_width;
+    }
+
+    public void setMute(boolean mute) {
+        this.mute = mute;
+    }
+
+    public void setPause(boolean pause) {
+        this.pause = pause;
+    }
+
+    public void setMap_zoom(double map_zoom) {
+        this.map_zoom = map_zoom;
+    }
+
+    public double getGame_view_height() {
+        return game_view_height;
+    }
+
+    public double getGame_view_width() {
+        return game_view_width;
+    }
+
+    public double getMap_zoom() {
+        return map_zoom;
+    }
+
     public int getNbtour() {
         return nbtour;
     }
@@ -249,6 +293,7 @@ public class Partie implements Serializable{
         return nbtroupes;
     }
 
+    //TODO faut tout refaire, faire pour que ca soit fait un tour apres l'autre
     public int attaqueClassique(Joueur defenseur,Case c,int nbtroupeenvoyer) {
         //methode qui lance une attaque contre un joueur
         // et renvoie le nombre de troupes restantes a l'attaquant
@@ -264,18 +309,18 @@ public class Partie implements Serializable{
         } else {
             deDefenseur = new int[1];
         }
-         while (nbtroupeenvoyer > 0 && c.getNbtroupes() > 0) {
+         while (nbtroupeenvoyer != 0 && c.getNbtroupes() != 0) {
              if (nbtroupeenvoyer > c.getNbtroupes()) {
                  int tempo = 6;
                  int totalAttaque = 0, totalDefense = 0;
                  for (int i = 0; i < deAttaquant.length; i++) {
-                     deAttaquant[i] = random.nextInt(7);
+                     deAttaquant[i] = random.nextInt(6)+1;
                      totalAttaque += deAttaquant[i];
                      if (deAttaquant[i] < tempo) tempo = deAttaquant[i];
                  }
                  totalAttaque -= tempo;
                  for (int j = 0; j < deDefenseur.length; j++) {
-                     deDefenseur[j] = random.nextInt(7);
+                     deDefenseur[j] = random.nextInt(6)+1;
                      totalDefense += deDefenseur[j];
                  }
                  if (totalAttaque > totalDefense) c.setNbtroupes(c.getNbtroupes() - (totalAttaque - totalDefense));
@@ -332,20 +377,89 @@ public class Partie implements Serializable{
         this.joueurCourant = joueurCourant;
     }
 
-    public void saveStation(String nomFile){
+    public boolean creationFileSave(String nomFile){
+        File file=new File(nomFile);
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nomFile));
-            oos.writeObject(this);
-            oos.close();
+            if (file.createNewFile()){
+                return true;
+            }
+            return false;
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void saveStation(String nomFile){
+
+        if (creationFileSave(nomFile)) {
+            try {
+                ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nomFile));
+                oos.writeObject(joueurs);
+                oos.writeObject(neutres);
+                oos.writeInt(joueurCourant);
+                oos.writeInt(mode);
+                oos.writeObject(mapName);
+                oos.writeInt(nbtour);
+                oos.writeBoolean(brouillard);
+                oos.writeBoolean(fin);
+                oos.writeBoolean(distributionRenforts);
+                oos.writeBoolean(attaque_deplacements);
+                oos.writeDouble(game_view_width);
+                oos.writeDouble(game_view_height);
+                oos.writeBoolean(mute);
+                oos.writeBoolean(pause);
+                oos.writeDouble(map_zoom);
+                oos.writeObject(deAttaquant);
+                oos.writeObject(deDefenseur);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public static Partie loadGame(String nomFile){
+        Partie partie;
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nomFile));
-            return (Partie)ois.readObject();
+            List<Joueur> listeJoueur=(List<Joueur>)ois.readObject();
+            List<Case> listecase=(List<Case>)ois.readObject();
+            int joueurCour=ois.readInt();
+            int mode=ois.readInt();
+            String name=ois.readObject().toString();
+            int nbtours=ois.readInt();
+            boolean brouillard=ois.readBoolean();
+            boolean fin=ois.readBoolean();
+            boolean distri=ois.readBoolean();
+            boolean attak=ois.readBoolean();
+            double game_width=ois.readDouble();
+            double game_height=ois.readDouble();
+            boolean mute=ois.readBoolean();
+            boolean pause=ois.readBoolean();
+            double map=ois.readDouble();
+            int[] att=(int[])ois.readObject();
+            int[] def=(int[])ois.readObject();
+
+            partie = new Partie(name);
+            partie.setJoueurs(listeJoueur);
+            partie.setNeutres(listecase);
+            partie.setJoueurCourant(joueurCour);
+            partie.setMode(mode);
+            partie.setNbtour(nbtours);
+            partie.setBrouillard(brouillard);
+            partie.setFin(fin);
+            partie.setDistributionRenforts(distri);
+            partie.setAttaque_deplacements(attak);
+            partie.setGame_view_width(game_width);
+            partie.setGame_view_height(game_height);
+            partie.setMute(mute);
+            partie.setPause(pause);
+            partie.setMap_zoom(map);
+            partie.setDeAttaquant(att);
+            partie.setDeDefenseur(def);
+
+            return partie;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

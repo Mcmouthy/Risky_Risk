@@ -211,6 +211,11 @@ public class Control_Game implements EventHandler<MouseEvent>{
         } else if(event.getSource().equals(view.reprendre)){
             model.pause = !model.pause;
             view.menu_pane.setVisible(model.pause);
+        } else if (event.getSource().equals(view.sauvegarder)){
+            String nomsave=view.popUpSetNomSauvegarde();
+            if (!nomsave.equals("")){
+                model.saveStation(nomsave);
+            }
         }
 
 
