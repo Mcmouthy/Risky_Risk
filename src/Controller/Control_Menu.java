@@ -156,6 +156,10 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
             view.listeResolution.setDisable(view.askFullscreen.isSelected());
         } else if(event.getSource().equals(getView().quitter)) {
             view.getStage().close();exit(0);
+        }else if(event.getSource().equals(getView().continuer)){
+            Partie p= Partie.loadGame("save/walter");
+            p.setPause(false);
+            game= new Control_Game(p,this);
         }
     }
 

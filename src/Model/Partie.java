@@ -263,7 +263,7 @@ public class Partie implements Serializable{
             if (nbtroupes>c.getNbtroupes()){
                 chanceAtt=random.nextDouble()+0.50;
                 chanceDef=random.nextDouble();
-                if (chanceAtt>=chanceDef){
+                if (chanceAtt>chanceDef){
                     nbtroupes=nbtroupes-c.getNbtroupes();
                     c.setNbtroupes(0);
                 }else{
@@ -273,7 +273,7 @@ public class Partie implements Serializable{
             }else {
                 chanceAtt = random.nextDouble();
                 chanceDef = random.nextDouble() + 0.50;
-                if (chanceAtt >= chanceDef) {
+                if (chanceAtt > chanceDef) {
                     nbtroupes = nbtroupes - c.getNbtroupes();
                     c.setNbtroupes(0);
                 } else {
@@ -286,8 +286,8 @@ public class Partie implements Serializable{
                 nbtroupes=nbtroupes-c.getNbtroupes();
                 c.setNbtroupes(0);
             }else{
-                nbtroupes=0;
                 c.setNbtroupes(c.getNbtroupes()-nbtroupes);
+                nbtroupes=0;
             }
         }
         return nbtroupes;

@@ -349,6 +349,7 @@ public class Menu_View {
         lancerPartie.setOnMouseClicked(eh);
         listeCarte.valueProperty().addListener(eh);
         askFullscreen.setOnMouseClicked(eh);
+        continuer.setOnMouseClicked(eh);
     }
 
     public Scene getScene()
