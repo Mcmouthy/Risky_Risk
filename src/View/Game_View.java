@@ -260,7 +260,7 @@ public class Game_View {
     }
 
     public String popUpSetNomSauvegarde(){
-        TextInputDialog dialog = new TextInputDialog("walter");
+        TextInputDialog dialog = new TextInputDialog("sauvegarde");
         dialog.initOwner(stage);
         dialog.initStyle(stage.getStyle());
         dialog.setTitle("Sauvegarder");

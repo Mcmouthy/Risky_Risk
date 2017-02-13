@@ -159,7 +159,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         }else if(event.getSource().equals(getView().continuer)){
             Partie p= Partie.loadGame("save/walter");
             p.setPause(false);
-            game= new Control_Game(p,this);
+            game= new Control_Game(p,this,false);
         }
     }
 
@@ -191,7 +191,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
             p.setMode(1);
         }
 
-        game=new Control_Game(p,this);
+        game=new Control_Game(p,this,true);
     }
 
     public boolean nbJoueursNonChoisi(){

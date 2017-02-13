@@ -31,11 +31,13 @@ public class Control_Game implements EventHandler<MouseEvent>{
     private final AudioClip clip;
     private boolean[] isMoving = new boolean[4]; // DIRECTION selon le sens horaire, comme en CSS
 
-    public Control_Game(Partie model,Control_Menu control_menu){
+    public Control_Game(Partie model,Control_Menu control_menu, boolean nouvelle){
         this.model=model;
         model.setJoueurCourant(loto.nextInt(model.getJoueurs().size()));
-        for(Joueur j:model.getJoueurs())
-            model.conquerirNeutre(j,model.getNeutres().get(loto.nextInt(model.getNeutres().size())),1);
+        if (nouvelle) {
+            for (Joueur j : model.getJoueurs())
+                model.conquerirNeutre(j, model.getNeutres().get(loto.nextInt(model.getNeutres().size())), 1);
+        }
         this.view = new Game_View(model,control_menu.getView().getStage());
         this.menu = control_menu;
 
