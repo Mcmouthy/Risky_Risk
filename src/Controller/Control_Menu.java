@@ -157,7 +157,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         } else if(event.getSource().equals(getView().quitter)) {
             view.getStage().close();exit(0);
         }else if(event.getSource().equals(getView().continuer)){
-            Partie p= Partie.loadGame("save/walter");
+            Partie p= Partie.loadGame("save/polo");
             p.setPause(false);
             game= new Control_Game(p,this,false);
         }
