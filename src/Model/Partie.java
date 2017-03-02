@@ -41,6 +41,7 @@ public class Partie implements Serializable{
     public Point old_map_translate = new Point(0,0);
     private int[] deAttaquant;
     private int[] deDefenseur;
+    private int fightResult;
 
     public Partie(String mapName){
         joueurs=new ArrayList<>();
@@ -81,6 +82,10 @@ public class Partie implements Serializable{
 
     public void setDeDefenseur(int[] deDefenseur) {
         this.deDefenseur = deDefenseur;
+    }
+
+    public int getFightResult() {
+        return fightResult;
     }
 
     public int getMode() {
@@ -231,11 +236,11 @@ public class Partie implements Serializable{
     public void captureTerrainAdverse(Joueur attaquant,Joueur defenseur, Case c, Case caseAttaquant,int nbtroupes){
         int nbtrouperestante;
         if (getMode()==CLASSICO){
-            nbtrouperestante=attaqueClassique(defenseur,c,nbtroupes-1);
+            nbtrouperestante=attaqueClassique(c,nbtroupes-1);
             caseAttaquant.setNbtroupes(caseAttaquant.getNbtroupes()-(nbtroupes-1));
 
         }else{
-            nbtrouperestante=attaqueRapide(defenseur,c,nbtroupes);
+            nbtrouperestante=attaqueRapide(c,nbtroupes);
         }
 
         if (c.getNbtroupes()>0 && nbtrouperestante>0 && getMode()==CLASSICO){
@@ -250,7 +255,7 @@ public class Partie implements Serializable{
         }
     }
 
-    public int attaqueRapide(Joueur defenseur, Case c, int nbtroupes) {
+    public int attaqueRapide(Case c, int nbtroupes) {
         /*c'est la meme chose que pour la methode attaqueClassique sauf que cette fois ci
         * on gere le nombre de troupe. Si nbtroupes est plus grand que les troupes sur la case
         * alors la probabilité de gagner est plus grande. on renvoie aussi le nombre de troupe restantes*/
@@ -301,7 +306,7 @@ public class Partie implements Serializable{
     }
 
     //TODO faut tout refaire, faire pour que ca soit fait un tour apres l'autre
-    public int attaqueClassique(Joueur defenseur,Case c,int nbtroupeenvoyer) {
+    public int attaqueClassique(Case c,int nbtroupeenvoyer) {
         //methode qui lance une attaque contre un joueur
         // et renvoie le nombre de troupes restantes a l'attaquant
         if (nbtroupeenvoyer >= 3) {

@@ -1,11 +1,13 @@
 package View;
 
 import Controller.Control_Menu;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -132,12 +134,16 @@ public class Menu_View {
 
         askNomJoueur1 = new TextField();
         askNomJoueur1.setPromptText("Saisissez le nom");
+        askNomJoueur1.setText("Joueur 1");
         askNomJoueur2 = new TextField();
         askNomJoueur2.setPromptText("Saisissez le nom");
+        askNomJoueur2.setText("Joueur 2");
         askNomJoueur3 = new TextField();
         askNomJoueur3.setPromptText("Saisissez le nom");
+        askNomJoueur2.setText("Joueur 3");
         askNomJoueur4 = new TextField();
         askNomJoueur4.setPromptText("Saisissez le nom");
+        askNomJoueur2.setText("Joueur 4");
 
         nomJoueur1 = new Label("Joueur 1 :");
         nomJoueur1.setId("nomJoueur");
@@ -360,5 +366,19 @@ public class Menu_View {
     public Stage getStage()
     {
         return stage;
+    }
+
+    public void setHoverSound(EventHandler<MouseEvent> hoverSound) {
+        startButton.setOnMouseEntered(hoverSound);
+        nouvellePartie.setOnMouseEntered(hoverSound);
+        continuer.setOnMouseEntered(hoverSound);
+        options.setOnMouseEntered(hoverSound);
+        apropos.setOnMouseEntered(hoverSound);
+        quitter.setOnMouseEntered(hoverSound);
+        retour2.setOnMouseEntered(hoverSound);
+        lancerPartie.setOnMouseEntered(hoverSound);
+        suivant.setOnMouseEntered(hoverSound);
+        retour.setOnMouseEntered(hoverSound);
+        saveSettings.setOnMouseEntered(hoverSound);
     }
 }

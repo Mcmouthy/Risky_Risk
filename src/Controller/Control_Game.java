@@ -5,6 +5,7 @@ import Model.Case;
 import Model.Joueur;
 import Model.Partie;
 import View.Game_View;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -24,10 +25,10 @@ import java.util.TimerTask;
  * Created by yhaffner on 15/12/16.
  */
 public class Control_Game implements EventHandler<MouseEvent>{
+    public final static Random loto = new Random();
     private final Partie model;
     private final Game_View view;
     private final Control_Menu menu;
-    private final Random loto = new Random();
     private final AudioClip clip;
     private boolean[] isMoving = new boolean[4]; // DIRECTION selon le sens horaire, comme en CSS
 
@@ -40,6 +41,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
         }
         this.view = new Game_View(model,control_menu.getView().getStage());
         this.menu = control_menu;
+
 
         view.endTurn.disableProperty().setValue(true);
         model.calculRenforts(model.getJoueurCourant());
@@ -144,6 +146,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
 
 
         /* ACTIONS */
+        boolean actualiseCases = true;
         if(event.getSource().equals(view.endTurn)) {
             view.endTurn.disableProperty().setValue(true);
             model.passeJoueurSuivant();
@@ -158,7 +161,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
             if(model.isDistributionRenforts() && model.getJoueurCourant().getTerrain().contains(c)) {
                 view.caseOnFocus=null;
                 model.getJoueurCourant().setNbRenforts(model.getJoueurCourant().getNbRenforts()-1);
-                if ((model.getMode()==model.CLASSICO && c.getNbtroupes()<24) || (model.getMode()==model.RAPIDO && c.getNbtroupes()<12))c.addRenforts();
+                if ((model.getMode()== Partie.CLASSICO && c.getNbtroupes()<24) || (model.getMode()== Partie.RAPIDO && c.getNbtroupes()<12))c.addRenforts();
                 if(model.getJoueurCourant().getNbRenforts()>0) {
                     view.notice.setText(model.getJoueurCourant().getNom() + "\n" +
                             model.getJoueurCourant().getNbRenforts() + " renforts restant");
@@ -181,6 +184,13 @@ public class Control_Game implements EventHandler<MouseEvent>{
                             if (j.getTerrain().contains(c)) {
                                 model.captureTerrainAdverse(model.getJoueurCourant(), j, c, caseattaquante,caseattaquante.getNbtroupes());
                                 //model.getJoueurCourant().getTerrain().get(model.getJoueurCourant().getindexTerrain(caseattaquante)).setNbtroupes(1);
+                                if(model.getMode()==Partie.CLASSICO) {
+                                    (new Thread(() -> {
+                                        view.model_des.launchDices(model.getDeAttaquant(),model.getDeDefenseur(),model.getFightResult());
+                                        Platform.runLater(view::actualizeCases);
+                                    })).start();
+                                    actualiseCases = false;
+                                }
                                 break;
                             }
                         }
@@ -223,6 +233,6 @@ public class Control_Game implements EventHandler<MouseEvent>{
 
 
         /* ACTUALISATION */
-        view.actualizeCases();
+        if(actualiseCases) view.actualizeCases();
     }
 }

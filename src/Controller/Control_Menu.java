@@ -58,8 +58,6 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         else
             scene = new Scene(root, Double.parseDouble(resolutions[resolution].split(" x ")[0]), Double.parseDouble(resolutions[resolution].split(" x ")[1]), Color.BLACK);
 
-
-
         stage.setScene(scene);
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         stage.show();
@@ -83,6 +81,11 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
             exit(0);
         });
         this.view.setController(this);
+        this.view.setHoverSound(event -> {
+            AudioClip clip = new AudioClip(new File("sounds/buttonHover.wav").toURI().toString());
+            clip.setVolume(soundVolume);
+            if(soundVolume>0.01) clip.play();
+        });
         this.view.sliderSoundVolume.setOnMouseReleased(event -> {
             AudioClip clip = new AudioClip(new File("sounds/button.wav").toURI().toString());
             clip.setVolume(view.sliderSoundVolume.getValue());
@@ -101,7 +104,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         if (event.getSource() instanceof Button) {
             AudioClip clip = new AudioClip(new File("sounds/button.wav").toURI().toString());
             clip.setVolume(soundVolume);
-            clip.play();;
+            if(soundVolume>0.01) clip.play();
         }
 
 
@@ -138,6 +141,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
                 resolution = i;
             }
             soundVolume = view.sliderSoundVolume.getValue();
+            musicVolume = view.sliderMusicVolume.getValue();
 
             if(changement) view.getStage().hide();
             view.getStage().setFullScreen(fullscreen);
