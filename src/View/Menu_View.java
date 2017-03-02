@@ -134,14 +134,16 @@ public class Menu_View {
 
         askNomJoueur1 = new TextField();
         askNomJoueur1.setPromptText("Saisissez le nom");
-        askNomJoueur1.setText("Joueur 1"); // TODO remove
+        askNomJoueur1.setText("Joueur 1");
         askNomJoueur2 = new TextField();
         askNomJoueur2.setPromptText("Saisissez le nom");
-        askNomJoueur2.setText("Joueur 2"); // TODO remove
+        askNomJoueur2.setText("Joueur 2");
         askNomJoueur3 = new TextField();
         askNomJoueur3.setPromptText("Saisissez le nom");
+        askNomJoueur2.setText("Joueur 3");
         askNomJoueur4 = new TextField();
         askNomJoueur4.setPromptText("Saisissez le nom");
+        askNomJoueur2.setText("Joueur 4");
 
         nomJoueur1 = new Label("Joueur 1 :");
         nomJoueur1.setId("nomJoueur");
