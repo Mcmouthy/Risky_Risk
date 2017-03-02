@@ -246,13 +246,7 @@ public class Dices {
             timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();
         });
-        while(plateau.isVisible())
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
+        waitForEndOfLaunch();
     }
     private void animateForDice(int i, int j){
         if(dices[i][j].getTranslateY()<(plateau.getHeight()-100)/2-100 && dices[i][j].getTranslateY()>-(plateau.getHeight()-100)/2) dicesIsEntered[i][j]=true;
@@ -332,6 +326,15 @@ public class Dices {
     }
 
 
+    public void waitForEndOfLaunch() {
+
+        while(plateau.isVisible())
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+    }
     public StackPane getPlateau() {
         return plateau;
     }

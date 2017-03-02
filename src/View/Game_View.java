@@ -102,7 +102,7 @@ public class Game_View {
         bouton_volume.setFitWidth(50);
         bouton_volume.setFitHeight(50);
         bouton_volume.setId("volume");
-        lanceContinue = new Button("Lancer jusqu'à conquête");
+        lanceContinue = new Button("S'arrêter après ce lancer");
         lanceContinue.setId("lance-continue");
         lanceContinue.setTranslateX(-model.game_view_width/2+115);
         lanceContinue.setTranslateY(-model.game_view_height/2+30);
@@ -204,6 +204,7 @@ public class Game_View {
         reprendre.setOnMouseClicked(eh);
         bouton_volume.setOnMouseClicked(eh);
         sauvegarder.setOnMouseClicked(eh);
+        lanceContinue.setOnMouseClicked(eh);
     }
 
     public void actualizeCases() {

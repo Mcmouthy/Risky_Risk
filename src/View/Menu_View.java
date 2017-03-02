@@ -140,10 +140,10 @@ public class Menu_View {
         askNomJoueur2.setText("Joueur 2");
         askNomJoueur3 = new TextField();
         askNomJoueur3.setPromptText("Saisissez le nom");
-        askNomJoueur2.setText("Joueur 3");
+        askNomJoueur3.setText("Joueur 3");
         askNomJoueur4 = new TextField();
         askNomJoueur4.setPromptText("Saisissez le nom");
-        askNomJoueur2.setText("Joueur 4");
+        askNomJoueur4.setText("Joueur 4");
 
         nomJoueur1 = new Label("Joueur 1 :");
         nomJoueur1.setId("nomJoueur");

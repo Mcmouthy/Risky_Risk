@@ -42,6 +42,9 @@ public class Partie implements Serializable{
     private int[] deAttaquant;
     private int[] deDefenseur;
     private int fightResult;
+    public boolean lanceContinue;
+    public Case actualDefCase;
+    public Case actualAttCase;
 
     public Partie(String mapName){
         joueurs=new ArrayList<>();
@@ -56,6 +59,7 @@ public class Partie implements Serializable{
         fin=false;
         distributionRenforts=true;
         attaque_deplacements=false;
+        lanceContinue=true;
 
 
         map_zoom =  game_view_width / backgroundImage.getHeight();
@@ -305,7 +309,6 @@ public class Partie implements Serializable{
         return nbtroupes;
     }
 
-    //TODO faut tout refaire, faire pour que ca soit fait un tour apres l'autre
     public int attaqueClassique(Case c,int nbtroupeenvoyer) {
         //methode qui lance une attaque contre un joueur
         // et renvoie le nombre de troupes restantes a l'attaquant
@@ -353,42 +356,36 @@ public class Partie implements Serializable{
             }
         }
 
-        if (deDefenseur.length==1) {
-            System.out.println("un dé de defense");
-            System.out.println(""+maxAttaque);
-            System.out.println(""+maxDefense);
+        if (deDefenseur.length == 1) {
             if (maxAttaque > maxDefense) {
                 c.setNbtroupes(c.getNbtroupes() - 1);
                 if (c.getNbtroupes() <= 0) c.setNbtroupes(0);
-                System.out.println("gagne");
+                fightResult = 1;
             } else {
+                fightResult = -1;
                 nbtroupeenvoyer -= 1;
-                System.out.println("perd");
             }
         }
 
         if (deDefenseur.length>1 && deAttaquant.length>1) {
-            System.out.println(deDefenseur.length+" dés defense");
-            System.out.println(deAttaquant.length+" dés attaque");
-            System.out.println(""+maxAttaque);
-            System.out.println(""+maxDefense);
             if (maxAttaque > maxDefense) {
                 c.setNbtroupes(c.getNbtroupes() - 1);
                 if (c.getNbtroupes() <= 0) c.setNbtroupes(0);
-                System.out.println("gagne max");
+                fightResult = 1;
             } else {
+                fightResult = -1;
                 nbtroupeenvoyer -= 1;
-                System.out.println("perd max");
             }
 
             if (moyenAttaque > moyenDefense) {
                 c.setNbtroupes(c.getNbtroupes() - 1);
-                System.out.println("gagne moyen");
                 if (c.getNbtroupes() <= 0) c.setNbtroupes(0);
+                fightResult += 1;
             } else {
+                fightResult += -1;
                 nbtroupeenvoyer -= 1;
-                System.out.println("perd moyen");
             }
+            fightResult /= 2;
         }
 
         if (deDefenseur.length>1 && deAttaquant.length==1) {

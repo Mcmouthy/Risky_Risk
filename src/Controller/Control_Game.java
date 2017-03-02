@@ -182,15 +182,23 @@ public class Control_Game implements EventHandler<MouseEvent>{
                     } else if (!model.getJoueurCourant().getTerrain().contains(c)){
                         for (Joueur j : model.getJoueurs()) {
                             if (j.getTerrain().contains(c)) {
-                                model.captureTerrainAdverse(model.getJoueurCourant(), j, c, caseattaquante,caseattaquante.getNbtroupes());
-                                //model.getJoueurCourant().getTerrain().get(model.getJoueurCourant().getindexTerrain(caseattaquante)).setNbtroupes(1);
                                 if(model.getMode()==Partie.CLASSICO) {
+                                    model.actualAttCase = caseattaquante;
+                                    model.actualDefCase = c;
                                     (new Thread(() -> {
-                                        view.model_des.launchDices(model.getDeAttaquant(),model.getDeDefenseur(),model.getFightResult());
-                                        Platform.runLater(view::actualizeCases);
+                                        do {
+                                            long time = System.currentTimeMillis();
+                                            model.captureTerrainAdverse(model.getJoueurCourant(), j, model.actualDefCase, model.actualAttCase,model.actualAttCase.getNbtroupes());
+                                            view.model_des.launchDices(model.getDeAttaquant(), model.getDeDefenseur(), model.getFightResult());
+                                            Platform.runLater(view::actualizeCases);
+                                            try {Thread.sleep(5);} catch (InterruptedException e) {e.printStackTrace();}
+                                        } while (model.actualAttCase.getNbtroupes() > 1 && model.lanceContinue);
+                                        model.lanceContinue = true;
+                                        view.lanceContinue.setDisable(false);
                                     })).start();
                                     actualiseCases = false;
-                                }
+                                } else
+                                    model.captureTerrainAdverse(model.getJoueurCourant(), j, c, caseattaquante,caseattaquante.getNbtroupes());
                                 break;
                             }
                         }
@@ -229,6 +237,10 @@ public class Control_Game implements EventHandler<MouseEvent>{
             if (!nomsave.equals("")){
                 model.saveStation(nomsave);
             }
+        } else if (event.getSource().equals(view.lanceContinue)) {
+            model.lanceContinue = !model.lanceContinue;
+            actualiseCases = false;
+            view.lanceContinue.setDisable(true);
         }
 
 
