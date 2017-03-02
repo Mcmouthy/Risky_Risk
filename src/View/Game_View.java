@@ -1,15 +1,21 @@
 package View;
 
+import Controller.Control_Game;
 import Model.Case;
+import Model.Dices;
 import Model.Joueur;
 import Model.Partie;
 import javafx.event.EventHandler;
+import javafx.geometry.Point3D;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
 
@@ -17,6 +23,8 @@ import java.awt.*;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Optional;
 
 /**
@@ -50,6 +58,8 @@ public class Game_View {
     public Button reprendre;
     public Button sauvegarder;
     public ImageView bouton_volume;
+    public Dices model_des;
+    public Button lanceContinue;
 
 
     public Game_View(Partie model, Stage stage) {
@@ -92,6 +102,14 @@ public class Game_View {
         bouton_volume.setFitWidth(50);
         bouton_volume.setFitHeight(50);
         bouton_volume.setId("volume");
+        lanceContinue = new Button("Lancer jusqu'à conquête");
+        lanceContinue.setId("lance-continue");
+        lanceContinue.setTranslateX(-model.game_view_width/2+115);
+        lanceContinue.setTranslateY(-model.game_view_height/2+30);
+        StackPane stackPane = new StackPane(lanceContinue);
+        stackPane.setPrefSize(model.game_view_width,model.game_view_height);
+        stackPane.setMaxSize(model.game_view_width,model.game_view_height);
+        model_des = new Dices(stackPane);
 
         allCases = new HashMap<Path, Case>();
         labels = new HashMap<Path, Label>();
@@ -142,7 +160,7 @@ public class Game_View {
         Label titre_pause = new Label("PAUSE");
         titre_pause.setId("pause_label");
         VBox boutons = new VBox(10,reprendre,sauvegarder,retour);
-        menu.getChildren().addAll(titre_pause,boutons,bouton_volume);
+        menu.getChildren().addAll(titre_pause,boutons,bouton_volume,Dices.getASimpleDiceRolling(Control_Game.loto.nextBoolean()?"red":"blue"));
         menu_pane.getChildren().add(menu);
         menu_pane.setPrefSize(model.game_view_width,model.game_view_height);
 
@@ -168,7 +186,7 @@ public class Game_View {
 
         game = new StackPane(background,territory_pane,labels_pane);
 
-        Pane limit_buf = new Pane(game, menu_pane);
+        Pane limit_buf = new Pane(game, model_des.getPlateau(),menu_pane);
         limit_buf.setMaxSize(model.game_view_width,model.game_view_height);
 
         ((BorderPane) stage.getScene().getRoot()).setCenter(limit_buf);

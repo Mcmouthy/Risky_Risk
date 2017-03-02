@@ -87,13 +87,13 @@
 
 }
 
-#retour, #recommencer, .menu_button{
+#retour, #recommencer, #lance-continue, .menu_button{
     -fx-background-color: #d6ba51;
     -fx-padding: 0.8em;
     -fx-font-weight: bold;
 }
 
-#retour:hover, #recommencer:hover, .menu_button{
+#retour:hover, #recommencer:hover, #lance-continue:hover, .menu_button{
     -fx-scale-x: 1.02;
     -fx-scale-y: 1.02;
     -fx-background-color: #ccb050;
@@ -139,4 +139,11 @@
 }
 #volume {
     -fx-background-color: white;
+}
+
+#dice_result {
+    -fx-font-size: 200px;
+    -fx-padding: 25px;
+    -fx-background-color: lightgrey;
+    -fx-border-radius: 12px;
 }
