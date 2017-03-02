@@ -349,27 +349,51 @@ public class Partie implements Serializable{
         }
 
         if (deDefenseur.length==1) {
+            System.out.println("un dé de defense");
+            System.out.println(""+maxAttaque);
+            System.out.println(""+maxDefense);
             if (maxAttaque > maxDefense) {
                 c.setNbtroupes(c.getNbtroupes() - 1);
                 if (c.getNbtroupes() <= 0) c.setNbtroupes(0);
+                System.out.println("gagne");
             } else {
-                nbtroupeenvoyer -= deDefenseur.length;
+                nbtroupeenvoyer -= 1;
+                System.out.println("perd");
             }
         }
 
         if (deDefenseur.length>1 && deAttaquant.length>1) {
+            System.out.println(deDefenseur.length+" dés defense");
+            System.out.println(deAttaquant.length+" dés attaque");
+            System.out.println(""+maxAttaque);
+            System.out.println(""+maxDefense);
             if (maxAttaque > maxDefense) {
                 c.setNbtroupes(c.getNbtroupes() - 1);
                 if (c.getNbtroupes() <= 0) c.setNbtroupes(0);
+                System.out.println("gagne max");
             } else {
-                nbtroupeenvoyer -= deDefenseur.length;
+                nbtroupeenvoyer -= 1;
+                System.out.println("perd max");
             }
 
             if (moyenAttaque > moyenDefense) {
                 c.setNbtroupes(c.getNbtroupes() - 1);
+                System.out.println("gagne moyen");
                 if (c.getNbtroupes() <= 0) c.setNbtroupes(0);
             } else {
-                nbtroupeenvoyer -= deDefenseur.length;
+                nbtroupeenvoyer -= 1;
+                System.out.println("perd moyen");
+            }
+        }
+
+        if (deDefenseur.length>1 && deAttaquant.length==1) {
+            System.out.println(""+maxAttaque);
+            System.out.println(""+maxDefense);
+            if (maxAttaque > maxDefense) {
+                c.setNbtroupes(c.getNbtroupes() - 1);
+                if (c.getNbtroupes() <= 0) c.setNbtroupes(0);
+            } else {
+                nbtroupeenvoyer -= 1;
             }
         }
         return nbtroupeenvoyer;
