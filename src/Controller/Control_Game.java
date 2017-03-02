@@ -158,7 +158,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
             if(model.isDistributionRenforts() && model.getJoueurCourant().getTerrain().contains(c)) {
                 view.caseOnFocus=null;
                 model.getJoueurCourant().setNbRenforts(model.getJoueurCourant().getNbRenforts()-1);
-                c.addRenforts();
+                if ((model.getMode()==model.CLASSICO && c.getNbtroupes()<24) || (model.getMode()==model.RAPIDO && c.getNbtroupes()<12))c.addRenforts();
                 if(model.getJoueurCourant().getNbRenforts()>0) {
                     view.notice.setText(model.getJoueurCourant().getNom() + "\n" +
                             model.getJoueurCourant().getNbRenforts() + " renforts restant");
@@ -179,8 +179,9 @@ public class Control_Game implements EventHandler<MouseEvent>{
                     } else if (!model.getJoueurCourant().getTerrain().contains(c)){
                         for (Joueur j : model.getJoueurs()) {
                             if (j.getTerrain().contains(c)) {
-                                model.captureTerrainAdverse(model.getJoueurCourant(), j, c, caseattaquante.getNbtroupes());
-                                model.getJoueurCourant().getTerrain().get(model.getJoueurCourant().getindexTerrain(caseattaquante)).setNbtroupes(1);
+                                model.captureTerrainAdverse(model.getJoueurCourant(), j, c, caseattaquante,caseattaquante.getNbtroupes());
+                                //model.getJoueurCourant().getTerrain().get(model.getJoueurCourant().getindexTerrain(caseattaquante)).setNbtroupes(1);
+                                break;
                             }
                         }
                     }

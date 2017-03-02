@@ -228,14 +228,21 @@ public class Partie implements Serializable{
         if (j.getTerrain().isEmpty())j.setEliminated(true);
     }
 
-    public void captureTerrainAdverse(Joueur attaquant,Joueur defenseur, Case c, int nbtroupes){
+    public void captureTerrainAdverse(Joueur attaquant,Joueur defenseur, Case c, Case caseAttaquant,int nbtroupes){
         int nbtrouperestante;
         if (getMode()==CLASSICO){
-            nbtrouperestante=attaqueClassique(defenseur,c,nbtroupes);
+            nbtrouperestante=attaqueClassique(defenseur,c,nbtroupes-1);
+            caseAttaquant.setNbtroupes(caseAttaquant.getNbtroupes()-(nbtroupes-1));
+
         }else{
             nbtrouperestante=attaqueRapide(defenseur,c,nbtroupes);
         }
-        if (c.getNbtroupes()==0 && nbtrouperestante>0){
+
+        if (c.getNbtroupes()>0 && nbtrouperestante>0 && getMode()==CLASSICO){
+            caseAttaquant.setNbtroupes(caseAttaquant.getNbtroupes()+nbtrouperestante);
+            System.out.println("retour à la base :"+nbtrouperestante);
+            System.out.println("troupe de la base :"+caseAttaquant.getNbtroupes());
+        }else if(c.getNbtroupes()==0 && nbtrouperestante>0){
             c.setJoueur(attaquant);
             c.setNbtroupes(nbtrouperestante);
             defenseur.perdTerrain(c);
@@ -304,31 +311,68 @@ public class Partie implements Serializable{
         } else {
             deAttaquant = new int[1];
         }
-        if (nbtroupeenvoyer >= 2) {
+        if (c.getNbtroupes() >= 2) {
             deDefenseur = new int[2];
         } else {
             deDefenseur = new int[1];
         }
-         while (nbtroupeenvoyer != 0 && c.getNbtroupes() != 0) {
-             if (nbtroupeenvoyer > c.getNbtroupes()) {
-                 int tempo = 6;
-                 int totalAttaque = 0, totalDefense = 0;
-                 for (int i = 0; i < deAttaquant.length; i++) {
-                     deAttaquant[i] = random.nextInt(6)+1;
-                     totalAttaque += deAttaquant[i];
-                     if (deAttaquant[i] < tempo) tempo = deAttaquant[i];
-                 }
-                 totalAttaque -= tempo;
-                 for (int j = 0; j < deDefenseur.length; j++) {
-                     deDefenseur[j] = random.nextInt(6)+1;
-                     totalDefense += deDefenseur[j];
-                 }
-                 if (totalAttaque > totalDefense) c.setNbtroupes(c.getNbtroupes() - (totalAttaque - totalDefense));
-                 else nbtroupeenvoyer -= totalDefense - totalAttaque;
+        int maxAttaque = 0, maxDefense = 0;
+        int moyenAttaque=0, moyenDefense=0;
+        deAttaquant[0]=random.nextInt(6)+1;
+        maxAttaque=deAttaquant[0];
+        if (deAttaquant.length>1) {
+            for (int i = 1; i < deAttaquant.length; i++) {
+                deAttaquant[i] = random.nextInt(6) + 1;
+                moyenAttaque=deAttaquant[i];
+                if (deAttaquant[i] > maxAttaque) {
+                    moyenAttaque = maxAttaque;
+                    maxAttaque = deAttaquant[i];
+                }else if (deAttaquant[i]>moyenAttaque){
+                    moyenAttaque=deAttaquant[i];
                 }
-         }
-        if (c.getNbtroupes() == 0 && nbtroupeenvoyer > 0) return nbtroupeenvoyer;
-        else return 0;
+            }
+        }
+
+        deDefenseur[0]=random.nextInt(6)+1;
+        maxDefense=deDefenseur[0];
+        if (deDefenseur.length>1) {
+            for (int j = 1; j < deDefenseur.length; j++) {
+                deDefenseur[j] = random.nextInt(6) + 1;
+                moyenDefense=deDefenseur[j];
+                if (deDefenseur[j] > maxDefense) {
+                    moyenDefense = maxDefense;
+                    maxDefense = deDefenseur[j];
+                }else if (deDefenseur[j]>moyenDefense){
+                    moyenDefense=deDefenseur[j];
+                }
+            }
+        }
+
+        if (deDefenseur.length==1) {
+            if (maxAttaque > maxDefense) {
+                c.setNbtroupes(c.getNbtroupes() - 1);
+                if (c.getNbtroupes() <= 0) c.setNbtroupes(0);
+            } else {
+                nbtroupeenvoyer -= deDefenseur.length;
+            }
+        }
+
+        if (deDefenseur.length>1 && deAttaquant.length>1) {
+            if (maxAttaque > maxDefense) {
+                c.setNbtroupes(c.getNbtroupes() - 1);
+                if (c.getNbtroupes() <= 0) c.setNbtroupes(0);
+            } else {
+                nbtroupeenvoyer -= deDefenseur.length;
+            }
+
+            if (moyenAttaque > moyenDefense) {
+                c.setNbtroupes(c.getNbtroupes() - 1);
+                if (c.getNbtroupes() <= 0) c.setNbtroupes(0);
+            } else {
+                nbtroupeenvoyer -= deDefenseur.length;
+            }
+        }
+        return nbtroupeenvoyer;
     }
 
     public void calculRenforts(Joueur j){
