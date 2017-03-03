@@ -249,8 +249,6 @@ public class Partie implements Serializable{
 
         if (c.getNbtroupes()>0 && nbtrouperestante>0 && getMode()==CLASSICO){
             caseAttaquant.setNbtroupes(caseAttaquant.getNbtroupes()+nbtrouperestante);
-            System.out.println("retour à la base :"+nbtrouperestante);
-            System.out.println("troupe de la base :"+caseAttaquant.getNbtroupes());
         }else if(c.getNbtroupes()==0 && nbtrouperestante>0){
             c.setJoueur(attaquant);
             c.setNbtroupes(nbtrouperestante);
