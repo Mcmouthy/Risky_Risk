@@ -197,6 +197,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
                                         } while (model.actualAttCase.getNbtroupes() > 1 && model.lanceContinue);
                                         model.lanceContinue = true;
                                         view.lanceContinue.setDisable(false);
+                                        Platform.runLater(this::verifFinDePartie);
                                     })).start();
                                     actualiseCases = false;
                                 } else
@@ -208,17 +209,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
                     view.caseOnFocus=null;
                 } else view.caseOnFocus=b;
             }
-
-            for (Joueur j:model.getJoueurs()){
-                if (j.getTerrain().size()==0){
-                    j.setEliminated(true);
-                }
-            }
-
-            if (model.nbjoueurRestant()==1){
-                model.setFin(true);
-                view.setFinDePartieView();
-            }
+            verifFinDePartie();
         } else if(event.getSource().equals(view.retour)){
             clip.stop();
             menu.getView().setMainMenuView();
@@ -248,5 +239,19 @@ public class Control_Game implements EventHandler<MouseEvent>{
 
         /* ACTUALISATION */
         if(actualiseCases) view.actualizeCases();
+    }
+
+    private void verifFinDePartie() {
+
+        for (Joueur j:model.getJoueurs()){
+            if (j.getTerrain().size()==0){
+                j.setEliminated(true);
+            }
+        }
+
+        if (model.nbjoueurRestant()==1){
+            model.setFin(true);
+            view.setFinDePartieView();
+        }
     }
 }

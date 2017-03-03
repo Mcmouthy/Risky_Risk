@@ -58,6 +58,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         else
             scene = new Scene(root, Double.parseDouble(resolutions[resolution].split(" x ")[0]), Double.parseDouble(resolutions[resolution].split(" x ")[1]), Color.BLACK);
 
+
         stage.setScene(scene);
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         stage.show();
@@ -166,12 +167,18 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
             game= new Control_Game(p,this,false);
         }
     }
+    @Override
+    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        for(int i=0;i<view.listeCarte.getItems().size();i++)
+            if(view.listeCarte.getItems().get(i).equals(newValue))
+                view.imagecarte.setImage(SwingFXUtils.toFXImage(getImageForCarteId(i), null));
+    }
+
 
     public Menu_View getView()
     {
         return view;
     }
-
     public void nouvellepartie() {
         Partie p = new Partie(view.listeCarte.getValue());
         p.setPlateauDimensions(view.getScene().getWidth(),view.getScene().getHeight());
@@ -198,6 +205,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         game=new Control_Game(p,this,true);
     }
 
+
     public boolean nbJoueursNonChoisi(){
         for (int i=0;i<view.nbJoueursGroup.getToggles().size();i++){
             if (view.nbJoueursGroup.getToggles().get(i).isSelected()){
@@ -206,7 +214,6 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         }
         return true;
     }
-
     public boolean typePartieChoisi(){
         for (int i=0;i<view.typeGroup.getToggles().size();i++){
             if (view.typeGroup.getToggles().get(i).isSelected()){
@@ -215,7 +222,6 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         }
         return true;
     }
-
     //DONE fonction qui verifie si il n'y a pas deux fois la meme couleur dans les combobox
     public boolean mauvaisChoixCouleurs(){
         if (view.nbJoueursGroup.getToggles().get(0).isSelected()){
@@ -236,7 +242,6 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         }
         return false;
     }
-
     public boolean nomJoueurNull(){
         if (view.nbJoueursGroup.getToggles().get(0).isSelected()){
             if (view.askNomJoueur1.getText().equals("") || view.askNomJoueur2.getText().equals("")){
@@ -254,7 +259,6 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         }
         return false;
     }
-
     private boolean sameNomJoueur() {
         if (view.nbJoueursGroup.getToggles().get(0).isSelected()){
             if (view.askNomJoueur1.getText().equals(view.askNomJoueur2.getText())){
@@ -274,6 +278,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         }
         return false;
     }
+
 
     public String[] getCartesNames() {
         maps = new File("map").listFiles(new FilenameFilter() {
@@ -312,7 +317,6 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
     }
 
 
-
     private void initFromConfigFile() {
         File config = new File("setup.cfg");
         if(config.exists()){
@@ -339,10 +343,4 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         }
     }
 
-    @Override
-    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-        for(int i=0;i<view.listeCarte.getItems().size();i++)
-            if(view.listeCarte.getItems().get(i).equals(newValue))
-                view.imagecarte.setImage(SwingFXUtils.toFXImage(getImageForCarteId(i), null));
-    }
 }

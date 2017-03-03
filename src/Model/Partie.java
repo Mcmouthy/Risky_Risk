@@ -459,7 +459,6 @@ public class Partie implements Serializable{
     }
 
     public void saveStation(String nomFile){
-
         if (creationFileSave(nomFile)) {
             try {
                 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nomFile));
@@ -480,7 +479,6 @@ public class Partie implements Serializable{
                 oos.writeDouble(map_zoom);
                 oos.writeObject(deAttaquant);
                 oos.writeObject(deDefenseur);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -528,9 +526,7 @@ public class Partie implements Serializable{
             partie.setDeDefenseur(def);
 
             return partie;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;
