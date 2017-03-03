@@ -160,11 +160,13 @@ public class Control_Game implements EventHandler<MouseEvent>{
 
             if(model.isDistributionRenforts() && model.getJoueurCourant().getTerrain().contains(c)) {
                 view.caseOnFocus=null;
-                model.getJoueurCourant().setNbRenforts(model.getJoueurCourant().getNbRenforts()-1);
-                if ((model.getMode()== Partie.CLASSICO && c.getNbtroupes()<24) || (model.getMode()== Partie.RAPIDO && c.getNbtroupes()<12))c.addRenforts();
+                if ((model.getMode()== Partie.CLASSICO && c.getNbtroupes()<24) || (model.getMode()== Partie.RAPIDO && c.getNbtroupes()<12)){
+                    c.addRenforts();
+                    model.getJoueurCourant().setNbRenforts(model.getJoueurCourant().getNbRenforts()-1);
+                }
                 if(model.getJoueurCourant().getNbRenforts()>0) {
                     view.notice.setText(model.getJoueurCourant().getNom() + "\n" +
-                            model.getJoueurCourant().getNbRenforts() + " renforts restant");
+                            model.getJoueurCourant().getNbRenforts() + " renfort(s) restant");
                 } else {
                     model.passeEtapeSuivante();
                     view.notice.setText(model.getJoueurCourant().getNom()+"\n"+
