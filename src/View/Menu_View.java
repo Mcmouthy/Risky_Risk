@@ -61,6 +61,9 @@ public class Menu_View {
     public Slider sliderSoundVolume;
     public Slider sliderMusicVolume;
 
+    public ComboBox<String> listeSave;
+    public Button lancerSave;
+
     public Menu_View(Stage stage)
     {
         this.stage = stage;
@@ -179,6 +182,11 @@ public class Menu_View {
         askFullscreen = new CheckBox("");
         sliderSoundVolume = new Slider(0, 1, 0);
         sliderMusicVolume = new Slider(0, 1, 0);
+
+        listeSave= new ComboBox<>();
+        listeSave.setId("listeSave");
+        lancerSave = new Button("Charger la partie");
+        lancerSave.setId("lancerSave");
 
     }
 
@@ -356,6 +364,7 @@ public class Menu_View {
         listeCarte.valueProperty().addListener(eh);
         askFullscreen.setOnMouseClicked(eh);
         continuer.setOnMouseClicked(eh);
+        lancerSave.setOnMouseClicked(eh);
     }
 
     public Scene getScene()
@@ -380,5 +389,20 @@ public class Menu_View {
         suivant.setOnMouseEntered(hoverSound);
         retour.setOnMouseEntered(hoverSound);
         saveSettings.setOnMouseEntered(hoverSound);
+        lancerSave.setOnMouseEntered(hoverSound);
+    }
+
+    public void chooseSave(){
+        stage.getScene().getRoot().setVisible(false);
+        ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
+
+        VBox panneau = new VBox();
+        HBox bout= new HBox();
+        bout.getChildren().addAll(retour,lancerSave);
+        panneau.getChildren().addAll(listeSave,bout);
+
+        ((BorderPane) stage.getScene().getRoot()).setCenter(panneau);
+        stage.getScene().getRoot().setVisible(true);
+
     }
 }

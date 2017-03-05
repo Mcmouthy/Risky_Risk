@@ -459,6 +459,7 @@ public class Partie implements Serializable{
     }
 
     public void saveStation(String nomFile){
+        nomFile+=".save";
         if (creationFileSave(nomFile)) {
             try {
                 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nomFile));
@@ -488,7 +489,7 @@ public class Partie implements Serializable{
     public static Partie loadGame(String nomFile){
         Partie partie;
         try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nomFile));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("save/"+nomFile+".save"));
             List<Joueur> listeJoueur=(List<Joueur>)ois.readObject();
             List<Case> listecase=(List<Case>)ois.readObject();
             int joueurCour=ois.readInt();

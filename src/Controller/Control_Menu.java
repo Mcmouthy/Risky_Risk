@@ -38,6 +38,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
     private Menu_View view;
     private Control_Game game;
     private File[] maps;
+    private File[] save;
 
     // SETTINGS
     int resolution = 0;
@@ -162,9 +163,13 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         } else if(event.getSource().equals(getView().quitter)) {
             view.getStage().close();exit(0);
         }else if(event.getSource().equals(getView().continuer)){
-            Partie p= Partie.loadGame("save/polo");
-            p.setPause(false);
-            game= new Control_Game(p,this,false);
+            for (String s : getSavesName())
+                view.listeSave.getItems().add(s);
+            view.listeSave.setValue(view.listeSave.getItems().get(0));
+            view.chooseSave();
+        }else if (event.getSource().equals(getView().lancerSave)){
+            Partie p = Partie.loadGame(getView().listeSave.getValue());
+            game = new Control_Game(p,this,false);
         }
     }
     @Override
@@ -341,6 +346,24 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String[] getSavesName() {
+        save = new File("save").listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                String[] parts = name.split("\\.");
+                return parts.length > 0 && parts[parts.length - 1].equals("save");
+            }
+        });
+        String[] savesName = new String[save.length];
+        for (int i = 0; i < save.length; i++) {
+            String name = "";
+            for (int j = 0; j < save[i].getName().split("\\.").length - 1; j++)
+                name += save[i].getName().split("\\.")[j];
+            savesName[i] = name;
+        }
+        return savesName;
     }
 
 }
