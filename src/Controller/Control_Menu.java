@@ -1,9 +1,11 @@
 package Controller;
 
 
+import Model.Generateur_v2;
 import Model.Joueur;
 import Model.Partie;
 import View.Menu_View;
+import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
@@ -122,6 +124,13 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         } else if (event.getSource().equals(getView().suivant)) {
             if (!nbJoueursNonChoisi() && !typePartieChoisi()) {
                 view.setNomCouleurJoueursAskingView();
+            }
+        } else if (event.getSource().equals(getView().creerMap)) {
+            Generateur_v2 g = new Generateur_v2();
+            try {
+                g.start(view.getStage());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         } else if (event.getSource().equals(getView().retour)) {
             view.setMainMenuView();

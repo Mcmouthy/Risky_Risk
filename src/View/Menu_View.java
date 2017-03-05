@@ -22,6 +22,7 @@ public class Menu_View {
     public Button nouvellePartie;
     public Button continuer;
     public Button options;
+    public Button creerMap;
     public Button apropos;
     public Button quitter;
     public Pane titreJeu;
@@ -86,6 +87,8 @@ public class Menu_View {
         continuer.setId("continuer");
         options = new Button("OPTIONS");
         options.setId("options");
+        creerMap = new Button("CRÉER UNE MAP");
+        creerMap.setId("options");
         apropos = new Button("À PROPOS");
         apropos.setId("apropos");
         quitter = new Button("QUITTER");
@@ -211,8 +214,9 @@ public class Menu_View {
         panneau.add(nouvellePartie,0,0);
         panneau.add(continuer,0,1);
         panneau.add(options,0,2);
-        panneau.add(apropos,0,3);
-        panneau.add(quitter,0,4);
+        panneau.add(creerMap,0,3);
+        panneau.add(apropos,0,4);
+        panneau.add(quitter,0,5);
 
 
         // Ajout final
@@ -365,6 +369,7 @@ public class Menu_View {
         askFullscreen.setOnMouseClicked(eh);
         continuer.setOnMouseClicked(eh);
         lancerSave.setOnMouseClicked(eh);
+        creerMap.setOnMouseClicked(eh);
     }
 
     public Scene getScene()
