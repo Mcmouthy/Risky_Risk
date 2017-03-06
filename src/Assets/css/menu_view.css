@@ -64,6 +64,8 @@
 #cartemenu, #nbjoueurspartie, #typepartie, #imgcarte {
     -fx-alignment: center;
     -fx-padding: 1.5;
+    -fx-text-fill: white;
+    -fx-font-size : 16px;
 }
 #panJoueur {
     -fx-text-fill: white;
@@ -73,5 +75,6 @@
     -fx-text-fill: white;
     -fx-alignment: center-left;
     -fx-padding : 0 2em 0 0;
+    -fx-font-size : 16px;
 }
 
