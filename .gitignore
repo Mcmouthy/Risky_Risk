@@ -1,6 +1,7 @@
 *.class
 .idea
 *.iml
+setup.cfg
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
