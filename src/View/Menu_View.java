@@ -22,6 +22,7 @@ public class Menu_View {
     public Button nouvellePartie;
     public Button continuer;
     public Button options;
+    public Button creerMap;
     public Button apropos;
     public Button quitter;
     public Pane titreJeu;
@@ -55,6 +56,10 @@ public class Menu_View {
     public ComboBox listeResolution;
     public CheckBox askFullscreen;
     public Button retour2;
+    public Label fullScreenlabel;
+    public Label resLabel;
+    public Label volM;
+    public Label volB;
 
     public Button saveSettings;
     private Stage stage; // Le stage est la fenetre principale
@@ -86,6 +91,8 @@ public class Menu_View {
         continuer.setId("continuer");
         options = new Button("OPTIONS");
         options.setId("options");
+        creerMap = new Button("CRÉER UNE MAP");
+        creerMap.setId("options");
         apropos = new Button("À PROPOS");
         apropos.setId("apropos");
         quitter = new Button("QUITTER");
@@ -211,8 +218,9 @@ public class Menu_View {
         panneau.add(nouvellePartie,0,0);
         panneau.add(continuer,0,1);
         panneau.add(options,0,2);
-        panneau.add(apropos,0,3);
-        panneau.add(quitter,0,4);
+        panneau.add(creerMap,0,3);
+        panneau.add(apropos,0,4);
+        panneau.add(quitter,0,5);
 
 
         // Ajout final
@@ -313,21 +321,29 @@ public class Menu_View {
         HBox itemFullsreen=new HBox(5);
         itemFullsreen.setId("cartemenu");
         itemFullsreen.setAlignment(Pos.CENTER);
-        itemFullsreen.getChildren().addAll(new Label("Plein écran : "),askFullscreen);
+        fullScreenlabel = new Label("Plein écran : ");
+        fullScreenlabel.setId("nomJoueur");
+        itemFullsreen.getChildren().addAll(fullScreenlabel,askFullscreen);
 
         HBox itemResolution=new HBox(5);
         itemResolution.setId("cartemenu");
         itemResolution.setAlignment(Pos.CENTER);
-        itemResolution.getChildren().addAll(new Label("Résolution : "),listeResolution);
+        resLabel = new Label("Résolution : ");
+        resLabel.setId("nomJoueur");
+        itemResolution.getChildren().addAll(resLabel ,listeResolution);
 
         HBox itemSoundVolume=new HBox(5);
         itemSoundVolume.setId("cartemenu");
         itemSoundVolume.setAlignment(Pos.CENTER);
-        itemSoundVolume.getChildren().addAll(new Label("Volume des bruitages : "), sliderSoundVolume);
+        volB = new Label("Volume des bruitages : ");
+        volB.setId("nomJoueur");
+        itemSoundVolume.getChildren().addAll(volB, sliderSoundVolume);
         HBox itemMusicVolume=new HBox(5);
         itemMusicVolume.setId("cartemenu");
         itemMusicVolume.setAlignment(Pos.CENTER);
-        itemMusicVolume.getChildren().addAll(new Label("Volume de la musique : "), sliderMusicVolume);
+        volM = new Label("Volume de la musique : ");
+        volM.setId("nomJoueur");
+        itemMusicVolume.getChildren().addAll(volM, sliderMusicVolume);
 
         panneau.getChildren().addAll(itemFullsreen,itemResolution,itemSoundVolume,itemMusicVolume);
 
@@ -365,6 +381,7 @@ public class Menu_View {
         askFullscreen.setOnMouseClicked(eh);
         continuer.setOnMouseClicked(eh);
         lancerSave.setOnMouseClicked(eh);
+        creerMap.setOnMouseClicked(eh);
     }
 
     public Scene getScene()
