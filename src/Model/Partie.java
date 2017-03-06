@@ -42,6 +42,7 @@ public class Partie implements Serializable{
     private int[] deAttaquant;
     private int[] deDefenseur;
     private int fightResult;
+    public long time_secondes;
     public boolean lanceContinue;
     public Case actualDefCase;
     public Case actualAttCase;
@@ -188,6 +189,7 @@ public class Partie implements Serializable{
                 joueurCourant = 0;
             }
         }
+        time_secondes = System.currentTimeMillis();
     }
 
     public void setFin(boolean fin) {

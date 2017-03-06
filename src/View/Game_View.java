@@ -19,7 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
 
-import java.awt.*;
+import java.awt.Point;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +60,7 @@ public class Game_View {
     public ImageView bouton_volume;
     public Dices model_des;
     public Button lanceContinue;
+    public Label timer;
 
 
     public Game_View(Partie model, Stage stage) {
@@ -77,7 +78,10 @@ public class Game_View {
         endTurn.setId("terminer");
         notice = new Label("esrtdtyfyguhij");
         notice.setId("notice");
-        mode = new Label("Partie Rapide");
+        notice.setPrefWidth(stage.getWidth()*0.5);
+        timer = new Label();
+        timer.setId("timer");
+        mode = new Label();
         mode.setId("mode-label");
         finDePartie=new Label("Félicitations "+model.getJoueurCourant().getNom()+", vous avez gagné !");
         finDePartie.setId("fin");
@@ -181,6 +185,7 @@ public class Game_View {
         //panel.getChildren().add(game);
         panel.getChildren().add(endTurn);
         panel.getChildren().add(notice);
+        panel.getChildren().add(timer);
         panel.getChildren().add(mode);
 
 

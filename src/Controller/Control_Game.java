@@ -30,6 +30,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
     private final Game_View view;
     private final Control_Menu menu;
     private final AudioClip clip;
+    private Timer tourTimeOut;
     private boolean[] isMoving = new boolean[4]; // DIRECTION selon le sens horaire, comme en CSS
 
     public Control_Game(Partie model,Control_Menu control_menu, boolean nouvelle){
@@ -43,10 +44,14 @@ public class Control_Game implements EventHandler<MouseEvent>{
         this.menu = control_menu;
 
 
-        view.endTurn.disableProperty().setValue(true);
+        view.endTurn.setText("Placement renforts auto");
         model.calculRenforts(model.getJoueurCourant());
         view.notice.setText(model.getJoueurCourant().getNom()+"\nPlacez vos renforts!");
         view.bouton_volume.setImage(new Image(new File("img/sound_"+(model.mute?"off":"on")+".png").toURI().toString()));
+        if(model.getMode()==Partie.CLASSICO)
+            view.mode.setText("Partie Classique");
+        else
+            view.mode.setText("Partie Rapide");
 
         setEvenHandlers();
         Timer timer = new Timer();
@@ -74,6 +79,27 @@ public class Control_Game implements EventHandler<MouseEvent>{
         clip.setVolume(control_menu.musicVolume);
         clip.setCycleCount(AudioClip.INDEFINITE);
         clip.play();
+        model.time_secondes=System.currentTimeMillis();
+        tourTimeOut = new Timer();
+        tourTimeOut.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater((()->view.timer.setText(
+                        (int)((model.time_secondes - System.currentTimeMillis()) / 1000 + 60) + ""
+                )));
+                if ((model.time_secondes - System.currentTimeMillis()) / 1000 + 60 <= 0) {
+                    tourTimeOut.cancel();
+                    tourTimeOut.purge();
+                    model.passeJoueurSuivant();
+                    model.passeEtapeSuivante();
+                    model.calculRenforts(model.getJoueurCourant());
+                    view.notice.setText(model.getJoueurCourant().getNom() + "\nPlacez vos renforts!");
+                    view.caseOnFocus = null;
+                    verifRenfortCapacite();
+                }
+            }
+        }, 0,30);
+
 
         view.setGameView();
         view.actualiserAffichage();
@@ -148,12 +174,56 @@ public class Control_Game implements EventHandler<MouseEvent>{
         /* ACTIONS */
         boolean actualiseCases = true;
         if(event.getSource().equals(view.endTurn)) {
-            view.endTurn.disableProperty().setValue(true);
-            model.passeJoueurSuivant();
-            model.passeEtapeSuivante();
-            model.calculRenforts(model.getJoueurCourant());
-            view.notice.setText(model.getJoueurCourant().getNom()+"\nPlacez vos renforts!");
-            view.caseOnFocus=null;
+            if(!view.endTurn.getText().equals("Placement renforts auto")) {
+                view.endTurn.setText("Placement renforts auto");
+                model.passeJoueurSuivant();
+                model.passeEtapeSuivante();
+                model.calculRenforts(model.getJoueurCourant());
+                view.notice.setText(model.getJoueurCourant().getNom() + "\nPlacez vos renforts!");
+                view.caseOnFocus = null;
+                verifRenfortCapacite();
+
+                if(tourTimeOut!=null) tourTimeOut.purge();
+                tourTimeOut = new Timer();
+                tourTimeOut.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Platform.runLater((()->view.timer.setText(
+                                (int)((model.time_secondes - System.currentTimeMillis()) / 1000 + 60) + ""
+                        )));
+                        if ((model.time_secondes - System.currentTimeMillis()) / 1000 + 60 <= 0) {
+                            tourTimeOut.cancel();
+                            tourTimeOut.purge();
+                            model.passeJoueurSuivant();
+                            model.passeEtapeSuivante();
+                            model.calculRenforts(model.getJoueurCourant());
+                            view.notice.setText(model.getJoueurCourant().getNom() + "\nPlacez vos renforts!");
+                            view.caseOnFocus = null;
+                            verifRenfortCapacite();
+                        }
+                    }
+                }, 0,30);
+            } else {
+                while (model.isDistributionRenforts())
+                    for (Case c : model.getJoueurCourant().getTerrain()) {
+                        view.caseOnFocus = null;
+                        if ((model.getMode() == Partie.CLASSICO && c.getNbtroupes() < 24) || (model.getMode() == Partie.RAPIDO && c.getNbtroupes() < 12)) {
+                            c.addRenforts();
+                            model.getJoueurCourant().setNbRenforts(model.getJoueurCourant().getNbRenforts() - 1);
+                        }
+                        if (model.getJoueurCourant().getNbRenforts() > 0) {
+                            view.notice.setText(model.getJoueurCourant().getNom() + "\n" +
+                                    model.getJoueurCourant().getNbRenforts() + " renfort(s) restant");
+                        } else {
+                            model.passeEtapeSuivante();
+                            view.notice.setText(model.getJoueurCourant().getNom() + "\n" +
+                                    "Cliquez sur une de vos case puis sur une case adversaire ou neutre pour tenter de la conquérir");
+                            view.endTurn.setText("Terminer le tour");
+                            break;
+                        }
+                        verifRenfortCapacite();
+                    }
+            }
         } else if(event.getSource() instanceof Path) {
             Path b = ((Path) event.getSource());
             Case c = view.allCases.get(b);
@@ -171,8 +241,9 @@ public class Control_Game implements EventHandler<MouseEvent>{
                     model.passeEtapeSuivante();
                     view.notice.setText(model.getJoueurCourant().getNom()+"\n"+
                             "Cliquez sur une de vos case puis sur une case adversaire ou neutre pour tenter de la conquérir");
-                    view.endTurn.disableProperty().setValue(false);
+                    view.endTurn.setText("Terminer le tour");
                 }
+                verifRenfortCapacite();
             } else if(model.isAttaque_deplacements()) {
                 Case caseattaquante=view.allCases.get(view.caseOnFocus);
                 if((view.caseOnFocus != null) && (view.allCases.get(view.caseOnFocus).getNbtroupes() > 1) && (view.allCases.get(view.caseOnFocus).getJoueur() == model.getJoueurCourant()) && model.getJoueurCourant().getTerrain().get(model.getJoueurCourant().getindexTerrain(view.allCases.get(view.caseOnFocus))).getVoisins().contains(c)) {
@@ -215,6 +286,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
             menu.getView().setMainMenuView();
             menu.getView().getStage().getScene().getStylesheets().clear();
             menu.getView().getStage().getScene().getStylesheets().add(new File("css/menu_view.css").toURI().toString());
+            menu.game = null;
         } else if(event.getSource().equals(view.recommencer)){
             menu.nouvellepartie();
         } else if(event.getSource().equals(view.bouton_volume)){
@@ -239,6 +311,17 @@ public class Control_Game implements EventHandler<MouseEvent>{
 
         /* ACTUALISATION */
         if(actualiseCases) view.actualizeCases();
+    }
+
+    private void verifRenfortCapacite() {
+        boolean ok=false;
+        for(Case c:model.getJoueurCourant().getTerrain()) if((model.getMode()== Partie.CLASSICO && c.getNbtroupes()<24) || (model.getMode()== Partie.RAPIDO && c.getNbtroupes()<12)) ok=true;
+        if(!ok) {
+            model.passeEtapeSuivante();
+            view.notice.setText(model.getJoueurCourant().getNom() + "\n" +
+                    "Cliquez sur une de vos case puis sur une case adversaire ou neutre pour tenter de la conquérir");
+            view.endTurn.setText("Terminer le tour");
+        }
     }
 
     private void verifFinDePartie() {

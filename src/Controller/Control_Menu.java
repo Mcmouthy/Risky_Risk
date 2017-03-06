@@ -38,7 +38,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
     };
 
     private Menu_View view;
-    private Control_Game game;
+    protected Control_Game game;
     private File[] maps;
     private File[] save;
 
@@ -303,9 +303,16 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
             }
         });
 
-
-        // TODO AMENER L'UTILISATEUR À CRÉER SA MAP EN CAS D'ERREUR
-        if(maps==null) {System.out.println("PAS DE MAPS DISPO, EN CRÉER UNE AVEC LE GÉNÉRATEUR");exit(-1);}
+        if(maps==null){
+            if(Generateur_v2.askForBoolean(view.getStage(),"Aucune map existante!", "Souhaitez vous créer un map?")){
+                try {
+                    (new Generateur_v2()).start(view.getStage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            } else {System.out.println("PAS DE MAPS DISPO, EN CRÉER UNE AVEC LE GÉNÉRATEUR");exit(-1);}
+        }
 
         String[] cartesName = new String[maps.length];
         for(int i=0;i<maps.length;i++) {

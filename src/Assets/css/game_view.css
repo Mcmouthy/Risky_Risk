@@ -18,7 +18,6 @@
 #notice{
     -fx-text-fill: antiquewhite;
     -fx-padding: 0 2em 0 2em;
-    -fx-pref-width: 46em;
     -fx-pref-height: 6em;
     -fx-wrap-text: true;
     -fx-alignment: center;
@@ -26,11 +25,20 @@
 }
 #mode-label {
     -fx-text-fill: antiquewhite;
-    -fx-padding: 1em 0 0 0;
-    -fx-pref-width: 15em;
+    -fx-padding: 1em;
     -fx-wrap-text: true;
     -fx-alignment: center;
     -fx-text-alignment: center;
+}
+#timer {
+    -fx-text-fill: antiquewhite;
+    -fx-font-size: 1em;
+    -fx-padding: 1em;
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-border-color: white;
+    -fx-border-radius: 2em;
 }
 
 #game{

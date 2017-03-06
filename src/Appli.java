@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 import static java.lang.System.exit;
 
@@ -24,3 +27,8 @@ public class Appli extends Application{
         Control_Menu control_menu = new Control_Menu(stage);
     }
 }
+
+/* TODO
+ * - évènements random
+ * - compléter fonctions secondaire
+ */

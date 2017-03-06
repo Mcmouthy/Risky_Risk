@@ -103,7 +103,7 @@ public class Generateur_v2 extends Application {
 
         name = askForString("Création d'une map", "Nom:");
         img = new Image(askForImageFile().toURI().toString());
-        if (askForBoolean("Création d'une map", "Utiliser un fichier d'aide? (image utilisée pour la création mais n'apparaît pas dans le fichier final)")) {
+        if (askForBoolean(stage,"Création d'une map", "Utiliser un fichier d'aide? (image utilisée pour la création mais n'apparaît pas dans le fichier final)")) {
             help_img = new Image(askForImageFile().toURI().toString());
             System.out.println("Pas de fichier help détecté, édition basé sur l'original");
         } else help_img = img;
@@ -356,7 +356,7 @@ public class Generateur_v2 extends Application {
         else return "";
     }
 
-    private boolean askForBoolean(String intitule, String texte) {
+    public static boolean askForBoolean(Stage stage, String intitule, String texte) {
         Optional<ButtonType> result = null;
         Alert alert;
         while (result == null || result.get() == ButtonType.CANCEL) {       //tant qu'on appuie sur la croix rouge, on reaffiche la popup
