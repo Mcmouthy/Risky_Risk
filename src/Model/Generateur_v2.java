@@ -84,14 +84,17 @@ public class Generateur_v2 extends Application {
     }
 
     private void initParameter() {
+        stage.hide();
+        stage.setFullScreen(false);
         stage.setTitle("Map Creator");
         stage.getIcons().add(new Image(new File("img/icon.png").toURI().toString()));
-        stage.centerOnScreen();
         stage.setResizable(false);
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, 600 + 200, 600, Color.BLACK);
         scene.setOnKeyPressed(new KeyListener());
         stage.setScene(scene);
+        stage.sizeToScene();
+        stage.centerOnScreen();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -102,10 +105,14 @@ public class Generateur_v2 extends Application {
         stage.show();
 
         name = askForString("Création d'une map", "Nom:");
-        img = new Image(askForImageFile().toURI().toString());
+        if(name.equals("")) name = "default_map_name";
+        File buf = askForImageFile();
+        if(buf==null) exit(1);
+        img = new Image(buf.toURI().toString());
         if (askForBoolean(stage,"Création d'une map", "Utiliser un fichier d'aide? (image utilisée pour la création mais n'apparaît pas dans le fichier final)")) {
-            help_img = new Image(askForImageFile().toURI().toString());
-            System.out.println("Pas de fichier help détecté, édition basé sur l'original");
+            buf = askForImageFile();
+            if(buf==null) help_img = img;
+            else help_img = new Image(buf.toURI().toString());
         } else help_img = img;
         MenuListener menuListener = new MenuListener();
         createTerritory = new Button("Créer territoire");
