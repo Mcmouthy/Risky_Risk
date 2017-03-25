@@ -247,15 +247,25 @@ public class Partie implements Serializable{
 
         }else{
             nbtrouperestante=attaqueRapide(c,nbtroupes);
+            caseAttaquant.setNbtroupes(caseAttaquant.getNbtroupes()-(nbtroupes-1));
         }
 
-        if (c.getNbtroupes()>0 && nbtrouperestante>0 && getMode()==CLASSICO){
-            caseAttaquant.setNbtroupes(caseAttaquant.getNbtroupes()+nbtrouperestante);
-        }else if(c.getNbtroupes()==0 && nbtrouperestante>0){
-            c.setJoueur(attaquant);
-            c.setNbtroupes(nbtrouperestante);
-            defenseur.perdTerrain(c);
-            attaquant.gagneTerrain(c);
+        if(getMode()==CLASSICO) {
+            if (c.getNbtroupes() > 0 && nbtrouperestante > 0) {
+                caseAttaquant.setNbtroupes(caseAttaquant.getNbtroupes() + nbtrouperestante);
+            } else if (c.getNbtroupes() == 0 && nbtrouperestante > 0) {
+                c.setJoueur(attaquant);
+                c.setNbtroupes(nbtrouperestante);
+                defenseur.perdTerrain(c);
+                attaquant.gagneTerrain(c);
+            }
+        }else if (getMode()==RAPIDO){
+            if (c.getNbtroupes()==0 && nbtrouperestante>0){
+                defenseur.perdTerrain(c);
+                attaquant.gagneTerrain(c);
+                c.setJoueur(attaquant);
+                c.setNbtroupes(nbtrouperestante);
+            }
         }
     }
 
@@ -290,11 +300,11 @@ public class Partie implements Serializable{
                 chanceAtt = random.nextDouble();
                 chanceDef = random.nextDouble() + 0.50;
                 if (chanceAtt > chanceDef) {
-                    nbtroupes = nbtroupes - c.getNbtroupes();
+                    nbtroupes = 1;
                     c.setNbtroupes(0);
                 } else {
+                    c.setNbtroupes(c.getNbtroupes()-nbtroupes);
                     nbtroupes = 0;
-                    c.setNbtroupes(1);
                 }
             }
         }else if (Math.abs(nbtroupes-c.getNbtroupes())>=2){
