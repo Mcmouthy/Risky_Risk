@@ -31,12 +31,12 @@ import java.util.Optional;
  * Created by yhaffner on 08/12/16
  */
 public class Game_View {
-    final static String NEUTRE = "case-neutre";
-    final static String COLOR_RED = "case-red";
-    final static String COLOR_BLUE = "case-blue";
-    final static String COLOR_GREEN = "case-green";
-    final static String COLOR_YELLOW = "case-yellow";
-    final static String COLOR_BLACK = "case-black";
+    private final static String NEUTRE = "case-neutre";
+    private final static String COLOR_RED = "case-red";
+    private final static String COLOR_BLUE = "case-blue";
+    private final static String COLOR_GREEN = "case-green";
+    private final static String COLOR_YELLOW = "case-yellow";
+    private final static String COLOR_BLACK = "case-black";
     private Partie model;
     public Stage stage;
     private Menu_View menu_view;
@@ -127,7 +127,7 @@ public class Game_View {
     }
 
 
-    public void createTerritoryFor(Case c) {
+    private void createTerritoryFor(Case c) {
         int w=50,h=20;
         Point lastPoint = null;
         Path p = new Path();
@@ -293,8 +293,6 @@ public class Game_View {
 
         // Traditional way to get the response value.
         Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()){
-            return "save/"+result.get();
-        }else return "";
+        return result.map(s -> "save/" + s).orElse("");
     }
 }

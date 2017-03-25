@@ -84,16 +84,16 @@ public class Control_Game implements EventHandler<MouseEvent>{
         tourTimeOut.schedule(new TimerTask() {
             @Override
             public void run() {
-                Platform.runLater((()->view.timer.setText(
+                if(!view.model_des.getPlateau().isVisible())Platform.runLater((()->view.timer.setText(
                         (int)((model.time_secondes - System.currentTimeMillis()) / 1000 + 60) + ""
-                )));
+                ))); else model.time_secondes = System.currentTimeMillis()- (60-Integer.parseInt(view.timer.getText()))*1000;
                 if ((model.time_secondes - System.currentTimeMillis()) / 1000 + 60 <= 0) {
                     tourTimeOut.cancel();
                     tourTimeOut.purge();
                     model.passeJoueurSuivant();
                     model.passeEtapeSuivante();
                     model.calculRenforts(model.getJoueurCourant());
-                    view.notice.setText(model.getJoueurCourant().getNom() + "\nPlacez vos renforts!");
+                    Platform.runLater((()->view.notice.setText(model.getJoueurCourant().getNom() + "\nPlacez vos renforts!")));
                     view.caseOnFocus = null;
                     verifRenfortCapacite();
                 }
@@ -188,16 +188,17 @@ public class Control_Game implements EventHandler<MouseEvent>{
                 tourTimeOut.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        Platform.runLater((()->view.timer.setText(
+                        if(!view.model_des.getPlateau().isVisible())Platform.runLater((()->view.timer.setText(
                                 (int)((model.time_secondes - System.currentTimeMillis()) / 1000 + 60) + ""
-                        )));
+                        ))); else model.time_secondes = System.currentTimeMillis() - (60-Integer.parseInt(view.timer.getText()))*1000;
+
                         if ((model.time_secondes - System.currentTimeMillis()) / 1000 + 60 <= 0) {
                             tourTimeOut.cancel();
                             tourTimeOut.purge();
                             model.passeJoueurSuivant();
                             model.passeEtapeSuivante();
                             model.calculRenforts(model.getJoueurCourant());
-                            view.notice.setText(model.getJoueurCourant().getNom() + "\nPlacez vos renforts!");
+                            Platform.runLater((()->view.notice.setText(model.getJoueurCourant().getNom() + "\nPlacez vos renforts!")));
                             view.caseOnFocus = null;
                             verifRenfortCapacite();
                         }

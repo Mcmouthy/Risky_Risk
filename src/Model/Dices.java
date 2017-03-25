@@ -31,19 +31,17 @@ import java.util.TimerTask;
  */
 public class Dices {
     private final ArrayList<Node> savedElements;
-    StackPane plateau;
+    private StackPane plateau;
     private MeshView[][] dices;
     private Vec2d[][] dicesDirection;
     private Timeline[][] dicesTimer;
     private int[][] dicesPhase;
-    private int[][] dicesDeceleration;
     private int[][] dicesFinalFace;
     private boolean[][] dicesIsEntered;
     private Label resultat;
 
     private static int cubeSize = 100;
     private int decalage = 300;
-    private Point[][] dicesPosition;
 
     public Dices(StackPane pane) {
         plateau = pane;
@@ -66,11 +64,9 @@ public class Dices {
         }
         dicesDirection = new Vec2d[2][3];
         dicesPhase = new int[2][3];
-        dicesDeceleration = new int[2][3];
         dicesFinalFace = new int[2][3];
         dicesTimer = new Timeline[2][3];
         dicesIsEntered = new boolean[2][3];
-        dicesPosition = new Point[2][3];
     }
 
     private static MeshView createDice(String s) {
@@ -154,7 +150,6 @@ public class Dices {
 
 
     public void launchDices(int[] desRouges, int[] desBleus, int victory) {
-
         plateau.setVisible(true);
         Platform.runLater(() -> {
             plateau.getChildren().clear();
@@ -171,8 +166,6 @@ public class Dices {
                 dicesFinalFace[0][i] = desRouges[i];
                 dicesIsEntered[0][i] = false;
                 dicesPhase[0][i] = 0;
-                dicesDeceleration[0][i] = 0;
-                dicesPosition[0][i] = new Point((int) dices[0][i].getTranslateX(), (int) dices[0][i].getTranslateY());
             }
             for (int i = 0; i < desBleus.length; i++) {
                 plateau.getChildren().add(dices[1][i]);
@@ -184,8 +177,6 @@ public class Dices {
                 dicesFinalFace[1][i] = desBleus[i];
                 dicesIsEntered[1][i] = false;
                 dicesPhase[1][i] = 0;
-                dicesDeceleration[1][i] = 0;
-                dicesPosition[1][i] = new Point((int) dices[1][i].getTranslateX(), (int) dices[1][i].getTranslateY());
             }
             for (MeshView[] t : dices) for (MeshView m : t) m.setVisible(true);
             plateau.getChildren().add(resultat);
@@ -378,7 +369,7 @@ public class Dices {
     }
 
 
-    public void waitForEndOfLaunch() {
+    private void waitForEndOfLaunch() {
 
         while (plateau.isVisible())
             try {
