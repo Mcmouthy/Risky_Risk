@@ -359,8 +359,7 @@ public class Generateur_v2 extends Application {
         dialog.initOwner(stage);
 
         Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()) return result.get();
-        else return "";
+        return result.orElse("");
     }
 
     public static boolean askForBoolean(Stage stage, String intitule, String texte) {
@@ -370,11 +369,31 @@ public class Generateur_v2 extends Application {
             alert = new Alert(Alert.AlertType.CONFIRMATION, texte, ButtonType.YES, ButtonType.NO);
             alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
             alert.initOwner(stage);
-            alert.setTitle("Map Creator");
+            alert.setTitle("RISKY RISK");
             alert.setHeaderText(intitule);
             result = alert.showAndWait();
         }
-        return result.get() == ButtonType.YES;
+        return result.isPresent() && result.get() == ButtonType.YES;
+    }
+
+
+    public static int askForInt(Stage stage, String intitule, String texte) {
+        TextInputDialog dialog = new TextInputDialog("1");
+        dialog.setTitle("RISKY RISK");
+        dialog.setHeaderText(intitule);
+        dialog.setContentText(texte);
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            try {
+                return Integer.parseInt(result.get());
+            }
+            catch(NumberFormatException nfe)
+            {
+                return -1;
+            }
+        }
+        return 0;
     }
 
     private File askForImageFile() {
@@ -408,7 +427,6 @@ public class Generateur_v2 extends Application {
         p.setTranslateY(min.y);
         return new AbstractMap.SimpleEntry<Path, Case>(p, new Case(null, 0, min.x, min.y, actualTerritory, actualContinent));
     }
-
 
 
     class KeyListener implements EventHandler<KeyEvent> {

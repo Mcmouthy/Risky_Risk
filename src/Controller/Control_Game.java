@@ -2,9 +2,11 @@ package Controller;
 
 
 import Model.Case;
+import Model.Generateur_v2;
 import Model.Joueur;
 import Model.Partie;
 import View.Game_View;
+import View.Menu_View;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -231,7 +233,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
                         } else {
                             model.passeEtapeSuivante();
                             view.notice.setText(model.getJoueurCourant().getNom() + "\n" +
-                                    "Cliquez sur une de vos case puis sur une case adversaire ou neutre pour tenter de la conquérir");
+                                    "Cliquez sur une de vos case puis sur une case adversaire ou neutre pour tenter de la conquérir ou bien sur l'une des votres pour effectuer un déplacement stratégique");
                             view.endTurn.setText("Terminer le tour");
                             break;
                         }
@@ -254,7 +256,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
                 } else {
                     model.passeEtapeSuivante();
                     view.notice.setText(model.getJoueurCourant().getNom()+"\n"+
-                            "Cliquez sur une de vos case puis sur une case adversaire ou neutre pour tenter de la conquérir");
+                            "Cliquez sur une de vos case puis sur une case adversaire ou neutre pour tenter de la conquérir ou bien sur l'une des votres pour effectuer un déplacement stratégique");
                     view.endTurn.setText("Terminer le tour");
                 }
                 verifRenfortCapacite();
@@ -290,9 +292,30 @@ public class Control_Game implements EventHandler<MouseEvent>{
                                 break;
                             }
                         }
+                    } else {
+                        int ans = Generateur_v2.askForInt(view.stage,"Déplacement stratégique", "Rentrez le nombre de troupes à déplacer: ");
+                        while(ans<0 ){
+                            ans = Generateur_v2.askForInt(view.stage,"ERREUR: nombre de troupes invalide", "Rentrez le nombre de troupes à déplacer: ");
+                        }
+                        if(ans>=caseattaquante.getNbtroupes()) ans = caseattaquante.getNbtroupes()-1;
+                        if((model.getMode()== Partie.CLASSICO && c.getNbtroupes()+ans>24) || (model.getMode()== Partie.RAPIDO && c.getNbtroupes()+ans>12))
+                            ans = model.getMode()==Partie.CLASSICO?24-c.getNbtroupes():12-c.getNbtroupes();
+                        model.deplacementTroupes(caseattaquante,c,ans);
                     }
                     view.caseOnFocus=null;
-                } else view.caseOnFocus=b;
+                } else if(view.caseOnFocus != null && model.getJoueurCourant().getTerrain().contains(c) && model.getJoueurCourant().getTerrain().contains(caseattaquante) && !c.equals(caseattaquante)) {
+                        int ans = Generateur_v2.askForInt(view.stage,"Déplacement stratégique", "Rentrez le nombre de troupes à déplacer: ");
+                        while(ans<0 ){
+                            ans = Generateur_v2.askForInt(view.stage,"ERREUR: nombre de troupes invalide", "Rentrez le nombre de troupes à déplacer: ");
+                        }
+                        if(ans>=caseattaquante.getNbtroupes()) ans = caseattaquante.getNbtroupes()-1;
+                        if((model.getMode()== Partie.CLASSICO && c.getNbtroupes()+ans>24) || (model.getMode()== Partie.RAPIDO && c.getNbtroupes()+ans>12))
+                            ans = model.getMode()==Partie.CLASSICO?24-c.getNbtroupes():12-c.getNbtroupes();
+                        model.deplacementTroupes(caseattaquante,c,ans);
+                        view.caseOnFocus = null;
+                } else {
+                    view.caseOnFocus=b;
+                }
             }
             verifFinDePartie();
         } else if(event.getSource().equals(view.retour)){
@@ -336,7 +359,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
         if(!ok) {
             model.passeEtapeSuivante();
             view.notice.setText(model.getJoueurCourant().getNom() + "\n" +
-                    "Cliquez sur une de vos case puis sur une case adversaire ou neutre pour tenter de la conquérir");
+                    "Cliquez sur une de vos case puis sur une case adversaire ou neutre pour tenter de la conquérir ou bien sur l'une des votres pour effectuer un déplacement stratégique");
             view.endTurn.setText("Terminer le tour");
         }
     }

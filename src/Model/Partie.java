@@ -170,11 +170,11 @@ public class Partie implements Serializable{
         else{setDistributionRenforts(true);setAttaque_deplacements(false);}
     }
 
-    public void setAttaque_deplacements(boolean attaque_deplacements) {
+    private void setAttaque_deplacements(boolean attaque_deplacements) {
         this.attaque_deplacements = attaque_deplacements;
     }
 
-    public void setDistributionRenforts(boolean distributionRenforts) {
+    private void setDistributionRenforts(boolean distributionRenforts) {
         this.distributionRenforts = distributionRenforts;
     }
 
@@ -435,9 +435,8 @@ public class Partie implements Serializable{
         if (caseDepart.getNbtroupes()>1){
             if (caseDepart.getNbtroupes()<nbtroupes)caseDepart.setNbtroupes(caseDepart.getNbtroupes()-(caseDepart.getNbtroupes()-1));
             else caseDepart.setNbtroupes(caseDepart.getNbtroupes()-nbtroupes);
-            caseArrivee.setNbtroupes(nbtroupes);
+            caseArrivee.setNbtroupes(nbtroupes+caseArrivee.getNbtroupes());
         }
-
     }
 
     public int nbjoueurRestant(){
