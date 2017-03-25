@@ -184,11 +184,17 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         }else if(event.getSource().equals(getView().continuer)){
             for (String s : getSavesName())
                 view.listeSave.getItems().add(s);
-            view.listeSave.setValue(view.listeSave.getItems().get(0));
-            view.chooseSave();
+            if(getSavesName().length!=0) {
+                view.listeSave.setValue(view.listeSave.getItems().get(0));
+                view.chooseSave();
+            }
         }else if (event.getSource().equals(getView().lancerSave)){
-            Partie p = Partie.loadGame(getView().listeSave.getValue());
-            game = new Control_Game(p,this,false);
+            if (!getView().listeSave.getValue().equals("")) {
+                Partie p = Partie.loadGame(getView().listeSave.getValue());
+                clipo.stop();
+                game = new Control_Game(p, this, false);
+
+            }
         }
     }
     @Override

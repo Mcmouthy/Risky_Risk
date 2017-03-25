@@ -16,9 +16,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.media.AudioClip;
 import javafx.scene.shape.Path;
 import java.io.File;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 
 /**
@@ -29,8 +27,10 @@ public class Control_Game implements EventHandler<MouseEvent>{
     private final Partie model;
     private final Game_View view;
     private final Control_Menu menu;
-    private final AudioClip clip;
+    private AudioClip clip;
     private Timer tourTimeOut;
+    private List<File> playlist= new ArrayList<>();
+    int indexPlaylist=0;
     private boolean[] isMoving = new boolean[4]; // DIRECTION selon le sens horaire, comme en CSS
 
     public Control_Game(Partie model,Control_Menu control_menu, boolean nouvelle){
@@ -75,9 +75,22 @@ public class Control_Game implements EventHandler<MouseEvent>{
         },10,50);
 
         File file = new File("musics/RiskSoundtrack.wav");
-        clip = new AudioClip(file.toURI().toString());
+        File file2 = new File("musics/Partie.wav");
+        File file3 = new File("musics/Partie2.wav");
+        File file4 = new File("musics/Partie3.wav");
+        File file5 = new File("musics/Partie4.wav");
+        File file6 = new File("musics/Partie5.wav");
+        File file7 = new File("musics/Partie6.wav");
+        playlist.add(file);
+        playlist.add(file2);
+        playlist.add(file3);
+        playlist.add(file4);
+        playlist.add(file5);
+        playlist.add(file6);
+        playlist.add(file7);
+
+        clip = new AudioClip(playlist.get(indexPlaylist).toURI().toString());
         clip.setVolume(control_menu.musicVolume);
-        clip.setCycleCount(AudioClip.INDEFINITE);
         clip.play();
         model.time_secondes=System.currentTimeMillis();
         tourTimeOut = new Timer();
@@ -86,7 +99,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
             public void run() {
                 if(!view.model_des.getPlateau().isVisible())Platform.runLater((()->view.timer.setText(
                         (int)((model.time_secondes - System.currentTimeMillis()) / 1000 + 60) + ""
-                ))); else model.time_secondes = System.currentTimeMillis()- (60-Integer.parseInt(view.timer.getText()))*1000;
+                ))); else model.time_secondes = System.currentTimeMillis()- (60-Integer.parseInt(view.timer.getText()))*1000;verifMusique();
                 if ((model.time_secondes - System.currentTimeMillis()) / 1000 + 60 <= 0) {
                     tourTimeOut.cancel();
                     tourTimeOut.purge();
@@ -167,7 +180,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
         if (!model.mute && event.getSource() instanceof Button) {
             AudioClip clip = new AudioClip(new File("sounds/button.wav").toURI().toString());
             clip.setVolume(menu.soundVolume);
-            clip.play();;
+            clip.play();
         }
 
 
@@ -285,6 +298,8 @@ public class Control_Game implements EventHandler<MouseEvent>{
         } else if(event.getSource().equals(view.retour)){
             clip.stop();
             menu.getView().setMainMenuView();
+            clip=new AudioClip(new File("musics/Menu.wav").toURI().toString());
+            clip.play(menu.musicVolume);
             menu.getView().getStage().getScene().getStylesheets().clear();
             menu.getView().getStage().getScene().getStylesheets().add(new File("css/menu_view.css").toURI().toString());
             menu.game = null;
@@ -312,6 +327,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
 
         /* ACTUALISATION */
         if(actualiseCases) view.actualizeCases();
+
     }
 
     private void verifRenfortCapacite() {
@@ -336,6 +352,17 @@ public class Control_Game implements EventHandler<MouseEvent>{
         if (model.nbjoueurRestant()==1){
             model.setFin(true);
             view.setFinDePartieView();
+        }
+    }
+
+    private void verifMusique(){
+        if (!clip.isPlaying()){
+            indexPlaylist++;
+            if (indexPlaylist>playlist.size()-1){
+                indexPlaylist=0;
+            }
+            clip=new AudioClip(playlist.get(indexPlaylist).toURI().toString());
+            clip.play(menu.musicVolume);
         }
     }
 }
