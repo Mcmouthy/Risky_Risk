@@ -47,6 +47,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
     boolean fullscreen = true;
     double soundVolume = 1;
     double musicVolume = 1;
+    AudioClip clipo;
 
     public Control_Menu(Stage stage)
     {
@@ -115,6 +116,9 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         /* ACTIONS */
         if (event.getSource().equals(getView().startButton)) {
             view.setMainMenuView();
+            clipo = new AudioClip(new File("musics/Menu.wav").toURI().toString());
+            clipo.setVolume(musicVolume);
+            if (musicVolume>0.01)clipo.play();
         } else if (event.getSource().equals(getView().nouvellePartie)) {
             view.listeCarte.getItems().clear();
             for (String s : getCartesNames())
@@ -138,6 +142,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
             view.setPartieAskingView();
         } else if (event.getSource().equals(getView().lancerPartie)) {
             if (!mauvaisChoixCouleurs() && !nomJoueurNull() && !sameNomJoueur()) {
+                clipo.stop();
                 nouvellepartie();
             } else {
                 view.popUpErreurSetNomCouleur();
@@ -151,8 +156,13 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
                 changement |= resolution!=i;
                 resolution = i;
             }
+            double stat=clipo.getPan();
+            clipo.stop();
             soundVolume = view.sliderSoundVolume.getValue();
             musicVolume = view.sliderMusicVolume.getValue();
+            clipo.setPan(stat);
+            clipo.play(musicVolume);
+
 
             if(changement) view.getStage().hide();
             view.getStage().setFullScreen(fullscreen);
