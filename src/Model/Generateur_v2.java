@@ -70,12 +70,6 @@ public class Generateur_v2 extends Application {
     private HashMap<Path, Case> allIn = new HashMap<>();
     private ArrayList<Continent> continents = new ArrayList<>();
 
-
-    public static void main(String[] args) {
-        Locale.setDefault(Locale.FRANCE);
-        launch(args);
-    }
-
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
