@@ -200,6 +200,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
                 if(loto.nextDouble()<=0.4) {
                     Generateur_v2.showText(view.stage, "Évènement", model.choixEvenements());
                 }
+                verifFinDePartie();
                 if(tourTimeOut!=null) tourTimeOut.purge();
                 tourTimeOut = new Timer();
                 tourTimeOut.schedule(new TimerTask() {

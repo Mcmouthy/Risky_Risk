@@ -646,7 +646,6 @@ public class Partie implements Serializable{
     public String choixEvenements(){
         int numevents=random.nextInt(7);
         Joueur j=pickJoueur();
-        Joueur j2= pickJoueur();
 
         switch (numevents){
             case 0:
@@ -666,11 +665,11 @@ public class Partie implements Serializable{
                 return "ALERTE ! "+j.getNom()+" : des troupes ont déserté !";
 
             case 4:
-                if (j2!=j) {
-                    eventTrahison(j, j2);
-                    return "ALERTE ! "+j.getNom()+" : des troupes nous ont trahis !";
-                }
-                break;
+                Joueur j2;
+                j2= pickJoueur();
+                while(j2.equals(j)) j2= pickJoueur();
+                eventTrahison(j, j2);
+                return "ALERTE ! "+j.getNom()+" : des troupes nous ont trahis !";
             case 5:
                 eventRevolte(j);
                 return "ALERTE ! "+j.getNom()+" : une révolte a eclaté dans un de vos territoire ! \nCelui-ci est perdu...";
