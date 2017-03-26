@@ -663,7 +663,6 @@ public class Partie implements Serializable{
             case 3:
                 eventDesertion(j);
                 return "ALERTE ! "+j.getNom()+" : des troupes ont déserté !";
-
             case 4:
                 Joueur j2;
                 j2= pickJoueur();
@@ -675,9 +674,10 @@ public class Partie implements Serializable{
                 return "ALERTE ! "+j.getNom()+" : une révolte a eclaté dans un de vos territoire ! \nCelui-ci est perdu...";
 
             case 6:
-                finEventSabotage();
-                return "Il semblerait que des experts aient sauvé un territoire du sabotage !";
-
+                if(finEventSabotage()!=null)
+                    return "Il semblerait que des experts aient sauvé un territoire du sabotage !";
+                else
+                    return "Des experts ont essayer de sauver un territoire du sabotage, mais aucun territoire n'était saboté. Il ne se passe RIEN.";
         }
         return "";
     }
