@@ -17,6 +17,7 @@ public class Case implements Serializable{
     private ArrayList<Point> points;
     private Set<Case> voisins;
     private Continent continent;
+    public boolean isAbleToAttack;
 
     public Case(Joueur joueur,int nbtroupes,int x,int y,ArrayList<Point> points,Continent continent){
         this.joueur=joueur;
@@ -26,6 +27,7 @@ public class Case implements Serializable{
         this.points = (ArrayList<Point>) points.clone();
         voisins=new HashSet<Case>();
         this.continent=continent;
+        isAbleToAttack = true;
 
         int hmax=0,vmax=0;
         for(Point pt:this.points) {

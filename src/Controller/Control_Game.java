@@ -303,14 +303,13 @@ public class Control_Game implements EventHandler<MouseEvent>{
                         model.deplacementTroupes(caseattaquante,c,ans);
                     }
                     view.caseOnFocus=null;
-                } else if(view.caseOnFocus != null && model.getJoueurCourant().getTerrain().contains(c) && model.getJoueurCourant().getTerrain().contains(caseattaquante) && !c.equals(caseattaquante)) {
+                } else if(model.getMode()== Partie.CLASSICO && view.caseOnFocus != null && model.getJoueurCourant().getTerrain().contains(c) && model.getJoueurCourant().getTerrain().contains(caseattaquante) && !c.equals(caseattaquante)) {
                         int ans = Generateur_v2.askForInt(view.stage,"Déplacement stratégique", "Rentrez le nombre de troupes à déplacer: ");
                         while(ans<0 ){
                             ans = Generateur_v2.askForInt(view.stage,"ERREUR: nombre de troupes invalide", "Rentrez le nombre de troupes à déplacer: ");
                         }
                         if(ans>=caseattaquante.getNbtroupes()) ans = caseattaquante.getNbtroupes()-1;
-                        if((model.getMode()== Partie.CLASSICO && c.getNbtroupes()+ans>24) || (model.getMode()== Partie.RAPIDO && c.getNbtroupes()+ans>12))
-                            ans = model.getMode()==Partie.CLASSICO?24-c.getNbtroupes():12-c.getNbtroupes();
+                        if(c.getNbtroupes()+ans>24) ans = model.getMode()==Partie.CLASSICO?24-c.getNbtroupes():12-c.getNbtroupes();
                         model.deplacementTroupes(caseattaquante,c,ans);
                         view.caseOnFocus = null;
                 } else {

@@ -47,6 +47,8 @@ public class Partie implements Serializable{
     public Case actualDefCase;
     public Case actualAttCase;
 
+    private ArrayDeque<Case> casesSabotes = new ArrayDeque<>();
+
     public Partie(String mapName){
         joueurs=new ArrayList<>();
         neutres=new ArrayList<>();
@@ -596,22 +598,22 @@ public class Partie implements Serializable{
         else c.setNbtroupes(c.getNbtroupes()-3);
     }
 
-    //TODO a revoir certaines partie de code qui ne sont pas bonnes du tout
     //Un joueur ne peux plus attaquer via une de ses cases pendant un tour
-    //PS : J'ai fais ça comme un sac (j'ai mis le nombre de troupes à 1)
-    //je pense que cet event se fera plus dans les controlleurs car dans le model on ne peut pas le montrer
-    //clairement qu'elle ne peut pas attaquer
+    //La case sabotée est ajotée à la liste des case sabotées
     public Case eventSabotage(Joueur j) {
         Case selected = pickCase(j);
-        Case buff = selected;
-        selected.setNbtroupes(1);
-        return buff;
+        if(selected.isAbleToAttack) {
+            casesSabotes.add(selected);
+            selected.isAbleToAttack = false;
+            return selected;
+        }
+        return null;
     }
 
-    //TODO a revoir certaines partie de code qui ne sont pas bonnes du tout
     //On remet le nombre de troupes de la case à son nombre initial pour qu'elle puisse attaquer ensuite
-    public void finEventSabotage(Joueur j) {
-        Case selected = eventSabotage(j);
+    public void finEventSabotage() {
+        Case selected = casesSabotes.poll();
+        if(selected!=null) selected.isAbleToAttack = true;
     }
 
     //Evenement qui enleve deux troupes
