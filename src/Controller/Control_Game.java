@@ -197,7 +197,9 @@ public class Control_Game implements EventHandler<MouseEvent>{
                 view.notice.setText(model.getJoueurCourant().getNom() + "\nPlacez vos renforts!");
                 view.caseOnFocus = null;
                 verifRenfortCapacite();
-                Generateur_v2.showText(view.stage,"Évènement",model.choixEvenements());
+                if(loto.nextDouble()<=0.4) {
+                    Generateur_v2.showText(view.stage, "Évènement", model.choixEvenements());
+                }
                 if(tourTimeOut!=null) tourTimeOut.purge();
                 tourTimeOut = new Timer();
                 tourTimeOut.schedule(new TimerTask() {
