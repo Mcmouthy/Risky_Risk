@@ -578,44 +578,49 @@ public class Partie implements Serializable{
     }
 
     //Evenement qui ajoute une troupe
-    public void eventRenfort(Joueur j) {
+    public int eventRenfort(Joueur j) {
         Case selected = pickCase(j);
         int renfort = Control_Game.loto.nextInt(6)+1;
         if(renfort+selected.getNbtroupes()>24) selected.setNbtroupes(24);
         else selected.setNbtroupes(selected.getNbtroupes()+renfort);
+        return renfort;
     }
 
     //Evenement qui ajoute trois troupes pendant un tour
-    private void eventMercenaires(Joueur j) {
+    private int eventMercenaires(Joueur j) {
         Case selected = pickCase(j);
         int renfort = Control_Game.loto.nextInt(4)*3+7;
         if(renfort+selected.getNbtroupes()>24) selected.setNbtroupes(24);
         else selected.setNbtroupes(selected.getNbtroupes()+renfort);
+        return renfort;
     }
 
     //Un joueur ne peux plus attaquer via une de ses cases pendant un tour
     //La case sabotée est ajotée à la liste des case sabotées
-    private void eventSabotage(Joueur j) {
+    private Case eventSabotage(Joueur j) {
         Case selected = pickCase(j);
         if(selected.isAbleToAttack) {
             casesSabotes.add(selected);
             selected.isAbleToAttack = false;
         }
+        return selected;
     }
 
     //On remet le nombre de troupes de la case à son nombre initial pour qu'elle puisse attaquer ensuite
-    public void finEventSabotage() {
+    public Case finEventSabotage() {
         Case selected = casesSabotes.poll();
         if(selected!=null) selected.isAbleToAttack = true;
+        return selected;
     }
 
     //Evenement qui enleve deux troupes
-    private void eventDesertion(Joueur j) {
+    private Case eventDesertion(Joueur j) {
         Case selected = pickCase(j);
         int troupes = selected.getNbtroupes();
         troupes-=2;
         if(troupes<1) troupes =1;
         selected.setNbtroupes(troupes);
+        return selected;
     }
 
     //Evenement qui prend aléatoirement 2 case qui ne sont pas du même joueur pour inverser leur troupes
@@ -628,42 +633,50 @@ public class Partie implements Serializable{
     }
 
     //Evenement qui supprime toutes les troupes présentes sur une case et la rend neutre
-    private void eventRevolte(Joueur j) {
+    private Joueur eventRevolte(Joueur j) {
         Case selected = pickCase(j);
         selected.setNbtroupes(0);
         j.perdTerrain(selected);
         neutres.add(selected);
+        return j;
     }
 
 
-    public void choixEvenements(){
+    public String choixEvenements(){
         int numevents=random.nextInt(7);
         Joueur j=pickJoueur();
         Joueur j2= pickJoueur();
 
         switch (numevents){
             case 0:
-                eventRenfort(j);
+                int nb=eventRenfort(j);
+                return j.getNom()+": "+nb+" renfort(s) vous ont été attribué(s) !";
                 break;
             case 1:
-                eventMercenaires(j);
+                int nb2=eventMercenaires(j);
+                return j.getNom()+": "+nb2+" mercenaire(s) vous viennent en aide !";
                 break;
             case 2:
                 eventSabotage(j);
+                return "ALERTE ! "+j.getNom()+" : l'une de vos case à été saboté !";
                 break;
             case 3:
                 eventDesertion(j);
+                return "ALERTE ! "+j.getNom()+" : des troupes ont déserté !";
                 break;
             case 4:
                 if (j2!=j) {
                     eventTrahison(j, j2);
+                    return "ALERTE ! "+j.getNom()+" : des troupes nous ont trahis !";
                 }
                 break;
             case 5:
                 eventRevolte(j);
+                return "ALERTE ! "+j.getNom()+" : une révolte a eclaté dans un de vos territoire ! \nCelui-ci est perdu...";
                 break;
             case 6:
                 finEventSabotage();
+                return "Il semblerait que des experts ont sauvé un territoire du sabotage !";
                 break;
         }
     }
