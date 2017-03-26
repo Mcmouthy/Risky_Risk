@@ -194,6 +194,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         }else if (event.getSource().equals(getView().lancerSave)){
             if (!getView().listeSave.getValue().equals("")) {
                 Partie p = Partie.loadGame(getView().listeSave.getValue());
+                if(p!=null)p.setPause(false);
                 clipo.stop();
                 game = new Control_Game(p, this, false);
 
