@@ -624,9 +624,8 @@ public class Partie implements Serializable{
         selected.setNbtroupes(troupes);
     }
 
-    //TODO a revoir certaines partie de code qui ne sont pas bonnes du tout
-    //Evenement qui enleve une troupe et l'ajoute à une case voisine
-    public void eventTrahison(Joueur j) {
+    //Evenement qui prend aléatoirement 2 case qui ne sont pas du même joueur pour inverser leur troupes
+    public void eventTrahison(Joueur j, Joueur j2) {
         Case selected = pickCase(j);
         selected.setNbtroupes(selected.getNbtroupes()-1);
 

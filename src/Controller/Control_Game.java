@@ -233,7 +233,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
                         } else {
                             model.passeEtapeSuivante();
                             view.notice.setText(model.getJoueurCourant().getNom() + "\n" +
-                                    "Cliquez sur une de vos case puis sur une case adversaire ou neutre pour tenter de la conquérir ou bien sur l'une des votres pour effectuer un déplacement stratégique");
+                                    "Cliquez sur une de vos case puis sur une case adversaire ou neutre pour tenter de la conquérir"+(model.getMode()==Partie.CLASSICO?" ou bien sur l'une des votres pour effectuer un déplacement stratégique":""));
                             view.endTurn.setText("Terminer le tour");
                             break;
                         }
@@ -256,7 +256,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
                 } else {
                     model.passeEtapeSuivante();
                     view.notice.setText(model.getJoueurCourant().getNom()+"\n"+
-                            "Cliquez sur une de vos case puis sur une case adversaire ou neutre pour tenter de la conquérir ou bien sur l'une des votres pour effectuer un déplacement stratégique");
+                            "Cliquez sur une de vos case puis sur une case adversaire ou neutre pour tenter de la conquérir"+(model.getMode()==Partie.CLASSICO?" ou bien sur l'une des votres pour effectuer un déplacement stratégique":""));
                     view.endTurn.setText("Terminer le tour");
                 }
                 verifRenfortCapacite();
@@ -298,7 +298,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
                             ans = Generateur_v2.askForInt(view.stage,"ERREUR: nombre de troupes invalide", "Rentrez le nombre de troupes à déplacer: ");
                         }
                         if(ans>=caseattaquante.getNbtroupes()) ans = caseattaquante.getNbtroupes()-1;
-                        if((model.getMode()== Partie.CLASSICO && c.getNbtroupes()+ans>24) || (model.getMode()== Partie.RAPIDO && c.getNbtroupes()+ans>12))
+                        if(c.getNbtroupes()+ans>24)
                             ans = model.getMode()==Partie.CLASSICO?24-c.getNbtroupes():12-c.getNbtroupes();
                         model.deplacementTroupes(caseattaquante,c,ans);
                     }
@@ -360,7 +360,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
         if(!ok) {
             model.passeEtapeSuivante();
             view.notice.setText(model.getJoueurCourant().getNom() + "\n" +
-                    "Cliquez sur une de vos case puis sur une case adversaire ou neutre pour tenter de la conquérir ou bien sur l'une des votres pour effectuer un déplacement stratégique");
+                    "Cliquez sur une de vos case puis sur une case adversaire ou neutre pour tenter de la conquérir"+(model.getMode()==Partie.CLASSICO?" ou bien sur l'une des votres pour effectuer un déplacement stratégique":""));
             view.endTurn.setText("Terminer le tour");
         }
     }
