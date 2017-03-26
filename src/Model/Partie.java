@@ -402,8 +402,6 @@ public class Partie implements Serializable{
         }
 
         if (deDefenseur.length>1 && deAttaquant.length==1) {
-            System.out.println(""+maxAttaque);
-            System.out.println(""+maxDefense);
             if (maxAttaque > maxDefense) {
                 c.setNbtroupes(c.getNbtroupes() - 1);
                 if (c.getNbtroupes() <= 0) c.setNbtroupes(0);
