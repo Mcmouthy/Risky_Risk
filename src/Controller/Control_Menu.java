@@ -116,7 +116,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         /* ACTIONS */
         if (event.getSource().equals(getView().startButton)) {
             view.setMainMenuView();
-            clipo = new AudioClip(new File("musics/Menu.wav").toURI().toString());
+            clipo = new AudioClip(new File("musics/VraieMenu.wav").toURI().toString());
             clipo.setVolume(musicVolume);
             if (musicVolume>0.01)clipo.play();
         } else if (event.getSource().equals(getView().nouvellePartie)) {
