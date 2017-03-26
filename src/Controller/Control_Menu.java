@@ -78,6 +78,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         this.view.listeResolution.setDisable(fullscreen);
         this.view.sliderSoundVolume.setValue(soundVolume);
         this.view.sliderMusicVolume.setValue(musicVolume);
+
     }
 
     private void setEvenHandlers() {
@@ -101,6 +102,10 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
             clip.setVolume(view.sliderMusicVolume.getValue());
             clip.play();
         });
+        clipo = new AudioClip(new File("musics/VraieMenu.wav").toURI().toString());
+        clipo.setVolume(musicVolume);
+        clipo.setCycleCount(50);
+        if (musicVolume>0.01)clipo.play();
     }
 
     @Override
@@ -116,10 +121,6 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
         /* ACTIONS */
         if (event.getSource().equals(getView().startButton)) {
             view.setMainMenuView();
-            clipo = new AudioClip(new File("musics/VraieMenu.wav").toURI().toString());
-            clipo.setVolume(musicVolume);
-            clipo.setCycleCount(50);
-            if (musicVolume>0.01)clipo.play();
         } else if (event.getSource().equals(getView().nouvellePartie)) {
             view.listeCarte.getItems().clear();
             for (String s : getCartesNames())
