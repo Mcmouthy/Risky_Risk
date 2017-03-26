@@ -1,5 +1,6 @@
 .root{
     -fx-background-image: url('../img/background.jpg');
+    -fx-text-fill: white;
 }
 
 #joueurButton1,#joueurButton2, #joueurButton3, #joueurButton4, #nbjoueurs, #type{
@@ -77,4 +78,6 @@
     -fx-padding : 0 2em 0 0;
     -fx-font-size : 16px;
 }
-
+#listeSave {
+    -fx-font-size : 16px;
+}
