@@ -585,31 +585,21 @@ public class Partie implements Serializable{
     }
 
     //Evenement qui ajoute trois troupes pendant un tour
-    public Case eventMercenaires(Joueur j) {
+    private void eventMercenaires(Joueur j) {
         Case selected = pickCase(j);
         int renfort = Control_Game.loto.nextInt(4)*3+7;
         if(renfort+selected.getNbtroupes()>24) selected.setNbtroupes(24);
         else selected.setNbtroupes(selected.getNbtroupes()+renfort);
-        return selected;
-    }
-
-    //Les trois troupes précédemment ajoutées sont retirées au tour suivant
-    //S'il y avait moins de trois troupes sur la case alors le nombre de troupe est mis à 1
-    public void finEventMercenaires(Case c) {
-        if (c.getNbtroupes()<=3) c.setNbtroupes(1);
-        else c.setNbtroupes(c.getNbtroupes()-3);
     }
 
     //Un joueur ne peux plus attaquer via une de ses cases pendant un tour
     //La case sabotée est ajotée à la liste des case sabotées
-    public Case eventSabotage(Joueur j) {
+    private void eventSabotage(Joueur j) {
         Case selected = pickCase(j);
         if(selected.isAbleToAttack) {
             casesSabotes.add(selected);
             selected.isAbleToAttack = false;
-            return selected;
         }
-        return null;
     }
 
     //On remet le nombre de troupes de la case à son nombre initial pour qu'elle puisse attaquer ensuite
@@ -619,7 +609,7 @@ public class Partie implements Serializable{
     }
 
     //Evenement qui enleve deux troupes
-    public void eventDesertion(Joueur j) {
+    private void eventDesertion(Joueur j) {
         Case selected = pickCase(j);
         int troupes = selected.getNbtroupes();
         troupes-=2;
@@ -628,7 +618,7 @@ public class Partie implements Serializable{
     }
 
     //Evenement qui prend aléatoirement 2 case qui ne sont pas du même joueur pour inverser leur troupes
-    public void eventTrahison(Joueur j1, Joueur j2) {
+    private void eventTrahison(Joueur j1, Joueur j2) {
         Case case1 = pickCase(j1);
         Case case2 = pickCase(j2);
         int buf = case1.getNbtroupes();
@@ -637,12 +627,13 @@ public class Partie implements Serializable{
     }
 
     //Evenement qui supprime toutes les troupes présentes sur une case et la rend neutre
-    public void eventRevolte(Joueur j) {
+    private void eventRevolte(Joueur j) {
         Case selected = pickCase(j);
         selected.setNbtroupes(0);
         j.perdTerrain(selected);
         neutres.add(selected);
     }
+
 
     public void choixEvenements(){
         int numevents=random.nextInt(6);
