@@ -646,7 +646,7 @@ public class Partie implements Serializable{
     }
 
     public void choixEvenements(){
-        int numevents=random.nextInt(6);
+        int numevents=random.nextInt(7);
         Joueur j=pickJoueur();
         Joueur j2= pickJoueur();
 
@@ -670,6 +670,9 @@ public class Partie implements Serializable{
                 break;
             case 5:
                 eventRevolte(j);
+                break;
+            case 6:
+                finEventSabotage();
                 break;
         }
     }
