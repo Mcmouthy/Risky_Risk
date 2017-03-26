@@ -320,9 +320,11 @@ public class Control_Game implements EventHandler<MouseEvent>{
             verifFinDePartie();
         } else if(event.getSource().equals(view.retour)){
             clip.stop();
+            clip = new AudioClip(new File("musics/VraieMenu.wav").toURI().toString());
+            clip.setVolume(menu.musicVolume);
+            clip.setCycleCount(50);
+            if (menu.musicVolume>0.01)clip.play();
             menu.getView().setMainMenuView();
-            clip=new AudioClip(new File("musics/Menu.wav").toURI().toString());
-            clip.play(menu.musicVolume);
             menu.getView().getStage().getScene().getStylesheets().clear();
             menu.getView().getStage().getScene().getStylesheets().add(new File("css/menu_view.css").toURI().toString());
             menu.game = null;
