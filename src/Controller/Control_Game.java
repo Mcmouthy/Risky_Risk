@@ -198,7 +198,9 @@ public class Control_Game implements EventHandler<MouseEvent>{
                 view.caseOnFocus = null;
                 verifRenfortCapacite();
                 if(loto.nextDouble()<=0.4) {
+                    view.endTurn.setDisable(true);
                     Generateur_v2.showText(view.stage, "Évènement", model.choixEvenements());
+                    view.endTurn.setDisable(false);
                 }
                 verifFinDePartie();
                 if(tourTimeOut!=null) tourTimeOut.purge();
@@ -278,6 +280,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
                                     model.actualAttCase = caseattaquante;
                                     model.actualDefCase = c;
                                     (new Thread(() -> {
+                                        Platform.runLater(()-> view.endTurn.setDisable(true));
                                         do {
                                             long time = System.currentTimeMillis();
                                             model.captureTerrainAdverse(model.getJoueurCourant(), j, model.actualDefCase, model.actualAttCase,model.actualAttCase.getNbtroupes());
@@ -287,7 +290,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
                                         } while (model.actualAttCase.getNbtroupes() > 1 && model.lanceContinue);
                                         model.lanceContinue = true;
                                         view.lanceContinue.setDisable(false);
-                                        Platform.runLater(this::verifFinDePartie);
+                                        Platform.runLater(()->{view.endTurn.setDisable(false);verifFinDePartie();});
                                     })).start();
                                     actualiseCases = false;
                                 } else

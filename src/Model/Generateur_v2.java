@@ -20,6 +20,7 @@ import javafx.scene.shape.*;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 import javax.imageio.ImageIO;
@@ -395,11 +396,10 @@ public class Generateur_v2 extends Application {
         Alert dialog = new Alert(Alert.AlertType.INFORMATION);
         dialog.setTitle("RISKY RISK");
         dialog.setHeaderText(intitule);
-        //dialog.setContentText(texte);
         Label label = new Label(texte);
         label.setWrapText(true);
         dialog.getDialogPane().setContent(label);
-        dialog.show();
+        dialog.showAndWait();
     }
 
 
