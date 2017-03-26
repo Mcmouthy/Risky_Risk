@@ -552,7 +552,8 @@ public class Partie implements Serializable{
         Joueur joueur;
         int jeSuisUnInt = random.nextInt(joueurs.size());
         joueur = joueurs.get(jeSuisUnInt);
-        return joueur;
+        if (joueur!=getJoueurCourant()) return joueur;
+        return pickJoueur();
     }
 
     //Méthode qui tire une case aléatoire parmi les cases du joueur précedemment tiré
@@ -647,6 +648,7 @@ public class Partie implements Serializable{
     public void choixEvenements(){
         int numevents=random.nextInt(6);
         Joueur j=pickJoueur();
+        Joueur j2= pickJoueur();
 
         switch (numevents){
             case 0:
@@ -662,7 +664,9 @@ public class Partie implements Serializable{
                 eventDesertion(j);
                 break;
             case 4:
-                eventTrahison(j,pickJoueur());
+                if (j2!=j) {
+                    eventTrahison(j, j2);
+                }
                 break;
             case 5:
                 eventRevolte(j);
