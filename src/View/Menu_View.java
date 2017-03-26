@@ -413,8 +413,10 @@ public class Menu_View {
         stage.getScene().getRoot().setVisible(false);
         ((BorderPane) stage.getScene().getRoot()).getChildren().clear();
 
-        VBox panneau = new VBox();
-        HBox bout= new HBox();
+        VBox panneau = new VBox(70);
+        panneau.setId("cartemenu");
+        HBox bout= new HBox(10);
+        bout.setId("cartemenu");
         bout.getChildren().addAll(retour,lancerSave);
         panneau.getChildren().addAll(listeSave,bout);
 

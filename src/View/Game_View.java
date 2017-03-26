@@ -290,8 +290,7 @@ public class Game_View {
         dialog.initOwner(stage);
         dialog.initStyle(stage.getStyle());
         dialog.setTitle("Sauvegarder");
-        dialog.setHeaderText("Nom du fichier de sauvegarde");
-        dialog.setContentText("Entrez le nom du fichier");
+        dialog.setHeaderText("Entrez le nom du fichier");
 
         // Traditional way to get the response value.
         Optional<String> result = dialog.showAndWait();
