@@ -1,5 +1,6 @@
 package Model;
 
+import Controller.Control_Game;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
@@ -581,19 +582,23 @@ public class Partie implements Serializable{
     //Evenement qui ajoute une troupe
     public void eventRenfort(Joueur j) {
         Case selected = pickCase(j);
-        selected.setNbtroupes(selected.getNbtroupes()+1);
+        int renfort = Control_Game.loto.nextInt(6)+1;
+        if(renfort+selected.getNbtroupes()>24) selected.setNbtroupes(24);
+        else selected.setNbtroupes(selected.getNbtroupes()+renfort);
     }
 
     //Evenement qui ajoute trois troupes pendant un tour
     public Case eventMercenaires(Joueur j) {
         Case selected = pickCase(j);
-        selected.setNbtroupes(selected.getNbtroupes()+3);
+        int renfort = Control_Game.loto.nextInt(4)*3+7;
+        if(renfort+selected.getNbtroupes()>24) selected.setNbtroupes(24);
+        else selected.setNbtroupes(selected.getNbtroupes()+renfort);
         return selected;
     }
 
     //Les trois troupes précédemment ajoutées sont retirées au tour suivant
     //S'il y avait moins de trois troupes sur la case alors le nombre de troupe est mis à 1
-    public void finEventMercenaires(Joueur j, Case c) {
+    public void finEventMercenaires(Case c) {
         if (c.getNbtroupes()<=3) c.setNbtroupes(1);
         else c.setNbtroupes(c.getNbtroupes()-3);
     }
@@ -621,16 +626,17 @@ public class Partie implements Serializable{
         Case selected = pickCase(j);
         int troupes = selected.getNbtroupes();
         troupes-=2;
+        if(troupes<1) troupes =1;
         selected.setNbtroupes(troupes);
     }
 
     //Evenement qui prend aléatoirement 2 case qui ne sont pas du même joueur pour inverser leur troupes
-    public void eventTrahison(Joueur j, Joueur j2) {
-        Case selected = pickCase(j);
-        selected.setNbtroupes(selected.getNbtroupes()-1);
-
-        Case voisin = pickVoisin(selected);
-        voisin.setNbtroupes(voisin.getNbtroupes()+1);
+    public void eventTrahison(Joueur j1, Joueur j2) {
+        Case case1 = pickCase(j1);
+        Case case2 = pickCase(j2);
+        int buf = case1.getNbtroupes();
+        case1.setNbtroupes(case2.getNbtroupes());
+        case2.setNbtroupes(buf);
     }
 
     //Evenement qui supprime toutes les troupes présentes sur une case et la rend neutre
