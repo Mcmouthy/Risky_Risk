@@ -651,19 +651,19 @@ public class Partie implements Serializable{
             case 0:
                 int nb=eventRenfort(j);
                 return j.getNom()+": "+nb+" renfort(s) vous ont été attribué(s) !";
-                break;
+
             case 1:
                 int nb2=eventMercenaires(j);
                 return j.getNom()+": "+nb2+" mercenaire(s) vous viennent en aide !";
-                break;
+
             case 2:
                 eventSabotage(j);
                 return "ALERTE ! "+j.getNom()+" : l'une de vos case à été saboté !";
-                break;
+
             case 3:
                 eventDesertion(j);
                 return "ALERTE ! "+j.getNom()+" : des troupes ont déserté !";
-                break;
+
             case 4:
                 if (j2!=j) {
                     eventTrahison(j, j2);
@@ -673,11 +673,11 @@ public class Partie implements Serializable{
             case 5:
                 eventRevolte(j);
                 return "ALERTE ! "+j.getNom()+" : une révolte a eclaté dans un de vos territoire ! \nCelui-ci est perdu...";
-                break;
+
             case 6:
                 finEventSabotage();
                 return "Il semblerait que des experts ont sauvé un territoire du sabotage !";
-                break;
+
         }
         return "";
     }
