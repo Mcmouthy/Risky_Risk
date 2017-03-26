@@ -351,7 +351,6 @@ public class Control_Game implements EventHandler<MouseEvent>{
             view.lanceContinue.setDisable(true);
         }
 
-
         /* ACTUALISATION */
         if(actualiseCases) view.actualizeCases();
 
