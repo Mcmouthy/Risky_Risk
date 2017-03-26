@@ -396,6 +396,15 @@ public class Generateur_v2 extends Application {
         return 0;
     }
 
+
+    public static void showText(Stage stage, String intitule, String texte) {
+        Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+        dialog.setTitle("RISKY RISK");
+        dialog.setHeaderText(intitule);
+        dialog.setContentText(texte);
+    }
+
+
     private File askForImageFile() {
         FileChooser dialogue = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image file (*.png,*.jpg,*.jpeg,*.gif,*.bmp)", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp");

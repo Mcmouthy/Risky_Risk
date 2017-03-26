@@ -548,7 +548,7 @@ public class Partie implements Serializable{
     }
 
     //Méthode qui tire un joueur aléatoire parmi les joueurs jouant
-    public Joueur pickJoueur() {
+    private Joueur pickJoueur() {
         Joueur joueur;
         int jeSuisUnInt = random.nextInt(joueurs.size());
         joueur = joueurs.get(jeSuisUnInt);
@@ -557,7 +557,7 @@ public class Partie implements Serializable{
     }
 
     //Méthode qui tire une case aléatoire parmi les cases du joueur précedemment tiré
-    public Case pickCase(Joueur j) {
+    private Case pickCase(Joueur j) {
         int moiAussiJeSuisUnInt = random.nextInt(j.getTerrain().size());
         return j.getTerrain().get(moiAussiJeSuisUnInt);
 
@@ -578,7 +578,7 @@ public class Partie implements Serializable{
     }
 
     //Evenement qui ajoute une troupe
-    public int eventRenfort(Joueur j) {
+    private int eventRenfort(Joueur j) {
         Case selected = pickCase(j);
         int renfort = Control_Game.loto.nextInt(6)+1;
         if(renfort+selected.getNbtroupes()>24) selected.setNbtroupes(24);
@@ -607,7 +607,7 @@ public class Partie implements Serializable{
     }
 
     //On remet le nombre de troupes de la case à son nombre initial pour qu'elle puisse attaquer ensuite
-    public Case finEventSabotage() {
+    private Case finEventSabotage() {
         Case selected = casesSabotes.poll();
         if(selected!=null) selected.isAbleToAttack = true;
         return selected;

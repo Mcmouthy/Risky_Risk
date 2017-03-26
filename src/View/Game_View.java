@@ -215,6 +215,8 @@ public class Game_View {
     public void actualizeCases() {
         for (Map.Entry<Path, Case> e : allCases.entrySet()) {
             labels.get(e.getKey()).setText(e.getValue().getNbtroupes()+"");
+            if(!e.getValue().isAbleToAttack) labels.get(e.getKey()).setStyle("-fx-background-color: darkred");
+            else labels.get(e.getKey()).setStyle("-fx-background-color: white");
             e.getKey().getStyleClass().clear();
             if(caseOnFocus!=null && caseOnFocus.equals(e.getKey()))
                 e.getKey().getStyleClass().add("focus");
