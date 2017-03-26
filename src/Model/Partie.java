@@ -637,6 +637,7 @@ public class Partie implements Serializable{
         Case selected = pickCase(j);
         selected.setNbtroupes(0);
         j.perdTerrain(selected);
+        selected.setJoueur(null);
         neutres.add(selected);
         return j;
     }
@@ -676,7 +677,7 @@ public class Partie implements Serializable{
 
             case 6:
                 finEventSabotage();
-                return "Il semblerait que des experts ont sauvé un territoire du sabotage !";
+                return "Il semblerait que des experts aient sauvé un territoire du sabotage !";
 
         }
         return "";
