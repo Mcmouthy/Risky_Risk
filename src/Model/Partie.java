@@ -679,5 +679,6 @@ public class Partie implements Serializable{
                 return "Il semblerait que des experts ont sauvé un territoire du sabotage !";
                 break;
         }
+        return "";
     }
 }
