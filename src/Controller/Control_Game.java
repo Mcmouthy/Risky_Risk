@@ -292,7 +292,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
                                 break;
                             }
                         }
-                    } else {
+                    } else if(model.getMode()== Partie.CLASSICO) {
                         int ans = Generateur_v2.askForInt(view.stage,"Déplacement stratégique", "Rentrez le nombre de troupes à déplacer: ");
                         while(ans<0 ){
                             ans = Generateur_v2.askForInt(view.stage,"ERREUR: nombre de troupes invalide", "Rentrez le nombre de troupes à déplacer: ");
