@@ -549,7 +549,6 @@ public class Partie implements Serializable{
     //Méthode qui tire un joueur aléatoire parmi les joueurs jouant
     public Joueur pickJoueur() {
         Joueur joueur;
-        Random random = new Random();
         int jeSuisUnInt = random.nextInt(joueurs.size());
         joueur = joueurs.get(jeSuisUnInt);
         return joueur;
@@ -557,7 +556,6 @@ public class Partie implements Serializable{
 
     //Méthode qui tire une case aléatoire parmi les cases du joueur précedemment tiré
     public Case pickCase(Joueur j) {
-        Random random = new Random();
         int moiAussiJeSuisUnInt = random.nextInt(j.getTerrain().size());
         return j.getTerrain().get(moiAussiJeSuisUnInt);
 
@@ -566,7 +564,6 @@ public class Partie implements Serializable{
     //Méthode qui tire une case aléatoire parmi les voisins de la case précédemment tirée
     public Case pickVoisin(Case c) {
         Set<Case> voisins = c.getVoisins();
-        Random random = new Random();
         int ohNonUnTroisiemeInt = random.nextInt(voisins.size());
         int i = 0;
         for(Case cas : voisins)
@@ -639,5 +636,31 @@ public class Partie implements Serializable{
         selected.setNbtroupes(0);
         j.perdTerrain(selected);
         neutres.add(selected);
+    }
+
+    public void choixEvenements(){
+        int numevents=random.nextInt(6);
+        Joueur j=pickJoueur();
+
+        switch (numevents){
+            case 0:
+                eventRenfort(j);
+                break;
+            case 1:
+                eventMercenaires(j);
+                break;
+            case 2:
+                eventSabotage(j);
+                break;
+            case 3:
+                eventDesertion(j);
+                break;
+            case 4:
+                eventTrahison(j,pickJoueur());
+                break;
+            case 5:
+                eventRevolte(j);
+                break;
+        }
     }
 }
