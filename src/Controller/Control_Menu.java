@@ -118,6 +118,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
             view.setMainMenuView();
             clipo = new AudioClip(new File("musics/VraieMenu.wav").toURI().toString());
             clipo.setVolume(musicVolume);
+            clipo.setCycleCount(50);
             if (musicVolume>0.01)clipo.play();
         } else if (event.getSource().equals(getView().nouvellePartie)) {
             view.listeCarte.getItems().clear();
@@ -161,6 +162,7 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
             soundVolume = view.sliderSoundVolume.getValue();
             musicVolume = view.sliderMusicVolume.getValue();
             clipo.setPan(stat);
+            clipo.setCycleCount(50);
             clipo.play(musicVolume);
 
 
