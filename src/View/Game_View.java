@@ -83,7 +83,7 @@ public class Game_View {
         timer.setId("timer");
         mode = new Label();
         mode.setId("mode-label");
-        finDePartie=new Label("Félicitations "+model.getJoueurCourant().getNom()+", vous avez gagné !");
+        finDePartie=new Label();
         finDePartie.setId("fin");
         message=new Label("Vous pouvez revenir au menu principal ou rejouer avec les mêmes paramètres.");
         message.setId("message");

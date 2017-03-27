@@ -677,4 +677,12 @@ public class Partie implements Serializable{
         }
         return "";
     }
+
+    public Joueur getLastPlayer() {
+        for (Joueur j :
+                joueurs) {
+            if (!j.isEliminated()) return j;
+        }
+        return null;
+    }
 }

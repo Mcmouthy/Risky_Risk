@@ -360,6 +360,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
 
         if (model.nbjoueurRestant()==1){
             model.setFin(true);
+            view.finDePartie.setText("Félicitations "+model.getLastPlayer().getNom()+", vous avez gagné !");
             view.setFinDePartieView();
         }
     }
