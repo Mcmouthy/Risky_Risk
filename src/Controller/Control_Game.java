@@ -102,16 +102,16 @@ public class Control_Game implements EventHandler<MouseEvent>{
             public void run() {
                 if(!view.model_des.getPlateau().isVisible())Platform.runLater((()->view.timer.setText(
                         (int)((model.time_secondes - System.currentTimeMillis()) / 1000 + 60) + ""
-                ))); else model.time_secondes = System.currentTimeMillis()- (60-Integer.parseInt(view.timer.getText()))*1000;verifMusique();
+                ))); else model.time_secondes = System.currentTimeMillis() - (60-Integer.parseInt(view.timer.getText()))*1000;
+
                 if ((model.time_secondes - System.currentTimeMillis()) / 1000 + 60 <= 0) {
-                    tourTimeOut.cancel();
-                    tourTimeOut.purge();
                     model.passeJoueurSuivant();
-                    model.passeEtapeSuivante();
+                    if(!view.endTurn.getText().equals("Placement renforts auto")) model.passeEtapeSuivante();
                     model.calculRenforts(model.getJoueurCourant());
-                    Platform.runLater((()->view.notice.setText(model.getJoueurCourant().getNom() + "\nPlacez vos renforts!")));
+                    Platform.runLater((()->{view.notice.setText(model.getJoueurCourant().getNom() + "\nPlacez vos renforts!");view.endTurn.setText("Placement renforts auto");}));
                     view.caseOnFocus = null;
                     verifRenfortCapacite();
+                    model.time_secondes = System.currentTimeMillis();
                 }
             }
         }, 0,30);
@@ -198,33 +198,12 @@ public class Control_Game implements EventHandler<MouseEvent>{
                 view.notice.setText(model.getJoueurCourant().getNom() + "\nPlacez vos renforts!");
                 view.caseOnFocus = null;
                 verifRenfortCapacite();
-                if(loto.nextDouble()<=0.4) {
+                if(loto.nextDouble()<=0.4 && model.getMode()==Partie.CLASSICO) {
                     view.endTurn.setDisable(true);
                     Generateur_v2.showText(view.stage, "Évènement", model.choixEvenements());
                     view.endTurn.setDisable(false);
                 }
                 verifFinDePartie();
-                if(tourTimeOut!=null) tourTimeOut.purge();
-                tourTimeOut = new Timer();
-                tourTimeOut.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        if(!view.model_des.getPlateau().isVisible())Platform.runLater((()->view.timer.setText(
-                                (int)((model.time_secondes - System.currentTimeMillis()) / 1000 + 60) + ""
-                        ))); else model.time_secondes = System.currentTimeMillis() - (60-Integer.parseInt(view.timer.getText()))*1000;
-
-                        if ((model.time_secondes - System.currentTimeMillis()) / 1000 + 60 <= 0) {
-                            tourTimeOut.cancel();
-                            tourTimeOut.purge();
-                            model.passeJoueurSuivant();
-                            model.passeEtapeSuivante();
-                            model.calculRenforts(model.getJoueurCourant());
-                            Platform.runLater((()->view.notice.setText(model.getJoueurCourant().getNom() + "\nPlacez vos renforts!")));
-                            view.caseOnFocus = null;
-                            verifRenfortCapacite();
-                        }
-                    }
-                }, 0,30);
             } else {
                 while (model.isDistributionRenforts())
                     for (Case c : model.getJoueurCourant().getTerrain()) {

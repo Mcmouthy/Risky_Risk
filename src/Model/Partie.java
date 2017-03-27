@@ -550,15 +550,13 @@ public class Partie implements Serializable{
         Joueur joueur;
         int jeSuisUnInt = random.nextInt(joueurs.size());
         joueur = joueurs.get(jeSuisUnInt);
-        if (joueur!=getJoueurCourant()) return joueur;
-        return pickJoueur();
+        return joueur;
     }
 
     //Méthode qui tire une case aléatoire parmi les cases du joueur précedemment tiré
     private Case pickCase(Joueur j) {
         int moiAussiJeSuisUnInt = random.nextInt(j.getTerrain().size());
         return j.getTerrain().get(moiAussiJeSuisUnInt);
-
     }
 
     //Méthode qui tire une case aléatoire parmi les voisins de la case précédemment tirée
