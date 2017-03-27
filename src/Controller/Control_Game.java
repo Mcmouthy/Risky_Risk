@@ -32,7 +32,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
     private AudioClip clip;
     private Timer tourTimeOut;
     private List<File> playlist= new ArrayList<>();
-    int indexPlaylist=0;
+    int indexPlaylist;
     private boolean[] isMoving = new boolean[4]; // DIRECTION selon le sens horaire, comme en CSS
 
     public Control_Game(Partie model,Control_Menu control_menu, boolean nouvelle){
@@ -90,6 +90,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
         playlist.add(file5);
         playlist.add(file6);
         playlist.add(file7);
+        indexPlaylist=loto.nextInt(playlist.size());
 
         clip = new AudioClip(playlist.get(indexPlaylist).toURI().toString());
         clip.setVolume(control_menu.musicVolume);
