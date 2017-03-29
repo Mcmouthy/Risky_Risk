@@ -635,6 +635,7 @@ public class Partie implements Serializable{
         j.perdTerrain(selected);
         selected.setJoueur(null);
         neutres.add(selected);
+        calculRenforts(j);
         return j;
     }
 
