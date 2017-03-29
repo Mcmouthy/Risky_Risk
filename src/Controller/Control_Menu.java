@@ -19,10 +19,14 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import sun.security.krb5.internal.crypto.Des;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import static java.lang.System.exit;
 
@@ -142,7 +146,29 @@ public class Control_Menu implements EventHandler<MouseEvent>, javafx.beans.valu
             view.setMainMenuView();
         } else if (event.getSource().equals(getView().retour2)) {
             view.setPartieAskingView();
-        } else if (event.getSource().equals(getView().lancerPartie)) {
+        }else if (event.getSource().equals(getView().apropos)){
+            (new Thread((()->{
+                String url = "http://risky-risk.ddns.net";
+                if(Desktop.isDesktopSupported()){
+                    Desktop desktop = Desktop.getDesktop();
+                    try {
+                        desktop.browse(new URI(url));
+                    } catch (IOException | URISyntaxException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }else{
+                    Runtime runtime = Runtime.getRuntime();
+                    try {
+                        runtime.exec("xdg-open " + url);
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }))).start();
+
+        }else if (event.getSource().equals(getView().lancerPartie)) {
             if (!mauvaisChoixCouleurs() && !nomJoueurNull() && !sameNomJoueur()) {
                 clipo.stop();
                 nouvellepartie();

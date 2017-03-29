@@ -382,6 +382,7 @@ public class Menu_View {
         continuer.setOnMouseClicked(eh);
         lancerSave.setOnMouseClicked(eh);
         creerMap.setOnMouseClicked(eh);
+        apropos.setOnMouseClicked(eh);
     }
 
     public Scene getScene()
