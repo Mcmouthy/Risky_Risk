@@ -113,6 +113,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
                     verifRenfortCapacite();
                     model.time_secondes = System.currentTimeMillis();
                 }
+                verifMusique();
             }
         }, 0,30);
 
