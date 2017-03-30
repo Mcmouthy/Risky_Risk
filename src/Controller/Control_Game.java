@@ -279,7 +279,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
                                 break;
                             }
                         }
-                    } else if(model.getMode()== Partie.CLASSICO && caseattaquante.isAbleToAttack) {
+                    } else if(model.getMode()== Partie.CLASSICO && caseattaquante.isAbleToAttack  && c.getVoisins().contains(caseattaquante)) {
                         int ans = Generateur_v2.askForInt(view.stage,"Déplacement stratégique", "Rentrez le nombre de troupes à déplacer: ");
                         while(ans<0 ){
                             ans = Generateur_v2.askForInt(view.stage,"ERREUR: nombre de troupes invalide", "Rentrez le nombre de troupes à déplacer: ");
@@ -290,7 +290,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
                         model.deplacementTroupes(caseattaquante,c,ans);
                     }
                     view.caseOnFocus=null;
-                } else if(model.getMode()== Partie.CLASSICO && view.caseOnFocus != null && model.getJoueurCourant().getTerrain().contains(c) && model.getJoueurCourant().getTerrain().contains(caseattaquante) && !c.equals(caseattaquante) && caseattaquante.isAbleToAttack) {
+                } else if(model.getMode()== Partie.CLASSICO && view.caseOnFocus != null && model.getJoueurCourant().getTerrain().contains(c) && model.getJoueurCourant().getTerrain().contains(caseattaquante) && !c.equals(caseattaquante) && caseattaquante.isAbleToAttack  && c.getVoisins().contains(caseattaquante)) {
                         int ans = Generateur_v2.askForInt(view.stage,"Déplacement stratégique", "Rentrez le nombre de troupes à déplacer: ");
                         while(ans<0 ){
                             ans = Generateur_v2.askForInt(view.stage,"ERREUR: nombre de troupes invalide", "Rentrez le nombre de troupes à déplacer: ");
