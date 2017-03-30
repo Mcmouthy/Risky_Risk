@@ -100,7 +100,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
         tourTimeOut.schedule(new TimerTask() {
             @Override
             public void run() {
-                if(!view.model_des.getPlateau().isVisible())Platform.runLater((()->view.timer.setText(
+                if(!view.model_des.getPlateau().isVisible() && !model.pause)Platform.runLater((()->view.timer.setText(
                         (int)((model.time_secondes - System.currentTimeMillis()) / 1000 + 60) + ""
                 ))); else model.time_secondes = System.currentTimeMillis() - (60-Integer.parseInt(view.timer.getText()))*1000;
 
