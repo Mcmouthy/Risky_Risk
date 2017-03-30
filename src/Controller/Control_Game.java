@@ -315,6 +315,7 @@ public class Control_Game implements EventHandler<MouseEvent>{
             menu.getView().getStage().getScene().getStylesheets().add(new File("css/menu_view.css").toURI().toString());
             menu.game = null;
         } else if(event.getSource().equals(view.recommencer)){
+            clip.stop();
             menu.nouvellepartie();
         } else if(event.getSource().equals(view.bouton_volume)){
             model.mute = !model.mute;
