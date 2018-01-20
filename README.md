@@ -2,7 +2,7 @@
 
 Projet tuteuré de S3/4
 
-Réalisé avec Lib-GDX
+Réalisé avec Java FX
 
 Membres du projet:
 - Dylan Delacote
